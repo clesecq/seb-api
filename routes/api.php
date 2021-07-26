@@ -6,6 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\MembersController;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ProductCategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +31,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::resource("users", UsersController::class)->middleware("permission:users");
     Route::resource("members", MembersController::class)->middleware("permission:members");
+    Route::resource("products", ProductsController::class)->middleware("permission:products");
+    Route::resource("products/categories", ProductCategoriesController::class)->middleware("permission:products");
 });
