@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->decimal('price', $precision = 8, $scale = 2);
             $table->foreignId('category_id');
+            $table->integer('count')->default(0);
             $table->timestamps();
         });
     }
