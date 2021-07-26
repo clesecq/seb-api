@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +25,6 @@ Route::prefix('auth')->group(function() {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get("user", [UserController::class, 'show']);
     Route::put("user", [UserController::class, 'update']);
+
+    Route::resource("users", UsersController::class)->middleware("permission:users");
 });
