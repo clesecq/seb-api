@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +21,7 @@ Route::prefix('auth')->group(function() {
     Route::post('logout', [AuthController::class, 'logout']);
 });
 
-Route::group(['middleware' => ['auth:sanctum', 'permission:suce']], function () {
-    Route::get("user", function (Request $request) {
-        return $request->user();
-    });
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get("user", [UserController::class, 'show']);
+    Route::put("user", [UserController::class, 'update']);
 });
