@@ -1,4 +1,4 @@
 #!/bin/bash
 
 trap 'kill %1' SIGINT
-php artisan serve & npm run watch
+php artisan serve & yarn run watch

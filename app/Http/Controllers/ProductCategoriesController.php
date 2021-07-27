@@ -12,9 +12,13 @@ class ProductCategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return ProductCategory::with('products')->get();
+        if (is_array($request->ids)) {
+            return ["data" => ProductCategory::whereIn('id', $request->ids)->get()];
+        } else {
+            return ProductCategory::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc')->paginate((int) ($request->per_page ?? 20));
+        }
     }
 
     /**
@@ -29,7 +33,7 @@ class ProductCategoriesController extends Controller
             'name' => ['required', 'string']
         ]);
 
-        return ProductCategory::create($data);
+        return ['data' => ProductCategory::create($data)];
     }
 
     /**
@@ -40,7 +44,7 @@ class ProductCategoriesController extends Controller
      */
     public function show($id)
     {
-        return ProductCategory::findOrFail($id)->load('products');
+        return ['data' => ProductCategory::findOrFail($id)];
     }
 
     /**
@@ -56,7 +60,8 @@ class ProductCategoriesController extends Controller
             'name' => ['sometimes', 'required', 'string']
         ]);
 
-        return ProductCategory::findOrFail($id)->update($data);
+        ProductCategory::findOrFail($id)->update($data);
+        return ['data' => ProductCategory::findOrFail($id)];
     }
 
     /**
@@ -67,6 +72,36 @@ class ProductCategoriesController extends Controller
      */
     public function destroy($id)
     {
-        return ProductCategory::findOrFail($id)->delete();
+        $product = ProductCategory::findOrFail($id);
+        $product->delete();
+        return ['data' => $product];
+    }
+
+    /**
+     * Destroy many of the specified resource
+     */
+    public function destroyMany(Request $request) {
+        if (is_array($request->ids)) {
+            ProductCategory::whereIn('id', $request->ids)->delete();
+            return response(["data" => $request->ids], 200);
+        } else {
+            return response([], 400);
+        }
+    }
+
+    /**
+     * Update many of the specified resource
+     */
+    public function updateMany(Request $request) {
+        $data = $request->validate([
+            'name' => ['sometimes', 'required', 'string']
+        ]);
+
+        if (is_array($request->ids)) {
+            ProductCategory::whereIn('id', $request->ids)->update($data);
+            return response(["data" => $request->ids], 200);
+        } else {
+            return response([], 400);
+        }
     }
 }

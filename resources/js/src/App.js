@@ -3,12 +3,17 @@ import ReactDOM from 'react-dom';
 import { Admin, Resource, ListGuesser } from 'react-admin';
 import DataProvider from './DataProvider';
 import AuthProvider from './AuthProvider';
+import Layout  from './layout/Layout';
+
+import Products from './resources/Products';
+import ProductsCategories from './resources/ProductsCategories';
 
 export default class App extends Component {
     render() {
         return (
-            <Admin dataProvider={DataProvider} authProvider={AuthProvider}>
-                {/*<Resource name="users" list={ListGuesser} />*/}
+            <Admin layout={Layout} dataProvider={DataProvider} authProvider={AuthProvider}>
+                {Products}
+                {ProductsCategories}
             </Admin>
         );
     }

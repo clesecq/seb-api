@@ -13,9 +13,9 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return User::all();
+        return User::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc')->paginate((int) ($request->per_page ?? 20));
     }
 
     /**

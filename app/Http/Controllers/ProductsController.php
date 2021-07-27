@@ -12,9 +12,13 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Product::with('category')->get();
+        if (is_array($request->ids)) {
+            return ["data" => Product::whereIn('id', $request->ids)->get()];
+        } else {
+            return Product::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc')->paginate((int) ($request->per_page ?? 20));
+        }
     }
 
     /**
@@ -32,7 +36,7 @@ class ProductsController extends Controller
             'category_id' => ['required', 'exists:product_categories,id']
         ]);
 
-        return Product::create($data);
+        return ['data' => Product::create($data)];
     }
 
     /**
@@ -43,7 +47,7 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        return Product::findOrFail($id)->load('category');
+        return ['data' => Product::findOrFail($id)];
     }
 
     /**
@@ -62,7 +66,8 @@ class ProductsController extends Controller
             'category_id' => ['sometimes', 'required', 'exists:product_categories,id']
         ]);
 
-        return Product::findOrFail($id)->update($data);
+        Product::findOrFail($id)->update($data);
+        return ['data' => Product::findOrFail($id)];
     }
 
     /**
@@ -73,6 +78,39 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        return Product::findOrFail($id)->delete();
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return ['data' => $product];
+    }
+
+    /**
+     * Destroy many of the specified resource
+     */
+    public function destroyMany(Request $request) {
+        if (is_array($request->ids)) {
+            Product::whereIn('id', $request->ids)->delete();
+            return response(["data" => $request->ids], 200);
+        } else {
+            return response([], 400);
+        }
+    }
+
+    /**
+     * Update many of the specified resource
+     */
+    public function updateMany(Request $request) {
+        $data = $request->validate([
+            'barcode' => ['sometimes', 'required', 'string', 'digits_between:8,13', 'unique:products,barcode'],
+            'name' => ['sometimes', 'required', 'string'],
+            'price' => ['sometimes', 'required', 'numeric'],
+            'category_id' => ['sometimes', 'required', 'exists:product_categories,id']
+        ]);
+
+        if (is_array($request->ids)) {
+            Product::whereIn('id', $request->ids)->update($data);
+            return response(["data" => $request->ids], 200);
+        } else {
+            return response([], 400);
+        }
     }
 }
