@@ -6,7 +6,8 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import LocalCafeIcon from '@material-ui/icons/LocalCafe';
 import CategoryIcon from '@material-ui/icons/Category';
 
-import ListItem from '@material-ui/core/ListItem';
+import Tooltip from '@material-ui/core/Tooltip';
+import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Collapse from '@material-ui/core/Collapse';
@@ -29,13 +30,15 @@ class Accordeon extends React.Component {
     render() {
         return (
             <>
-                <ListItem button onClick={this.handleClick} className={"RaMenuItemLink-root-36 MuiMenuItem-root"}>
-                    <ListItemIcon className={"RaMenuItemLink-icon-38"}>
-                        {this.props.leftIcon}
-                    </ListItemIcon>
-                    <ListItemText primary={this.props.title} />
-                    {this.state.open ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
+                <Tooltip title={this.props.title} placement="right">
+                    <MenuItem button onClick={this.handleClick} className={"RaMenuItemLink-root-36 MuiMenuItem-root"}>
+                        <ListItemIcon className={"RaMenuItemLink-icon-38"}>
+                            {this.props.leftIcon}
+                        </ListItemIcon>
+                        <ListItemText primary={this.props.title} />
+                        {this.state.open ? <ExpandLess /> : <ExpandMore />}
+                    </MenuItem>
+                </Tooltip>
                 <Collapse in={this.state.open}>
                     {this.props.children}
                 </Collapse>
