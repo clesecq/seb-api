@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
 
         $user = User::create([
             'name' => 'root',
-            'email' => 'root@ŀocalhost',
+            'email' => 'root@localhost',
             'password' => Hash::make('root'),
             'permissions' => ["*"]
         ]);

@@ -13,6 +13,8 @@
         "@babel/preset-react": "^7.13.13",
         "axios": "^0.21",
         "bootstrap": "^4.6.0",
+        "browser-sync": "^2.27.5",
+        "browser-sync-webpack-plugin": "^2.3.0",
         "jquery": "^3.6",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
@@ -25,6 +27,10 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "prop-types": "^15.7.2",
+        "ra-data-json-server": "^3.17.0",
+        "ra-data-simple-rest": "^3.16.0",
+        "react-admin": "^3.17.0",
         "react-router-dom": "^5.2.0"
     }
 }

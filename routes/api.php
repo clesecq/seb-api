@@ -22,10 +22,13 @@ use App\Http\Controllers\ProductCategoriesController;
 
 Route::prefix('auth')->group(function() {
     Route::post('login', [AuthController::class, 'login']);
-    Route::post('logout', [AuthController::class, 'logout']);
+    Route::get('logout', [AuthController::class, 'logout']);
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get("auth/check", function() {
+        return response(["message" => "ok"], 200);
+    });
     Route::get("user", [UserController::class, 'show']);
     Route::put("user", [UserController::class, 'update']);
 
