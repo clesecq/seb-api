@@ -33,10 +33,10 @@ class Accordeon extends React.Component {
                 <Tooltip title={this.props.title} placement="right">
                     <MenuItem button onClick={this.handleClick} className={"RaMenuItemLink-root-36 MuiMenuItem-root"}>
                         <ListItemIcon className={"RaMenuItemLink-icon-38"}>
-                            {this.props.leftIcon}
+                        {this.state.open ? <ExpandLess /> : <ExpandMore />}
                         </ListItemIcon>
                         <ListItemText primary={this.props.title} />
-                        {this.state.open ? <ExpandLess /> : <ExpandMore />}
+                        
                     </MenuItem>
                 </Tooltip>
                 <Collapse in={this.state.open}>
@@ -50,7 +50,7 @@ class Accordeon extends React.Component {
 export const Menu = () => (
     <div>
         <MenuItemLink to="/" primaryText="Dashboard" leftIcon={<DashboardIcon />}/>
-        <Accordeon title="Products" leftIcon={<LocalCafeIcon />}>
+        <Accordeon title="Products" />}>
             <MenuItemLink to="/products" primaryText="Products" leftIcon={<LocalCafeIcon />}/>
             <MenuItemLink to="/products_categories" primaryText="Caterogies" leftIcon={<CategoryIcon />}/>
         </Accordeon>
