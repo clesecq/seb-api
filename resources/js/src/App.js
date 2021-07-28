@@ -5,6 +5,7 @@ import AuthProvider from './AuthProvider';
 import DataProvider from './DataProvider';
 import Dashboard from './layout/Dashboard';
 import Layout from './layout/Layout';
+import Accounts from "./resources/Accounts";
 import Members from './resources/Members';
 import Products from './resources/Products';
 import ProductsCategories from './resources/ProductsCategories';
@@ -19,6 +20,7 @@ export default class App extends Component {
                 {ProductsCategories}
                 {Members}
                 {Users}
+                {Accounts}
             </Admin>
         );
     }

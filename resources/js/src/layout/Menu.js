@@ -4,6 +4,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import CategoryIcon from '@material-ui/icons/Category';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -52,9 +53,12 @@ class Accordeon extends React.Component {
 export const Menu = () => (
     <>
         <MenuItemLink to="/" primaryText="Dashboard" leftIcon={<DashboardIcon />}/>
-        <Accordeon title="Products">
+        <Accordeon title="Sales">
             <MenuItemLink to="/products" primaryText="Products" leftIcon={<LocalCafeIcon />}/>
             <MenuItemLink to="/products_categories" primaryText="Caterogies" leftIcon={<CategoryIcon />}/>
+        </Accordeon>
+        <Accordeon title="Accounting">
+            <MenuItemLink to="/accounts" primaryText="Accounts" leftIcon={<AccountBalanceIcon />}/>
         </Accordeon>
         <MenuItemLink to="/members" primaryText="Members" leftIcon={<GroupIcon />}/>
         <MenuItemLink to="/users" primaryText="Users" leftIcon={<AccountBoxIcon />}/>
