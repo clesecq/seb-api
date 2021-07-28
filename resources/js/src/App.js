@@ -9,6 +9,7 @@ import Accounts from "./resources/Accounts";
 import Members from './resources/Members';
 import Products from './resources/Products';
 import ProductsCategories from './resources/ProductsCategories';
+import Transactions from "./resources/Transactions";
 import Users from "./resources/Users";
 
 
@@ -21,6 +22,7 @@ export default class App extends Component {
                 {Members}
                 {Users}
                 {Accounts}
+                {Transactions}
             </Admin>
         );
     }

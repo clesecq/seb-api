@@ -12,6 +12,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import GroupIcon from '@material-ui/icons/Group';
 import LocalCafeIcon from '@material-ui/icons/LocalCafe';
+import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 import * as React from 'react';
 import { MenuItemLink } from 'react-admin';
 
@@ -59,6 +60,7 @@ export const Menu = () => (
         </Accordeon>
         <Accordeon title="Accounting">
             <MenuItemLink to="/accounts" primaryText="Accounts" leftIcon={<AccountBalanceIcon />}/>
+            <MenuItemLink to="/transactions" primaryText="Transactions" leftIcon={<SwapHorizIcon />}/>
         </Accordeon>
         <MenuItemLink to="/members" primaryText="Members" leftIcon={<GroupIcon />}/>
         <MenuItemLink to="/users" primaryText="Users" leftIcon={<AccountBoxIcon />}/>

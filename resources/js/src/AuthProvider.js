@@ -9,6 +9,9 @@ class AuthProvider {
                 'email': username,
                 'password': password
             }).then(response => {
+                let data = response.data;
+                data["fullName"] = response.data.email;
+                localStorage.setItem('user', JSON.stringify(data));
                 return Promise.resolve();
             }).catch(error => {
                 if (error?.response?.data?.message) {
@@ -23,18 +26,11 @@ class AuthProvider {
      * Gets the identity of an user
      */
     getIdentity() {
-        return axios.get('/api/user').then(response => {
-            let out = {
-                "id": response.data.id,
-                "fullName": response.data.email
-            };
-            return out;
-        }).catch(error => {
-            if (error?.response?.data?.message) {
-                throw new Error(error?.response?.data?.message);
-            }
-            throw new Error("Unknown error");
-        });
+        if (localStorage.getItem('user')) {
+            return Promise.resolve(JSON.parse(localStorage.getItem('user')));
+        } else {
+            return Promise.reject();
+        }
     }
 
     /**
@@ -51,11 +47,18 @@ class AuthProvider {
      * Check if we are authenticated
      */
     checkAuth(params) {
-        return axios.get('/api/auth/check').then(response => {
+        if (localStorage.getItem('user')) {
             return Promise.resolve();
-        }).catch(error => {
-            return Promise.reject();
-        });
+        } else {
+            return axios.get('/api/user').then(response => {
+                let data = response.data;
+                data["fullName"] = response.data.email;
+                localStorage.setItem('user', JSON.stringify(data));
+                return Promise.resolve();
+            }).catch(error => {
+                return Promise.reject();
+            });
+        }
     }
 
     /**
@@ -63,6 +66,7 @@ class AuthProvider {
      */
     logout() {
         return axios.get('/api/auth/logout').then(response => {
+            localStorage.removeItem('user');
             return Promise.resolve();
         }).catch(error => {
             return Promise.reject();
@@ -73,7 +77,11 @@ class AuthProvider {
      * Get a list of the permissions
      */
     getPermissions(params) {
-        return Promise.resolve();
+        if (localStorage.getItem('user')) {
+            return Promise.resolve(JSON.parse(localStorage.getItem('user'))["permissions"]);
+        } else {
+            return Promise.reject();
+        }
     }
 }
 
