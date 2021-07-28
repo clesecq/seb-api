@@ -1,8 +1,12 @@
 import * as React from "react";
 import { Resource, SimpleShowLayout, List, Datagrid, TextField, DateField, Create, TextInput, SimpleForm, Edit, EditButton, Show } from 'react-admin';
 
+const ProductsCategoriesFilters = [
+    <TextInput label="Name" source="name" />
+];
+
 const ProductsCategoriesList = (props) => (
-    <List {... props}>
+    <List {...props} filters={ProductsCategoriesFilters}>
         <Datagrid>
             <TextField source="id" />
             <TextField source="name" />

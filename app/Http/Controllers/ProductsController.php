@@ -14,10 +14,17 @@ class ProductsController extends Controller
      */
     public function index(Request $request)
     {
+        error_log(json_encode($request->filter));
         if (is_array($request->ids)) {
             return ["data" => Product::whereIn('id', $request->ids)->get()];
         } else {
-            return Product::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc')->paginate((int) ($request->per_page ?? 20));
+            $data = Product::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
+            if (is_array($request->filter)) {
+                foreach($request->filter as $k => $v) {
+                    $data = $data->where($k, 'like', '%' . $v . '%');
+                }
+            }
+            return $data->paginate((int) ($request->per_page ?? 20));
         }
     }
 

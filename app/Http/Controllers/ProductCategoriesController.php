@@ -17,7 +17,13 @@ class ProductCategoriesController extends Controller
         if (is_array($request->ids)) {
             return ["data" => ProductCategory::whereIn('id', $request->ids)->get()];
         } else {
-            return ProductCategory::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc')->paginate((int) ($request->per_page ?? 20));
+            $data = ProductCategory::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
+            if (is_array($request->filter)) {
+                foreach($request->filter as $k => $v) {
+                    $data = $data->where($k, 'like', '%' . $v . '%');
+                }
+            }
+            return $data->paginate((int) ($request->per_page ?? 20));
         }
     }
 

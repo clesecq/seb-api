@@ -4,6 +4,7 @@ import { Admin, Resource, ListGuesser } from 'react-admin';
 import DataProvider from './DataProvider';
 import AuthProvider from './AuthProvider';
 import Layout  from './layout/Layout';
+import Dashboard from './layout/Dashboard';
 
 import Products from './resources/Products';
 import ProductsCategories from './resources/ProductsCategories';
@@ -11,7 +12,7 @@ import ProductsCategories from './resources/ProductsCategories';
 export default class App extends Component {
     render() {
         return (
-            <Admin layout={Layout} dataProvider={DataProvider} authProvider={AuthProvider}>
+            <Admin dashboard={Dashboard} layout={Layout} dataProvider={DataProvider} authProvider={AuthProvider}>
                 {Products}
                 {ProductsCategories}
             </Admin>

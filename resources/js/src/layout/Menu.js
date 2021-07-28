@@ -48,11 +48,11 @@ class Accordeon extends React.Component {
 }
 
 export const Menu = () => (
-    <div>
+    <>
         <MenuItemLink to="/" primaryText="Dashboard" leftIcon={<DashboardIcon />}/>
-        <Accordeon title="Products" />}>
+        <Accordeon title="Products">
             <MenuItemLink to="/products" primaryText="Products" leftIcon={<LocalCafeIcon />}/>
             <MenuItemLink to="/products_categories" primaryText="Caterogies" leftIcon={<CategoryIcon />}/>
         </Accordeon>
-    </div>
+    </>
 );

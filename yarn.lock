@@ -5420,6 +5420,7 @@
     "ra-core" "^3.17.0"
 
 "ra-ui-materialui@^3.17.0":
+  "integrity" "sha512-7oK4CQ+251+a3qNaPVi9M614SheNWwGwLKvvA4pkXcwEU1XT8M+imd48drX9e1U2ih8D4/4vP1PUn/eCSSHjkQ=="
   "version" "3.15.0"
   dependencies:
     "autosuggest-highlight" "^3.1.1"

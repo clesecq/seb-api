@@ -1,8 +1,13 @@
 import * as React from "react";
 import { Resource, SimpleShowLayout, List, Datagrid, TextField, DateField, NumberField, Create, TextInput, ReferenceInput, SelectInput, SimpleForm, ReferenceField, Edit, EditButton, Show } from 'react-admin';
 
+const ProductsFilters = [
+    <TextInput label="Name" source="name" />,
+    <TextInput label="Barcode" source="barcode" />
+];
+
 const ProductsList = (props) => (
-    <List {... props}>
+    <List {...props} filters={ProductsFilters}>
         <Datagrid>
             <TextField source="id" />
             <TextField source="barcode" />
@@ -18,6 +23,7 @@ const ProductsList = (props) => (
         </Datagrid>
     </List>
 );
+ 
 
 const ProductsCreate = (props) => (
     <Create {...props}>

@@ -3,11 +3,19 @@ import _ from 'underscore';
 
 class DataProvider {
     getList(resource, params) {
+        console.log(params);
+
+        let filter = "";
+        for(let key in params.filter) {
+            filter += "&filter[" + encodeURIComponent(key) + "]=" + encodeURIComponent(params.filter[key]);
+        }
+
         return axios.get('/api/' + resource +
                          '?per_page=' + params.pagination.perPage +
                          '&page=' + params.pagination.page +
                          '&order_by=' + params.sort.field +
-                         '&order_sort=' + params.sort.order).then(response => {
+                         '&order_sort=' + params.sort.order +
+                         filter).then(response => {
             return response.data;
         }).catch(error => {
             throw new Error(error?.message);
