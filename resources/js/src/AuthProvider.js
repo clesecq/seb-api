@@ -51,12 +51,10 @@ class AuthProvider {
      * Check if we are authenticated
      */
     checkAuth(params) {
-        return axios.get('/sanctum/csrf-cookie').then(response => {
-            return axios.get('/api/auth/check').then(response => {
-                return Promise.resolve();
-            }).catch(error => {
-                return Promise.reject();
-            });
+        return axios.get('/api/auth/check').then(response => {
+            return Promise.resolve();
+        }).catch(error => {
+            return Promise.reject();
         });
     }
 

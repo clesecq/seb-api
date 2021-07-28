@@ -88,9 +88,9 @@ class MembersController extends Controller
      */
     public function destroy($id)
     {
-        $product = Member::findOrFail($id);
-        $product->delete();
-        return ['data' => $product];
+        $member = Member::findOrFail($id);
+        $member->delete();
+        return ['data' => $member];
     }
 
     /**

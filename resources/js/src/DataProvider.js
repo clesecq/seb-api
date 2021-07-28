@@ -19,7 +19,10 @@ class DataProvider {
                          filter).then(response => {
             return response.data;
         }).catch(error => {
-            throw new Error(error?.message);
+            if (error?.response?.data?.message) {
+                return Promise.reject(new Error(error?.response?.data?.message));
+            }
+            return Promise.reject(new Error(error?.message));
         });
     }
 
@@ -27,7 +30,10 @@ class DataProvider {
         return axios.get('/api/' + resource + '/' + id).then(response => {
             return response.data;
         }).catch(error => {
-            throw new Error(error?.message);
+            if (error?.response?.data?.message) {
+                return Promise.reject(new Error(error?.response?.data?.message));
+            }
+            return Promise.reject(new Error(error?.message));
         });
     }
 
@@ -44,7 +50,10 @@ class DataProvider {
         return axios.get('/api/' + resource + parameters).then(response => {
             return response.data;
         }).catch(error => {
-            throw new Error(error?.message);
+            if (error?.response?.data?.message) {
+                return Promise.reject(new Error(error?.response?.data?.message));
+            }
+            return Promise.reject(new Error(error?.message));
         });
     }
 
@@ -61,7 +70,10 @@ class DataProvider {
         return axios.delete('/api/' + resource + parameters).then(response => {
             return response.data;
         }).catch(error => {
-            throw new Error(error?.message);
+            if (error?.response?.data?.message) {
+                return Promise.reject(new Error(error?.response?.data?.message));
+            }
+            return Promise.reject(new Error(error?.message));
         });
     }
 
@@ -70,20 +82,20 @@ class DataProvider {
             return response.data;
         }).catch(error => {
             if (error?.response?.data?.message) {
-                throw new Error(error?.response?.data?.message);
+                return Promise.reject(new Error(error?.response?.data?.message));
             }
-            throw new Error("Unknown error");
+            return Promise.reject(new Error(error?.message));
         });
     }
 
     delete(resource, {id}) {
-        return axios.delete('/api/' + resource + "/" + id, data).then(response => {
+        return axios.delete('/api/' + resource + "/" + id).then(response => {
             return response.data;
         }).catch(error => {
             if (error?.response?.data?.message) {
-                throw new Error(error?.response?.data?.message);
+                return Promise.reject(new Error(error?.response?.data?.message));
             }
-            throw new Error("Unknown error");
+            return Promise.reject(new Error(error?.message));
         });
     }
 
@@ -94,9 +106,9 @@ class DataProvider {
             return response.data;
         }).catch(error => {
             if (error?.response?.data?.message) {
-                throw new Error(error?.response?.data?.message);
+                return Promise.reject(new Error(error?.response?.data?.message));
             }
-            throw new Error("Unknown error");
+            return Promise.reject(new Error(error?.message));
         });
     }
 
@@ -113,7 +125,10 @@ class DataProvider {
         return axios.put('/api/' + resource + parameters, data).then(response => {
             return response.data;
         }).catch(error => {
-            throw new Error(error?.message);
+            if (error?.response?.data?.message) {
+                return Promise.reject(new Error(error?.response?.data?.message));
+            }
+            return Promise.reject(new Error(error?.message));
         });
     }
 }

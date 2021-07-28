@@ -73,8 +73,6 @@ const MembersShow = (props) => (
             <TextField source="card" />
             <DateField source="created_at" />
             <DateField source="updated_at" />
-            <DateField source="created_at" />
-            <DateField source="updated_at" />
         </SimpleShowLayout>
     </Show>
 );

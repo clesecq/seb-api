@@ -32,17 +32,20 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get("user", [UserController::class, 'show']);
     Route::put("user", [UserController::class, 'update']);
 
+    Route::delete("users", [UsersController::class, "destroyMany"])->middleware("permission:users");
+    Route::put("users", [UsersController::class, "updateMany"])->middleware("permission:users");
     Route::resource("users", UsersController::class)->middleware("permission:users");
 
-    Route::delete("members", [MembersController::class, "destroyMany"]);
-    Route::put("members", [MembersController::class, "updateMany"]);
+    Route::delete("members", [MembersController::class, "destroyMany"])->middleware("permission:members");
+    Route::put("members", [MembersController::class, "updateMany"])->middleware("permission:members");
     Route::resource("members", MembersController::class)->middleware("permission:members");
 
     
-    Route::delete("products", [ProductsController::class, "destroyMany"]);
-    Route::put("products", [ProductsController::class, "updateMany"]);
+    Route::delete("products", [ProductsController::class, "destroyMany"])->middleware("permission:products");
+    Route::put("products", [ProductsController::class, "updateMany"])->middleware("permission:products");
     Route::resource("products", ProductsController::class)->middleware("permission:products");
 
-    
+    Route::delete("products_categories", [ProductCategoriesController::class, "destroyMany"])->middleware("permission:products");
+    Route::put("products_categories", [ProductCategoriesController::class, "updateMany"])->middleware("permission:products");
     Route::resource("products_categories", ProductCategoriesController::class)->middleware("permission:products");
 });

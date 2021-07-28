@@ -8,6 +8,7 @@ import Layout from './layout/Layout';
 import Members from './resources/Members';
 import Products from './resources/Products';
 import ProductsCategories from './resources/ProductsCategories';
+import Users from "./resources/Users";
 
 
 export default class App extends Component {
@@ -17,6 +18,7 @@ export default class App extends Component {
                 {Products}
                 {ProductsCategories}
                 {Members}
+                {Users}
             </Admin>
         );
     }

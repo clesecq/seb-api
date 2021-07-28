@@ -80,9 +80,9 @@ class ProductCategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $product = ProductCategory::findOrFail($id);
-        $product->delete();
-        return ['data' => $product];
+        $category = ProductCategory::findOrFail($id);
+        $category->delete();
+        return ['data' => $category];
     }
 
     /**
