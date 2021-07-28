@@ -2,6 +2,17 @@
 import _ from 'underscore';
 
 class DataProvider {
+    reload(resource)  {
+        return axios.get('/api/' + resource + '/reload').then(response => {
+            return Promise.resolve({'data': {}});
+        }).catch(error => {
+            if (error?.response?.data?.message) {
+                return Promise.reject(new Error(error?.response?.data?.message));
+            }
+            return Promise.reject(new Error(error?.message));
+        });
+    }
+
     getList(resource, params) {
         let filter = "";
         for(let key in params.filter) {

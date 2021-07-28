@@ -25,6 +25,8 @@ class TransactionsController extends Controller
             }
             if (!is_null($request->per_page))
                 $data = $data->paginate((int) $request->per_page);
+            else
+                $data = $data->get();
             return $data;
         }
     }
@@ -39,8 +41,8 @@ class TransactionsController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string'],
-            'amount' => ['required', 'number'],
-            'rectification' => ['required', 'boolean'],
+            'amount' => ['required', 'numeric'],
+            'rectification' => ['sometimes', 'required', 'boolean'],
             'account_id' => ['required', 'exists:accounts,id'],
         ]);
 

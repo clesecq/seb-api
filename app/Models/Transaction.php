@@ -9,8 +9,16 @@ class Transaction extends Model
 {
     use HasFactory;
 
+    protected static function booted()
+    {
+        static::created(function ($transaction) {
+            $transaction->account->recalculate();
+        });
+    }
+
     protected $casts = [
-        'rectification' => 'boolean'
+        'rectification' => 'boolean',
+        'amount' => 'double'
     ];
 
     protected $fillable = [
@@ -20,4 +28,8 @@ class Transaction extends Model
         'user_id',
         'account_id'
     ];
+
+    public function account() {
+        return $this->belongsTo(Account::class);
+    }
 }

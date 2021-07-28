@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BooleanField, Create, Datagrid, DateField, List, NumberField, ReferenceField, ReferenceInput, Resource, SelectInput, Show, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { BooleanField, BooleanInput, Create, Datagrid, DateField, List, NumberField, NumberInput, ReferenceField, ReferenceInput, Resource, SelectInput, Show, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
 
 const TransactionsFilters = [
     <TextInput label="Name" source="name" />,

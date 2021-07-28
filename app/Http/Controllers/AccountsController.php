@@ -25,6 +25,8 @@ class AccountsController extends Controller
             }
             if (!is_null($request->per_page))
                 $data = $data->paginate((int) $request->per_page);
+            else
+                $data = $data->get();
             return $data;
         }
     }
@@ -116,6 +118,15 @@ class AccountsController extends Controller
             return response(["data" => $request->ids], 200);
         } else {
             return response([], 400);
+        }
+    }
+
+    /**
+     * Recalculates the amount stored in the accounts
+     */
+    public function reload(Request $request) {
+        foreach(Account::all() as $account) {
+            $account->recalculate();
         }
     }
 }

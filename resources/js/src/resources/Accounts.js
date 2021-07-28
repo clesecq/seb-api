@@ -1,14 +1,36 @@
+import RefreshIcon from '@material-ui/icons/Refresh';
 import * as React from "react";
-import { Create, Datagrid, DateField, DateInput, Edit, EditButton, List, NumberField, Resource, Show, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { Button, Create, CreateButton, Datagrid, DateField, DateInput, Edit, EditButton, ExportButton, FilterButton, List, NumberField, Resource, Show, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar, useDataProvider, useRefresh } from 'react-admin';
 
 const AccountsFilters = [
     <TextInput label="Name" source="name" />,
     <TextInput label="IBAN" source="iban" />,
     <TextInput label="BIC" source="bic" />,
 ];
+ 
+const AccountsActions = (props) => {
+    const dataProvider = useDataProvider();
+    const refresh = useRefresh();
+
+    return (
+        <TopToolbar>
+            <FilterButton/>
+            <Button
+                onClick={() => {
+                    dataProvider.reload('accounts').then(() => {
+                        refresh();
+                    });
+                }}
+                label="Recalculate"
+            ><RefreshIcon/></Button>
+            <CreateButton/>
+            <ExportButton/>
+        </TopToolbar>
+    );
+};
 
 const AccountsList = (props) => (
-    <List {...props} filters={AccountsFilters}>
+    <List {...props} filters={AccountsFilters} actions={<AccountsActions />}>
         <Datagrid>
             <TextField source="id" />
             <TextField source="name" />
@@ -19,7 +41,6 @@ const AccountsList = (props) => (
         </Datagrid>
     </List>
 );
- 
 
 const AccountsCreate = (props) => (
     <Create {...props}>

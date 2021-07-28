@@ -14,4 +14,17 @@ class Account extends Model
         'iban',
         'bic'
     ];
+
+    protected $casts = [
+        'balance' => 'double'
+    ];
+
+    public function transactions() {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function recalculate() {
+        $this->balance = $this->transactions->sum('amount');
+        $this->save();
+    }
 }
