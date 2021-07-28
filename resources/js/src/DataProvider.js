@@ -3,10 +3,11 @@ import _ from 'underscore';
 
 class DataProvider {
     getList(resource, params) {
-        console.log(params);
-
         let filter = "";
         for(let key in params.filter) {
+            if (params.filter[key] === true) params.filter[key] = 1;
+            if (params.filter[key] === false) params.filter[key] = 0;
+
             filter += "&filter[" + encodeURIComponent(key) + "]=" + encodeURIComponent(params.filter[key]);
         }
 
@@ -90,13 +91,29 @@ class DataProvider {
         let diff = _.omit(data, function(v,k) { return previousData[k] === v; });
         
         return axios.put('/api/' + resource + "/" + id, diff).then(response => {
-            console.log(response.data);
             return response.data;
         }).catch(error => {
             if (error?.response?.data?.message) {
                 throw new Error(error?.response?.data?.message);
             }
             throw new Error("Unknown error");
+        });
+    }
+
+    updateMany(resource, {ids, data}) {
+        let parameters = "";
+        for(let i = 0; i < ids.length; i++) {
+            if (i == 0) {
+                parameters += "?ids[]=" + ids[i];
+            } else {
+                parameters += "&ids[]=" + ids[i];
+            }
+        }
+
+        return axios.put('/api/' + resource + parameters, data).then(response => {
+            return response.data;
+        }).catch(error => {
+            throw new Error(error?.message);
         });
     }
 }

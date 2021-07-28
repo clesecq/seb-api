@@ -7,8 +7,12 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-.MuiCollapse-container .MuiListItemIcon-root {
+.MuiCollapse-wrapper .MuiListItemIcon-root {
     margin-right: 16px;
+}
+
+.MuiButtonBase-root .MuiListItemIcon-root {
+    width: 40px;
 }
 
 li.RaMenuItemLink-root-36 {

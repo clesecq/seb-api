@@ -1,18 +1,20 @@
 
-import * as React from 'react';
-import { DashboardMenuItem, MenuItemLink } from 'react-admin';
-
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import LocalCafeIcon from '@material-ui/icons/LocalCafe';
-import CategoryIcon from '@material-ui/icons/Category';
-
-import Tooltip from '@material-ui/core/Tooltip';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Collapse from '@material-ui/core/Collapse';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import MenuItem from '@material-ui/core/MenuItem';
+import Tooltip from '@material-ui/core/Tooltip';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import CategoryIcon from '@material-ui/icons/Category';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import GroupIcon from '@material-ui/icons/Group';
+import LocalCafeIcon from '@material-ui/icons/LocalCafe';
+import * as React from 'react';
+import { MenuItemLink } from 'react-admin';
+
+
 
 class Accordeon extends React.Component {
     constructor(props) {
@@ -54,5 +56,7 @@ export const Menu = () => (
             <MenuItemLink to="/products" primaryText="Products" leftIcon={<LocalCafeIcon />}/>
             <MenuItemLink to="/products_categories" primaryText="Caterogies" leftIcon={<CategoryIcon />}/>
         </Accordeon>
+        <MenuItemLink to="/members" primaryText="Members" leftIcon={<GroupIcon />}/>
+        <MenuItemLink to="/users" primaryText="Users" leftIcon={<AccountBoxIcon />}/>
     </>
 );

@@ -23,7 +23,9 @@ class ProductCategoriesController extends Controller
                     $data = $data->where($k, 'like', '%' . $v . '%');
                 }
             }
-            return $data->paginate((int) ($request->per_page ?? 20));
+            if (!is_null($request->per_page))
+                $data = $data->paginate((int) $request->per_page);
+            return $data;
         }
     }
 

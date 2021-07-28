@@ -33,6 +33,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put("user", [UserController::class, 'update']);
 
     Route::resource("users", UsersController::class)->middleware("permission:users");
+
+    Route::delete("members", [MembersController::class, "destroyMany"]);
+    Route::put("members", [MembersController::class, "updateMany"]);
     Route::resource("members", MembersController::class)->middleware("permission:members");
 
     

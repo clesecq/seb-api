@@ -14,7 +14,6 @@ class ProductsController extends Controller
      */
     public function index(Request $request)
     {
-        error_log(json_encode($request->filter));
         if (is_array($request->ids)) {
             return ["data" => Product::whereIn('id', $request->ids)->get()];
         } else {
@@ -24,7 +23,9 @@ class ProductsController extends Controller
                     $data = $data->where($k, 'like', '%' . $v . '%');
                 }
             }
-            return $data->paginate((int) ($request->per_page ?? 20));
+            if (!is_null($request->per_page))
+                $data = $data->paginate((int) $request->per_page);
+            return $data;
         }
     }
 

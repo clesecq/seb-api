@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Resource, SimpleShowLayout, List, Datagrid, TextField, DateField, Create, TextInput, SimpleForm, Edit, EditButton, Show } from 'react-admin';
+import { Create, Datagrid, DateField, DateInput, Edit, EditButton, List, Resource, Show, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
 
 const ProductsCategoriesFilters = [
     <TextInput label="Name" source="name" />
@@ -30,6 +30,8 @@ const ProductsCategoriesEdit = (props) => (
         <SimpleForm>
             <TextInput disabled source="id" />
             <TextInput source="name" />
+            <DateInput disabled source="created_at" />
+            <DateInput disabled source="updated_at" />
         </SimpleForm>
     </Edit>
 );
@@ -39,6 +41,8 @@ const ProductsCategoriesShow = (props) => (
         <SimpleShowLayout>
             <TextField source="id" />
             <TextField source="name" />
+            <DateField source="created_at" />
+            <DateField source="updated_at" />
         </SimpleShowLayout>
     </Show>
 );
