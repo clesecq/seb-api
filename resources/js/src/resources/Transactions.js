@@ -24,6 +24,7 @@ const TransactionsList = (props) => (
             <ReferenceField label="Creator" source="user_id" reference="users">
                 <TextField source="email" />
             </ReferenceField>
+            <DateField source="created_at" />
             <ShowButton />
         </Datagrid>
     </List>
