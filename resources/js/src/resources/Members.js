@@ -1,7 +1,7 @@
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import * as React from "react";
 import { Fragment } from 'react';
-import { BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, Create, Datagrid, DateField, DateInput, Edit, EditButton, List, Resource, Show, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, Create, Datagrid, DateField, DateInput, Edit, EditButton, List, ReferenceField, Resource, Show, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
 
 const MembersFilters = [
     <TextInput label="First Name" source="firstname" />,
@@ -26,6 +26,9 @@ const MembersList = (props) => (
             <TextField source="lastname" />
             <TextField source="email" />
             <BooleanField source="payed" />
+            <ReferenceField label="Transaction" source="transaction_id" reference="transactions" >
+                <TextField source="name" />
+            </ReferenceField>
             <TextField source="card" />
             <DateField source="created_at" />
             <DateField source="updated_at" />
@@ -70,6 +73,9 @@ const MembersShow = (props) => (
             <TextField source="lastname" />
             <TextField source="email" />
             <BooleanField source="payed" />
+            <ReferenceField label="Transaction" source="transaction_id" reference="transactions" >
+                <TextField source="name" />
+            </ReferenceField>
             <TextField source="card" />
             <DateField source="created_at" />
             <DateField source="updated_at" />

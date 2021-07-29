@@ -27,4 +27,10 @@ class Account extends Model
         $this->balance = $this->transactions->sum('amount');
         $this->save();
     }
+
+    public static function recalculateAll() {
+        foreach(static::all() as $account) {
+            $account->recalculate();
+        }
+    }
 }

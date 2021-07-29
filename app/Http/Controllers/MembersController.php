@@ -120,7 +120,9 @@ class MembersController extends Controller
         ]);
 
         if (is_array($request->ids)) {
-            Member::whereIn('id', $request->ids)->update($data);
+            Member::whereIn('id', $request->ids)->get()->each(function($member) use ($data) {
+                $member->update($data);
+            });
             return response(["data" => $request->ids], 200);
         } else {
             return response([], 400);

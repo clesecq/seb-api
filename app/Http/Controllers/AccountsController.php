@@ -125,8 +125,6 @@ class AccountsController extends Controller
      * Recalculates the amount stored in the accounts
      */
     public function reload(Request $request) {
-        foreach(Account::all() as $account) {
-            $account->recalculate();
-        }
+        Account::recalculateAll();
     }
 }

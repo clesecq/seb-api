@@ -19,6 +19,7 @@ class CreateMembersTable extends Migration
             $table->string('lastname');
             $table->string('email')->unique();
             $table->boolean('payed')->default(false);
+            $table->foreignId('transaction_id')->nullable()->default(null);
             $table->string('card');
             $table->timestamps();
         });
