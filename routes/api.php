@@ -57,13 +57,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
     Route::group(['middleware' => ['permission:accounts']], function () {
-    Route::delete("accounts", [AccountsController::class, "destroyMany"]);
-    Route::get("accounts/reload", [AccountsController::class, "reload"]);
-    Route::put("accounts", [AccountsController::class, "updateMany"]);
-    Route::resource("accounts", AccountsController::class);
+        Route::delete("accounts", [AccountsController::class, "destroyMany"]);
+        Route::get("accounts/reload", [AccountsController::class, "reload"]);
+        Route::put("accounts", [AccountsController::class, "updateMany"]);
+        Route::resource("accounts", AccountsController::class);
 
-    Route::delete("transactions", [TransactionsController::class, "destroyMany"]);
-    Route::put("transactions", [TransactionsController::class, "updateMany"]);
-    Route::resource("transactions", TransactionsController::class);
+        Route::delete("transactions", [TransactionsController::class, "destroyMany"]);
+        Route::put("transactions", [TransactionsController::class, "updateMany"]);
+        Route::resource("transactions", TransactionsController::class);
     });
 });

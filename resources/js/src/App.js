@@ -16,7 +16,7 @@ import Users from "./resources/Users";
 export default class App extends Component {
     render() {
         return (
-            <Admin dashboard={Dashboard} layout={Layout} dataProvider={DataProvider} authProvider={AuthProvider}>
+            <Admin dashboard={Dashboard} layout={Layout} dataProvider={DataProvider} authProvider={AuthProvider} title="Seb" disableTelemetry>
                 {Products}
                 {ProductsCategories}
                 {Members}
