@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProductCategoriesController;
 use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\MovementsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::delete("products_categories", [ProductCategoriesController::class, "destroyMany"]);
         Route::put("products_categories", [ProductCategoriesController::class, "updateMany"]);
         Route::resource("products_categories", ProductCategoriesController::class);
+
+        Route::resource("movements", MovementsController::class);
     });
 
     Route::group(['middleware' => ['permission:accounts']], function () {

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Transaction;
+use App\Models\Movement;
 use Illuminate\Http\Request;
 
-class TransactionsController extends Controller
+class MovementsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class TransactionsController extends Controller
     public function index(Request $request)
     {
         if (is_array($request->ids)) {
-            return ["data" => Transaction::whereIn('id', $request->ids)->get()];
+            return ["data" => Movement::whereIn('id', $request->ids)->get()];
         } else {
-            $data = Transaction::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
+            $data = Movement::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
                 foreach($request->filter as $k => $v) {
                     $data = $data->where($k, 'like', '%' . $v . '%');
@@ -32,26 +32,6 @@ class TransactionsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'name' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
-            'rectification' => ['sometimes', 'required', 'boolean'],
-            'account_id' => ['required', 'exists:accounts,id'],
-        ]);
-
-        $data['user_id'] = $request->user()->id;
-
-        return ['data' => Transaction::create($data)];
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -59,7 +39,7 @@ class TransactionsController extends Controller
      */
     public function show($id)
     {
-        return ['data' => Transaction::findOrFail($id)];
+        return ['data' => Movement::with(['products', 'products.product'])->findOrFail($id)];
     }
 
     /**

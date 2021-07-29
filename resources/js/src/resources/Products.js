@@ -23,7 +23,6 @@ const ProductsList = (props) => (
         </Datagrid>
     </List>
 );
- 
 
 const ProductsCreate = (props) => (
     <Create {...props}>

@@ -7,6 +7,7 @@ import Dashboard from './layout/Dashboard';
 import Layout from './layout/Layout';
 import Accounts from "./resources/Accounts";
 import Members from './resources/Members';
+import Movements from "./resources/Movements";
 import Products from './resources/Products';
 import ProductsCategories from './resources/ProductsCategories';
 import Transactions from "./resources/Transactions";
@@ -23,6 +24,7 @@ export default class App extends Component {
                 {Users}
                 {Accounts}
                 {Transactions}
+                {Movements}
             </Admin>
         );
     }

@@ -119,7 +119,7 @@ export const Menu = () => {
             <Accordeon title="Stocks" permissions={["stocks", "products"]}>
                 <Item to="/products" permissions="products" primaryText="Products" leftIcon={<LocalCafeIcon />}/>
                 <Item to="/products_categories" permissions="products" primaryText="Caterogies" leftIcon={<CategoryIcon />}/>
-                <Item to="/stocks" permissions="stocks" primaryText="Stocks" leftIcon={<ShoppingCartIcon />}/>
+                <Item to="/movements" permissions="products" primaryText="Movements" leftIcon={<ShoppingCartIcon />}/>
             </Accordeon>
             <Accordeon title="Accounting" permissions="accounts">
                 <Item to="/accounts" permissions="accounts" primaryText="Accounts" leftIcon={<AccountBalanceIcon />}/>
