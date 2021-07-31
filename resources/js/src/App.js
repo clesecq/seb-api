@@ -5,6 +5,7 @@ import AuthProvider from './AuthProvider';
 import DataProvider from './DataProvider';
 import Dashboard from './layout/Dashboard';
 import Layout from './layout/Layout';
+import Theme from "./layout/Theme";
 import Accounts from "./resources/Accounts";
 import Members from './resources/Members';
 import Movements from "./resources/Movements";
@@ -17,7 +18,7 @@ import Users from "./resources/Users";
 export default class App extends Component {
     render() {
         return (
-            <Admin dashboard={Dashboard} layout={Layout} dataProvider={DataProvider} authProvider={AuthProvider} title="Seb" disableTelemetry>
+            <Admin dashboard={Dashboard} theme={Theme} layout={Layout} dataProvider={DataProvider} authProvider={AuthProvider} title="Seb" disableTelemetry>
                 {Products}
                 {ProductsCategories}
                 {Members}

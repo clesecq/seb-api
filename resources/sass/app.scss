@@ -18,3 +18,31 @@
 li.RaMenuItemLink-root-36 {
     height: 36px;
 }
+
+a:hover {
+    color: #74d6fc;
+}
+
+.MuiDrawer-root {
+    a:hover {
+        color: #fb963a;
+    }
+}
+
+.MuiTable-root {
+    background: #303030;
+}
+
+.MuiTableBody-root, .MuiDrawer-root {
+    background: #424242;
+}
+
+@media only screen and (max-width: 959px) {
+    .MuiDrawer-root {
+        background: none;
+    }
+}
+
+.MuiGrid-spacing-xs-3 > .MuiGrid-item {
+    width:100%;
+}
