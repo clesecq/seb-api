@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movement;
+use App\Models\ProductMovement;
 use Illuminate\Http\Request;
 
 class MovementsController extends Controller
@@ -52,6 +53,35 @@ class MovementsController extends Controller
     public function update(Request $request, $id)
     {
         abort(405);
+    }
+
+    public function store(Request $request)
+    {
+        $movement_data = $request->validate([
+            "name" => ["required", "string"],
+            "rectification" => ["boolean"],
+        ]);
+
+        $movement_data['user_id'] = $request->user()->id;
+
+        $products_data = $request->validate([
+            "products.*.id" => ["required", "exists:products,id"],
+            "products.*.diff" => ["required", "numeric", "integer"],
+        ]);
+
+        $movement_id = Movement::create($movement_data)->id;
+
+        foreach($products_data["products"] as $product) {
+            $data = [
+                "movement_id" => $movement_id,
+                "product_id" => $product["id"],
+                "count" => $product["diff"]
+            ];
+
+            ProductMovement::create($data);
+        }
+
+        return ['data' => Movement::with(['products', 'products.product'])->findOrFail($movement_id)];
     }
 
     /**

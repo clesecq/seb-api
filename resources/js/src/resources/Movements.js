@@ -1,7 +1,7 @@
 import keyBy from 'lodash/keyBy';
 import PropTypes from 'prop-types';
-import * as React from "react";
-import { BooleanField, BooleanInput, Create, Datagrid, DateField, List, ListContextProvider, ReferenceField, Resource, Show, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput, useRecordContext } from 'react-admin';
+import React from "react";
+import { ArrayInput, BooleanField, BooleanInput, Create, Datagrid, DateField, List, ListContextProvider, NumberInput, ReferenceField, ReferenceInput, Resource, SelectInput, Show, ShowButton, SimpleForm, SimpleFormIterator, SimpleShowLayout, TextField, TextInput, useRecordContext } from 'react-admin';
 
 const MovementsFilters = [
     <TextInput label="Name" source="name" />
@@ -21,25 +21,31 @@ const MovementsList = (props) => (
         </Datagrid>
     </List>
 );
- 
 
 const MovementsCreate = (props) => (
     <Create {...props}>
         <SimpleForm>
             <TextInput source="name" />
             <BooleanInput source="rectification" />
+            <ArrayInput source="products">
+                <SimpleFormIterator>
+                    <ReferenceInput label="Product" source="id" reference="products">
+                        <SelectInput optionText="name" />
+                    </ReferenceInput>
+
+                    <NumberInput source="diff" label="Diff" />
+                </SimpleFormIterator>
+            </ArrayInput>
+
             {/* TODO: Add way to add products (like ProductsField) */}
         </SimpleForm>
     </Create>
 );
 
+
 const ProductsField = (props) => {
     const { source } = props;
     const record = useRecordContext(props);
-    const [page, setPage] = React.useState(1);
-    const perPage = 50;
-
-    console.log(keyBy(record[source], 'product_id'));
 
     return (record[source] !== undefined &&
         <ListContextProvider value={{
@@ -58,9 +64,7 @@ const ProductsField = (props) => {
                 <TextField source="count" label="Diff" />
             </Datagrid>
         </ListContextProvider >
-    )
-
-    return <span>{JSON.stringify(record[source])}</span>
+    );
 }
 
 ProductsField.defaultProps = {
