@@ -45,7 +45,7 @@ class UsersController extends Controller
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string'],
             'permissions' => ['required', 'array'],
-            'permissions.*' => ['string', 'exists:permissions,name']
+            'permissions.*' => ['string', 'exists:permissions,id']
         ]);
 
         $data['password'] = Hash::make($data['password']);
@@ -84,7 +84,7 @@ class UsersController extends Controller
             'email' => ['sometimes', 'required', 'email', 'unique:users,email'],
             'password' => ['sometimes', 'required', 'string'],
             'permissions' => ['required', 'array'],
-            'permissions.*' => ['string', 'exists:permissions,name']
+            'permissions.*' => ['string', 'exists:permissions,id']
         ]);
 
         if (array_key_exists('password', $data)) {
@@ -125,7 +125,7 @@ class UsersController extends Controller
                 ], 400);
             }
 
-            Product::whereIn('id', $request->ids)->delete();
+            User::whereIn('id', $request->ids)->delete();
             return response(["data" => $request->ids], 200);
         } else {
             return response([], 400);
@@ -137,10 +137,11 @@ class UsersController extends Controller
      */
     public function updateMany(Request $request) {
         $data = $request->validate([
-            'barcode' => ['sometimes', 'required', 'string', 'digits_between:8,13', 'unique:products,barcode'],
             'name' => ['sometimes', 'required', 'string'],
-            'price' => ['sometimes', 'required', 'numeric'],
-            'category_id' => ['sometimes', 'required', 'exists:product_categories,id']
+            'email' => ['sometimes', 'required', 'email', 'unique:users,email'],
+            'password' => ['sometimes', 'required', 'string'],
+            'permissions' => ['required', 'array'],
+            'permissions.*' => ['string', 'exists:permissions,id']
         ]);
 
         if (is_array($request->ids)) {
