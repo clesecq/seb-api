@@ -74,7 +74,7 @@ export default merge(defaultTheme, {
         },
         RaToolbar: {
             toolbar: {
-                "background-color": "none"
+                "background-color": "#545454"
             }
         },
         RaCreate: {
@@ -96,6 +96,11 @@ export default merge(defaultTheme, {
         RaEdit: {
             noActions: {
                 "margin-top": 0
+            }
+        },
+        MuiDialogContent: {
+            root: {
+                padding: "8px, 0 !important"
             }
         }
     }

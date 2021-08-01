@@ -6,10 +6,17 @@ import CloseIcon from '@material-ui/icons/Close';
 import { spacing } from "@material-ui/system";
 import inflection from 'inflection';
 import * as React from "react";
-import { Button, Create, Edit, Show, useGetResourceLabel, useRedirect, useResourceContext, useResourceDefinition } from 'react-admin';
+import { Create, DeleteButton, Edit, SaveButton, Show, Toolbar, useGetResourceLabel, useRedirect, useResourceContext, useResourceDefinition } from 'react-admin';
 import { Route } from 'react-router-dom';
 
-const StyledButton = styled(Button)(spacing);
+const StyledDeleteButton = styled(DeleteButton)(spacing);
+
+const CustomToolbar = props => (
+    <Toolbar {...props}>
+        <SaveButton color="secondary" />
+        <StyledDeleteButton size="medium" ml="auto" undoable={false} />
+    </Toolbar>
+);
 
 const styles = (theme) => ({
     root: {
@@ -37,7 +44,6 @@ const MyDialogTitle = withStyles(styles)((props) => {
         </DialogTitle>
     );
 });
-
 const CreateDialog = ({ handleClose, syncWithLocation, children, ...props }) => {
     const name = useResourceContext();
     const resource = useResourceDefinition(props);
@@ -57,7 +63,7 @@ const CreateDialog = ({ handleClose, syncWithLocation, children, ...props }) => 
                         <DialogContent>
                             <MyDialogTitle onClose={handleClose}>Create {inflection.humanize(label(name, 1), true)}</MyDialogTitle>
                             <Create title=" " {...props}>
-                                {children}
+                                {React.cloneElement(children, {toolbar: (<CustomToolbar />)})}
                             </Create>
                         </DialogContent>
                     </>}
@@ -88,7 +94,7 @@ const EditDialog = ({ handleClose, syncWithLocation, children, ...props }) => {
                             <DialogContent>
                                 <MyDialogTitle onClose={handleClose}>Edit {inflection.humanize(label(name, 1), true)} #{isMatch ? match.params.id : null}</MyDialogTitle>
                                 <Edit actions={null} id={isMatch ? match.params.id : null} title=" " {...props}>
-                                    {children}
+                                    {React.cloneElement(children, {toolbar: (<CustomToolbar />)})}
                                 </Edit>
                             </DialogContent>
                         </>)
