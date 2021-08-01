@@ -1,26 +1,33 @@
+// TODO: Rewrite properly, reimplementing SimpleForm and stuff, because right now the way components
+// are organized because of RA is aweful
+
 import { Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
+import { styled } from "@material-ui/core/styles";
+import { spacing } from "@material-ui/system";
 import inflection from 'inflection';
 import * as React from "react";
-import { Button, Create, Edit, List, SaveButton, Show, SimpleForm, SimpleShowLayout, Toolbar, useRedirect, useRefresh, useResourceContext } from 'react-admin';
+import { Button, Create, CreateButton, Edit, EditButton, ExportButton, FilterButton, List, SaveButton, Show, SimpleForm, SimpleShowLayout, Toolbar, TopToolbar, useGetResourceLabel, useNotify, useRedirect, useRefresh, useResourceContext } from 'react-admin';
 import { Route } from 'react-router-dom';
+
+const StyledButton = styled(Button)(spacing);
+const StyledEditButton = styled(EditButton)(spacing);
 
 const DialogEditToolBar = ({ handleClose, ...props }) => (
     <DialogActions>
         <Toolbar {...props} >
-            <Box mr={1}>
-                <Button label="Cancel" onClick={handleClose} size="medium" />
-            </Box>
+            <StyledButton label="Cancel" onClick={handleClose} size="medium" mr={1} />
             <SaveButton disabled={props.pristine} color="secondary" />
         </Toolbar>
     </DialogActions>
 );
 
-const ModalFormCreate = ({ handleClose, children, ...props }) => {
+
+const ModalFormCreate = ({ handleClose, syncWithLocation, children, ...props }) => {
     const name = useResourceContext();
+    const label = useGetResourceLabel();
     return (
         <DialogContent>
-            <DialogTitle>Create {inflection.humanize(inflection.singularize(name), false)}</DialogTitle>
+            <DialogTitle>Create {inflection.humanize(label(name, 1), true)}</DialogTitle>
             <Create title=" " {...props}>
                 <SimpleForm toolbar={<DialogEditToolBar handleClose={handleClose} />} redirect="list">
                     {children}
@@ -30,13 +37,14 @@ const ModalFormCreate = ({ handleClose, children, ...props }) => {
     );
 };
 
-const ModalFormEdit = ({ handleClose, children, ...props }) => {
+const ModalFormEdit = ({ handleClose, syncWithLocation, children, ...props }) => {
     const name = useResourceContext();
+    const label = useGetResourceLabel();
     return (
         <DialogContent>
-            <DialogTitle>Edit {inflection.humanize(inflection.singularize(name))} #{props.id}</DialogTitle>
+            <DialogTitle>Edit {inflection.humanize(label(name, 1), true)} #{props.id}</DialogTitle>
             <Edit title=" " {...props}>
-                <SimpleForm toolbar={<DialogEditToolBar handleClose={handleClose} />} redirect="show">
+                <SimpleForm toolbar={<DialogEditToolBar handleClose={handleClose} />} redirect="list">
                     {children}
                 </SimpleForm>
             </Edit>
@@ -44,35 +52,53 @@ const ModalFormEdit = ({ handleClose, children, ...props }) => {
     );
 };
 
-const ModalFormShow = ({ handleClose, children, ...props }) => {
+const ModalFormShow = ({ handleClose, syncWithLocation, children, hasEdit, ...props }) => {
     const name = useResourceContext();
+    const label = useGetResourceLabel();
+
     return (
         <DialogContent>
-            <DialogTitle>{inflection.humanize(inflection.singularize(name))} #{props.id}</DialogTitle>
+            <DialogTitle>{label(name, 1)} #{props.id}</DialogTitle>
             <Show title=" " {...props} >
                 <SimpleShowLayout>
                     {children}
-                    <DialogActions>
-                        <Button label="Cancel" onClick={handleClose} size="medium" />
-                    </DialogActions>
                 </SimpleShowLayout>
             </Show>
+            <DialogActions>
+                <Button label="Cancel" onClick={handleClose} size="medium" />
+                {hasEdit ? (<EditButton ml={1} size="medium" basePath={props.basePath} record={{ id: props.id }} />) : ""}
+            </DialogActions>
         </DialogContent>
     );
 };
 
-const ModalList = ({ children, show, edit, create, filters, actions, ...props }) => {
+const ModalAction = ({ hasFilters, hasCreate, ...props }) => (
+    <TopToolbar>
+        {hasFilters ? <FilterButton /> : ""}
+        {hasCreate ? <CreateButton /> : ""}
+        <ExportButton />
+    </TopToolbar>
+);
+
+const ModalList = ({ children, show, edit, create, filters, actions, bulkActionButtons, ...props }) => {
     const name = useResourceContext();
     const redirect = useRedirect();
     const refresh = useRefresh();
+    const notify = useNotify();
+
     const handleClose = () => {
+        redirect(`/${name}`);
+    };
+
+    const handleCreate = () => {
+        notify('ra.notification.created', 'info', { smart_count: 1 });
         redirect(`/${name}`);
         refresh();
     };
 
     return (
         <React.Fragment>
-            <List filters={filters} actions={actions} {...props}>
+            <List filters={filters} actions={actions === undefined ? <ModalAction hasFilters={filters !== undefined} hasCreate={create !== undefined} /> : actions} bulkActionButtons={bulkActionButtons} {...props}>
                 {children}
             </List>
             <Route
@@ -81,7 +107,7 @@ const ModalList = ({ children, show, edit, create, filters, actions, ...props })
                     const CustomCreate = create;
                     return (
                         <Dialog open maxWidth="md" onClose={handleClose} fullWidth={true}>
-                            {CustomCreate === undefined ? redirect(`/${name}`) : <CustomCreate {...props} handleClose={handleClose} />}
+                            {CustomCreate === undefined ? redirect(`/${name}`) : <CustomCreate {...props} handleClose={handleClose} onSuccess={handleCreate} />}
                         </Dialog>
                     );
                 }}
@@ -96,7 +122,7 @@ const ModalList = ({ children, show, edit, create, filters, actions, ...props })
                         <Dialog open={isMatch} maxWidth="md" onClose={handleClose} fullWidth={true}>
                             {isMatch ? (
                                 (match.params.arg == "show" ?
-                                    (CustomShow === undefined ? redirect(`/${name}`) : <CustomShow {...props} actions={<></>} handleClose={handleClose} id={isMatch ? match.params.id : null} />)
+                                    (CustomShow === undefined ? redirect(`/${name}`) : <CustomShow {...props} actions={<></>} handleClose={handleClose} id={isMatch ? match.params.id : null} hasEdit={CustomEdit !== undefined} />)
                                     :
                                     (CustomEdit === undefined ? redirect(`/${name}`) : <CustomEdit {...props} actions={<></>} handleClose={handleClose} id={isMatch ? match.params.id : null} />)
                                 )

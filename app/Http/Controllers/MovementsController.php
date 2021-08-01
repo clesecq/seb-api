@@ -65,6 +65,7 @@ class MovementsController extends Controller
         $movement_data['user_id'] = $request->user()->id;
 
         $products_data = $request->validate([
+            "products" => ['required', 'array'],
             "products.*.id" => ["required", "exists:products,id"],
             "products.*.diff" => ["required", "numeric", "integer"],
         ]);

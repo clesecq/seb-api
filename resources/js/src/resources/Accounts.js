@@ -1,5 +1,5 @@
 import * as React from "react";
-import { CreateButton, Datagrid, DateField, DateInput, EditButton, ExportButton, FilterButton, NumberField, Resource, ShowButton, TextField, TextInput, TopToolbar } from 'react-admin';
+import { CreateButton, Datagrid, DateField, DateInput, EditButton, ExportButton, FilterButton, NumberField, Resource, TextField, TextInput, TopToolbar } from 'react-admin';
 import { ModalFormCreate, ModalFormEdit, ModalFormShow, ModalList } from '../components/ModalForm';
 import { RecalculateButton } from '../components/RecalculateButton';
 
@@ -57,7 +57,6 @@ const AccountsList = (props) => (
             <TextField source="iban" />
             <TextField source="bic" />
             <NumberField source="balance" />
-            <ShowButton />
             <EditButton />
         </Datagrid>
     </ModalList>
