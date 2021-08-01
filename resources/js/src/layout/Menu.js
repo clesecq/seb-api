@@ -38,46 +38,6 @@ function hasPerm(permissions, perm) {
     return false;
 }
 
-/*
-class Accordeon extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {"open": false};
-
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-    handleClick(e) {
-        this.setState({"open": !this.state.open});
-    }
-
-    render() {
-        const { loading, permissions } = usePermissions();
-
-        return (
-            <>{
-                (!('permissions' in props) || hasPerm(permissions, props.permissions)) &&
-                <>
-                    <Tooltip title={this.props.title} placement="right">
-                        <MenuItem button onClick={this.handleClick} className={"RaMenuItemLink-root-36 MuiMenuItem-root"}>
-                            <ListItemIcon className={"RaMenuItemLink-icon-38"}>
-                            {this.state.open ? <ExpandLess /> : <ExpandMore />}
-                            </ListItemIcon>
-                            <ListItemText primary={this.props.title} />
-                            
-                        </MenuItem>
-                    </Tooltip>
-                    <Collapse in={this.state.open}>
-                        {this.props.children}
-                    </Collapse>
-                </>
-             }</>
-        );
-    }
-}
-*/
-
 const Accordeon = (props) => {
     const { permissions } = usePermissions();
     const [ open, setOpen] = useState(false);
@@ -112,7 +72,7 @@ const Item = (props) => {
     );
 }
 
-export const Menu = () => {
+const Menu = () => {
     return (
         <>
             <Item to="/" primaryText="Dashboard" leftIcon={<DashboardIcon />}/>
@@ -129,4 +89,6 @@ export const Menu = () => {
             <Item to="/users" permissions="users" primaryText="Users" leftIcon={<AccountBoxIcon />}/>
         </>
     );
-}
+};
+
+export { Menu };

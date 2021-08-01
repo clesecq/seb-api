@@ -1,3 +1,4 @@
+import { createBrowserHistory } from 'history';
 import React, { Component } from "react";
 import { Admin, Resource } from 'react-admin';
 import ReactDOM from 'react-dom';
@@ -16,19 +17,21 @@ import Profile from "./resources/Profile";
 import transactions from "./resources/Transactions";
 import users from "./resources/Users";
 
+const history = createBrowserHistory();
+
 export default class App extends Component {
     render() {
         return (
-            <Admin dashboard={Dashboard} theme={Theme} layout={Layout} dataProvider={DataProvider} authProvider={AuthProvider} title="Seb" disableTelemetry
-                    customRoutes={[
-                        <Route path="/profile" component={Profile} />
-                    ]}
+            <Admin history={history} dashboard={Dashboard} theme={Theme} layout={Layout} dataProvider={DataProvider} authProvider={AuthProvider} title="Seb" disableTelemetry
+                customRoutes={[
+                    <Route path="/profile" component={Profile} />
+                ]}
             >
                 <Resource name="permissions" />
                 <Resource name="profile" />
                 <Resource name="accounts" {...accounts} />
                 <Resource name="members" {...members} />
-                <Resource name="transactions" {...transactions}  />
+                <Resource name="transactions" {...transactions} />
                 <Resource name="users" {...users} />
                 <Resource name="products_categories" {...productscategories} />
                 <Resource name="products" {...products} />
@@ -39,5 +42,5 @@ export default class App extends Component {
 };
 
 if (document.getElementById('app')) {
-    ReactDOM.render(<App/>, document.getElementById('app'));
+    ReactDOM.render(<App />, document.getElementById('app'));
 }
