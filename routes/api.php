@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductCategoriesController;
 use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\MovementsController;
+use App\Http\Controllers\PermissionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
     Route::get("profile/me", [ProfileController::class, 'show']);
     Route::put("profile/me", [ProfileController::class, 'update']);
+    Route::resource("permissions", PermissionsController::class);
 
     Route::group(['middleware' => ['permission:users']], function () {
         Route::delete("users", [UsersController::class, "destroyMany"]);

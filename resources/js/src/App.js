@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { Admin, Resource } from 'react-admin';
 import ReactDOM from 'react-dom';
 import { Route } from 'react-router-dom';
-import AuthProvider from './AuthProvider';
-import DataProvider from './DataProvider';
 import Dashboard from './layout/Dashboard';
 import Layout from './layout/Layout';
 import Theme from "./layout/Theme";
+import AuthProvider from './providers/AuthProvider';
+import DataProvider from './providers/DataProvider';
 import Accounts from "./resources/Accounts";
 import Members from './resources/Members';
 import Movements from "./resources/Movements";
@@ -24,6 +24,7 @@ export default class App extends Component {
                         <Route path="/profile" component={Profile} />
                     ]}
             >
+                <Resource name="permissions" />
                 <Resource name="profile" />
                 {Products}
                 {ProductsCategories}

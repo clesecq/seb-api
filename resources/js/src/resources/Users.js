@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BooleanInput, Create, Datagrid, DateField, DateInput, Edit, EditButton, List, PasswordInput, Resource, Show, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { AutocompleteArrayInput, BooleanInput, ChipField, Create, Datagrid, DateField, DateInput, Edit, EditButton, List, PasswordInput, ReferenceArrayField, ReferenceArrayInput, Resource, Show, SimpleForm, SimpleShowLayout, SingleFieldList, TextField, TextInput } from 'react-admin';
 
 const UsersFilters = [
     <TextInput label="First Name" source="firstname" />,
@@ -15,22 +15,26 @@ const UsersList = (props) => (
             <TextField source="id" />
             <TextField source="name" />
             <TextField source="email" />
-            <TextField source="permissions" />
+            <ReferenceArrayField label="Permissions" reference="permissions" source="permissions">
+                <SingleFieldList>
+                    <ChipField source="name" />
+                </SingleFieldList>
+            </ReferenceArrayField>
             <DateField source="created_at" />
             <DateField source="updated_at" />
             <EditButton />
         </Datagrid>
     </List>
 );
- 
-
 const UsersCreate = (props) => (
     <Create {...props}>
         <SimpleForm>
             <TextInput source="name" />
             <TextInput source="email" />
             <PasswordInput source="password" />
-            <TextInput source="permissions" />
+            <ReferenceArrayInput label="Permissions" reference="permissions" source="permissions">
+                <AutocompleteArrayInput />
+            </ReferenceArrayInput>
         </SimpleForm>
     </Create>
 );
@@ -41,7 +45,9 @@ const UsersEdit = (props) => (
             <TextInput disabled source="id" />
             <TextInput source="name" />
             <TextInput source="email" />
-            <TextInput source="permissions" />
+            <ReferenceArrayInput label="Permissions" reference="permissions" source="permissions">
+                <AutocompleteArrayInput />
+            </ReferenceArrayInput>
             <DateInput disabled source="created_at" />
             <DateInput disabled source="updated_at" />
         </SimpleForm>
@@ -54,7 +60,11 @@ const UsersShow = (props) => (
             <TextField source="id" />
             <TextField source="name" />
             <TextField source="email" />
-            <TextField source="permissions" />
+            <ReferenceArrayField label="Permissions" reference="permissions" source="permissions">
+                <SingleFieldList>
+                    <ChipField source="name" />
+                </SingleFieldList>
+            </ReferenceArrayField>
             <DateField source="created_at" />
             <DateField source="updated_at" />
         </SimpleShowLayout>
