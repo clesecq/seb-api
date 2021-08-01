@@ -86,6 +86,17 @@ export default merge(defaultTheme, {
             root: {
                 "background": "#545454"
             }
+        },
+        MuiDialogTitle: {
+            root: {
+                "padding-top": "0px !important",
+                "padding-bottom": "0px !important"
+            }
+        },
+        RaEdit: {
+            noActions: {
+                "margin-top": 0
+            }
         }
     }
 });

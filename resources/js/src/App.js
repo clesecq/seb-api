@@ -7,14 +7,14 @@ import Layout from './layout/Layout';
 import Theme from "./layout/Theme";
 import AuthProvider from './providers/AuthProvider';
 import DataProvider from './providers/DataProvider';
-import Accounts from "./resources/Accounts";
-import Members from './resources/Members';
-import Movements from "./resources/Movements";
-import Products from './resources/Products';
-import ProductsCategories from './resources/ProductsCategories';
+import accounts from "./resources/Accounts";
+import members from './resources/Members';
+import movements from "./resources/Movements";
+import products from './resources/Products';
+import productscategories from "./resources/ProductsCategories";
 import Profile from "./resources/Profile";
-import Transactions from "./resources/Transactions";
-import Users from "./resources/Users";
+import transactions from "./resources/Transactions";
+import users from "./resources/Users";
 
 export default class App extends Component {
     render() {
@@ -26,13 +26,13 @@ export default class App extends Component {
             >
                 <Resource name="permissions" />
                 <Resource name="profile" />
-                {Products}
-                {ProductsCategories}
-                {Members}
-                {Users}
-                {Accounts}
-                {Transactions}
-                {Movements}
+                <Resource name="accounts" {...accounts} />
+                <Resource name="members" {...members} />
+                <Resource name="transactions" {...transactions}  />
+                <Resource name="users" {...users} />
+                <Resource name="products_categories" {...productscategories} />
+                <Resource name="products" {...products} />
+                <Resource name="movements" {...movements} />
             </Admin>
         );
     }

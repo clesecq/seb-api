@@ -1,8 +1,8 @@
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import * as React from "react";
 import { Fragment } from 'react';
-import { BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, Datagrid, DateField, DateInput, EditButton, FunctionField, ReferenceField, Resource, TextField, TextInput } from 'react-admin';
-import { ModalFormCreate, ModalFormEdit, ModalFormShow, ModalList } from '../components/ModalForm';
+import { BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, Datagrid, DateField, DateInput, EditButton, FunctionField, List, ReferenceField, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
 
 const MembersFilters = [
     <TextInput label="First Name" source="firstname" />,
@@ -19,59 +19,62 @@ const MembersBulkActionButtons = props => (
     </Fragment>
 );
 
-const MembersList = (props) => (
-    <ModalList {...props} show={MembersShow} edit={MembersEdit} create={MembersCreate} filters={MembersFilters} bulkActionButtons={<MembersBulkActionButtons />}>
-        <Datagrid>
-            <TextField source="id" />
-            <TextField source="firstname" />
-            <TextField source="lastname" />
-            <TextField source="email" />
-            <BooleanField source="payed" />
-            <ReferenceField label="Transaction" source="transaction_id" reference="transactions" link="show" >
-                <FunctionField render={r => "#" + r.id} />
-            </ReferenceField>
-            <TextField source="card" />
-            <EditButton />
-        </Datagrid>
-    </ModalList>
+const Members = (props) => (
+    <>
+        <List {...props} filters={MembersFilters} bulkActionButtons={<MembersBulkActionButtons />}>
+            <Datagrid>
+                <TextField source="id" />
+                <TextField source="firstname" />
+                <TextField source="lastname" />
+                <TextField source="email" />
+                <BooleanField source="payed" />
+                <ReferenceField label="Transaction" source="transaction_id" reference="transactions" link="show" >
+                    <FunctionField render={r => "#" + r.id} />
+                </ReferenceField>
+                <TextField source="card" />
+                <EditButton />
+                <ShowButton />
+            </Datagrid>
+        </List>
+        <CreateDialog {...props}>
+            <SimpleForm redirect="list">
+                <TextInput source="firstname" />
+                <TextInput source="lastname" />
+                <TextInput source="email" />
+                <BooleanInput source="payed" />
+                <TextInput source="card" />
+            </SimpleForm>
+        </CreateDialog>
+        <EditDialog {...props}>
+            <SimpleForm redirect="list">
+                <TextInput disabled source="id" />
+                <TextInput source="firstname" />
+                <TextInput source="lastname" />
+                <TextInput source="email" />
+                <BooleanInput source="payed" />
+                <TextInput source="card" />
+                <DateInput disabled source="created_at" />
+                <DateInput disabled source="updated_at" />
+            </SimpleForm>
+        </EditDialog>
+        <ShowDialog>
+            <SimpleShowLayout>
+                <TextField source="id" />
+                <TextField source="firstname" />
+                <TextField source="lastname" />
+                <TextField source="email" />
+                <BooleanField source="payed" />
+                <TextField source="card" />
+                <DateField source="created_at" />
+                <DateField source="updated_at" />
+            </SimpleShowLayout>
+        </ShowDialog>
+    </>
 );
 
-const MembersCreate = (props) => (
-    <ModalFormCreate {...props}>
-        <TextInput source="firstname" />
-        <TextInput source="lastname" />
-        <TextInput source="email" />
-        <BooleanInput source="payed" />
-        <TextInput source="card" />
-    </ModalFormCreate>
-);
-
-const MembersEdit = (props) => (
-    <ModalFormEdit {...props}>
-        <TextInput disabled source="id" />
-        <TextInput source="firstname" />
-        <TextInput source="lastname" />
-        <TextInput source="email" />
-        <BooleanInput source="payed" />
-        <TextInput source="card" />
-        <DateInput disabled source="created_at" />
-        <DateInput disabled source="updated_at" />
-    </ModalFormEdit>
-);
-
-const MembersShow = (props) => (
-    <ModalFormShow {...props} >
-        <TextField source="id" />
-        <TextField source="firstname" />
-        <TextField source="lastname" />
-        <TextField source="email" />
-        <BooleanField source="payed" />
-        <TextField source="card" />
-        <DateField source="created_at" />
-        <DateField source="updated_at" />
-    </ModalFormShow>
-);
-
-export default (
-    <Resource name="members" list={MembersList} />
-);
+export default {
+    list: Members,
+    create: Members,
+    edit: Members,
+    show: Members
+};

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { AutocompleteArrayInput, BooleanInput, ChipField, Datagrid, DateField, DateInput, EditButton, PasswordInput, ReferenceArrayField, ReferenceArrayInput, Resource, SingleFieldList, TextField, TextInput } from 'react-admin';
-import { ModalFormCreate, ModalFormEdit, ModalFormShow, ModalList } from '../components/ModalForm';
+import { AutocompleteArrayInput, BooleanInput, ChipField, Datagrid, DateField, DateInput, EditButton, List, PasswordInput, ReferenceArrayField, ReferenceArrayInput, SimpleForm, SimpleShowLayout, SingleFieldList, TextField, TextInput } from 'react-admin';
+import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
 
 const UsersFilters = [
     <TextInput label="First Name" source="firstname" />,
@@ -10,63 +10,65 @@ const UsersFilters = [
     <BooleanInput label="Payed" source="payed" />
 ];
 
-const UsersList = (props) => (
-    <ModalList {...props} filters={UsersFilters} show={UsersShow} create={UsersCreate} edit={UsersEdit} >
-        <Datagrid>
-            <TextField source="id" />
-            <TextField source="name" />
-            <TextField source="email" />
-            <ReferenceArrayField label="Permissions" reference="permissions" source="permissions">
-                <SingleFieldList>
-                    <ChipField source="name" />
-                </SingleFieldList>
-            </ReferenceArrayField>
-            <DateField source="created_at" />
-            <DateField source="updated_at" />
-            <EditButton />
-        </Datagrid>
-    </ModalList>
+const Users = (props) => (
+    <>
+        <List {...props} filters={UsersFilters}>
+            <Datagrid>
+                <TextField source="id" />
+                <TextField source="name" />
+                <TextField source="email" />
+                <ReferenceArrayField label="Permissions" reference="permissions" source="permissions">
+                    <SingleFieldList>
+                        <ChipField source="name" />
+                    </SingleFieldList>
+                </ReferenceArrayField>
+                <DateField source="created_at" />
+                <DateField source="updated_at" />
+                <EditButton />
+            </Datagrid>
+        </List>
+        <CreateDialog {...props}>
+            <SimpleForm redirect="list">
+                <TextInput source="name" />
+                <TextInput source="email" />
+                <PasswordInput source="password" />
+                <ReferenceArrayInput label="Permissions" reference="permissions" source="permissions">
+                    <AutocompleteArrayInput />
+                </ReferenceArrayInput>
+            </SimpleForm>
+        </CreateDialog>
+        <EditDialog {...props}>
+            <SimpleForm redirect="list">
+                <TextInput disabled source="id" />
+                <TextInput source="name" />
+                <TextInput source="email" />
+                <ReferenceArrayInput label="Permissions" reference="permissions" source="permissions">
+                    <AutocompleteArrayInput />
+                </ReferenceArrayInput>
+                <DateInput disabled source="created_at" />
+                <DateInput disabled source="updated_at" />
+            </SimpleForm>
+        </EditDialog>
+        <ShowDialog>
+            <SimpleShowLayout>
+                <TextField source="id" />
+                <TextField source="name" />
+                <TextField source="email" />
+                <ReferenceArrayField label="Permissions" reference="permissions" source="permissions">
+                    <SingleFieldList>
+                        <ChipField source="name" />
+                    </SingleFieldList>
+                </ReferenceArrayField>
+                <DateField source="created_at" />
+                <DateField source="updated_at" />
+            </SimpleShowLayout>
+        </ShowDialog>
+    </>
 );
 
-const UsersCreate = (props) => (
-    <ModalFormCreate {...props}>
-        <TextInput source="name" />
-        <TextInput source="email" />
-        <PasswordInput source="password" />
-        <ReferenceArrayInput label="Permissions" reference="permissions" source="permissions">
-            <AutocompleteArrayInput />
-        </ReferenceArrayInput>
-    </ModalFormCreate>
-);
-
-const UsersEdit = (props) => (
-    <ModalFormEdit {...props}>
-        <TextInput disabled source="id" />
-        <TextInput source="name" />
-        <TextInput source="email" />
-        <ReferenceArrayInput label="Permissions" reference="permissions" source="permissions">
-            <AutocompleteArrayInput />
-        </ReferenceArrayInput>
-        <DateInput disabled source="created_at" />
-        <DateInput disabled source="updated_at" />
-    </ModalFormEdit>
-);
-
-const UsersShow = (props) => (
-    <ModalFormShow {...props}>
-        <TextField source="id" />
-        <TextField source="name" />
-        <TextField source="email" />
-        <ReferenceArrayField label="Permissions" reference="permissions" source="permissions">
-            <SingleFieldList>
-                <ChipField source="name" />
-            </SingleFieldList>
-        </ReferenceArrayField>
-        <DateField source="created_at" />
-        <DateField source="updated_at" />
-    </ModalFormShow>
-);
-
-export default (
-    <Resource name="users" list={UsersList} />
-);
+export default {
+    list: Users,
+    create: Users,
+    edit: Users,
+    show: Users
+};

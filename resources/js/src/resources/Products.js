@@ -1,71 +1,84 @@
 import * as React from "react";
-import { Datagrid, DateField, DateInput, EditButton, NumberField, ReferenceField, ReferenceInput, Resource, SelectInput, TextField, TextInput } from 'react-admin';
-import { ModalFormCreate, ModalFormEdit, ModalFormShow, ModalList } from '../components/ModalForm';
+import { CreateButton, Datagrid, DateField, DateInput, EditButton, ExportButton, FilterButton, List, NumberField, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
+import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
+import { RecalculateButton } from '../components/RecalculateButton';
 
 const ProductsFilters = [
     <TextInput label="Name" source="name" />,
     <TextInput label="Barcode" source="barcode" />
 ];
 
-const ProductsList = (props) => (
-    <ModalList {...props} filters={ProductsFilters} show={ProductsShow} create={ProductsCreate} edit={ProductsEdit}>
-        <Datagrid>
-            <TextField source="id" />
-            <TextField source="barcode" />
-            <TextField source="name" />
-            <ReferenceField label="Category" source="category_id" reference="products_categories" >
+const ProductsListActions = ({ basePath, ...props }) => (
+    <TopToolbar>
+        <FilterButton />
+        <RecalculateButton />
+        <CreateButton />
+        <ExportButton />
+    </TopToolbar>
+);
+
+
+const Products = (props) => (
+    <>
+        <List {...props} filters={ProductsFilters} actions={<ProductsListActions />}>
+            <Datagrid>
+                <TextField source="id" />
+                <TextField source="barcode" />
                 <TextField source="name" />
-            </ReferenceField>
-            <TextField source="price" />
-            <NumberField source="count" />
-            <DateField source="created_at" />
-            <DateField source="updated_at" />
-            <EditButton />
-        </Datagrid>
-    </ModalList>
+                <ReferenceField label="Category" source="category_id" reference="products_categories" >
+                    <TextField source="name" />
+                </ReferenceField>
+                <TextField source="price" />
+                <NumberField source="count" />
+                <DateField source="created_at" />
+                <DateField source="updated_at" />
+                <EditButton />
+            </Datagrid>
+        </List>
+        <CreateDialog {...props}>
+            <SimpleForm redirect="list">
+                <TextInput source="name" />
+                <ReferenceInput label="Category" source="category_id" reference="products_categories">
+                    <SelectInput optionText="name" />
+                </ReferenceInput>
+                <TextInput source="barcode" />
+                <TextInput source="price" />
+            </SimpleForm>
+        </CreateDialog>
+        <EditDialog {...props}>
+            <SimpleForm redirect="list">
+                <TextInput disabled source="id" />
+                <TextInput source="name" />
+                <ReferenceInput label="Category" source="category_id" reference="products_categories">
+                    <SelectInput optionText="name" />
+                </ReferenceInput>
+                <TextInput source="barcode" />
+                <TextInput source="price" />
+                <NumberField disabled source="count" />
+                <DateInput disabled source="created_at" />
+                <DateInput disabled source="updated_at" />
+            </SimpleForm>
+        </EditDialog>
+        <ShowDialog>
+            <SimpleShowLayout>
+                <TextField source="id" />
+                <TextField source="barcode" />
+                <TextField source="name" />
+                <ReferenceField label="Category" source="category_id" reference="products_categories" >
+                    <TextField source="name" />
+                </ReferenceField>
+                <TextField source="price" />
+                <NumberField source="count" />
+                <DateField source="created_at" />
+                <DateField source="updated_at" />
+            </SimpleShowLayout>
+        </ShowDialog>
+    </>
 );
 
-const ProductsCreate = (props) => (
-    <ModalFormCreate {...props}>
-        <TextInput source="name" />
-        <ReferenceInput label="Category" source="category_id" reference="products_categories">
-            <SelectInput optionText="name" />
-        </ReferenceInput>
-        <TextInput source="barcode" />
-        <TextInput source="price" />
-    </ModalFormCreate>
-);
-
-const ProductsEdit = (props) => (
-    <ModalFormEdit {...props}>
-        <TextInput disabled source="id" />
-        <TextInput source="name" />
-        <ReferenceInput label="Category" source="category_id" reference="products_categories">
-            <SelectInput optionText="name" />
-        </ReferenceInput>
-        <TextInput source="barcode" />
-        <TextInput source="price" />
-        <NumberField disabled source="count" />
-        <DateInput disabled source="created_at" />
-        <DateInput disabled source="updated_at" />
-    </ModalFormEdit>
-);
-
-const ProductsShow = (props) => (
-    <ModalFormShow {...props}>
-        <TextField source="id" />
-        <TextField source="barcode" />
-        <TextField source="name" />
-        <ReferenceField label="Category" source="category_id" reference="products_categories" >
-            <TextField source="name" />
-        </ReferenceField>
-        <TextField source="price" />
-        <NumberField source="count" />
-        <DateField source="created_at" />
-        <DateField source="updated_at" />
-    </ModalFormShow>
-);
-
-export default (
-    <Resource name="products" list={ProductsList} />
-);
+export default {
+    list: Products,
+    create: Products,
+    edit: Products,
+    show: Products
+};
