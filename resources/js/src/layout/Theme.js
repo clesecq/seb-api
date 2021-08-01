@@ -52,11 +52,6 @@ export default merge(defaultTheme, {
                 "padding-top": "5px"
             }
         },
-        RaTopToolbar: {
-            root: {
-                "padding-top": 0
-            }
-        },
         RaFormInput: {
             input: {
                 width: "100%"
