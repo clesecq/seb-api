@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AutocompleteArrayInput, BooleanInput, ChipField, Datagrid, DateField, DateInput, PasswordInput, ReferenceArrayField, ReferenceArrayInput, Resource, ShowButton, SingleFieldList, TextField, TextInput } from 'react-admin';
+import { AutocompleteArrayInput, BooleanInput, ChipField, Datagrid, DateField, DateInput, EditButton, PasswordInput, ReferenceArrayField, ReferenceArrayInput, Resource, SingleFieldList, TextField, TextInput } from 'react-admin';
 import { ModalFormCreate, ModalFormEdit, ModalFormShow, ModalList } from '../components/ModalForm';
 
 const UsersFilters = [
@@ -11,7 +11,7 @@ const UsersFilters = [
 ];
 
 const UsersList = (props) => (
-    <ModalList {...props} filters={UsersFilters}>
+    <ModalList {...props} filters={UsersFilters} show={UsersShow} create={UsersCreate} edit={UsersEdit} >
         <Datagrid>
             <TextField source="id" />
             <TextField source="name" />
@@ -23,7 +23,7 @@ const UsersList = (props) => (
             </ReferenceArrayField>
             <DateField source="created_at" />
             <DateField source="updated_at" />
-            <ShowButton />
+            <EditButton />
         </Datagrid>
     </ModalList>
 );
@@ -40,7 +40,7 @@ const UsersCreate = (props) => (
 );
 
 const UsersEdit = (props) => (
-    <ModalFormEdit {...props}>·
+    <ModalFormEdit {...props}>
         <TextInput disabled source="id" />
         <TextInput source="name" />
         <TextInput source="email" />
@@ -68,5 +68,5 @@ const UsersShow = (props) => (
 );
 
 export default (
-    <Resource name="users" list={UsersList} show={UsersShow} create={UsersCreate} edit={UsersEdit} />
+    <Resource name="users" list={UsersList} />
 );

@@ -2,7 +2,8 @@
 // are organized because of RA is aweful
 
 import { Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
-import { styled } from "@material-ui/core/styles";
+import { styled, useTheme } from "@material-ui/core/styles";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { spacing } from "@material-ui/system";
 import inflection from 'inflection';
 import * as React from "react";
@@ -10,7 +11,6 @@ import { Button, Create, CreateButton, Edit, EditButton, ExportButton, FilterBut
 import { Route } from 'react-router-dom';
 
 const StyledButton = styled(Button)(spacing);
-const StyledEditButton = styled(EditButton)(spacing);
 
 const DialogEditToolBar = ({ handleClose, ...props }) => (
     <DialogActions>
@@ -85,6 +85,8 @@ const ModalList = ({ children, show, edit, create, filters, actions, bulkActionB
     const redirect = useRedirect();
     const refresh = useRefresh();
     const notify = useNotify();
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const handleClose = () => {
         redirect(`/${name}`);
@@ -106,7 +108,7 @@ const ModalList = ({ children, show, edit, create, filters, actions, bulkActionB
                 render={() => {
                     const CustomCreate = create;
                     return (
-                        <Dialog open maxWidth="md" onClose={handleClose} fullWidth={true}>
+                        <Dialog open maxWidth="md" onClose={handleClose} fullWidth={true} scroll="body" fullScreen={fullScreen}>
                             {CustomCreate === undefined ? redirect(`/${name}`) : <CustomCreate {...props} handleClose={handleClose} onSuccess={handleCreate} />}
                         </Dialog>
                     );
@@ -119,7 +121,7 @@ const ModalList = ({ children, show, edit, create, filters, actions, bulkActionB
                     const CustomShow = show;
                     const CustomEdit = edit;
                     return (
-                        <Dialog open={isMatch} maxWidth="md" onClose={handleClose} fullWidth={true}>
+                        <Dialog open={isMatch} maxWidth="md" onClose={handleClose} fullWidth={true} scroll="body" fullScreen={fullScreen}>
                             {isMatch ? (
                                 (match.params.arg == "show" ?
                                     (CustomShow === undefined ? redirect(`/${name}`) : <CustomShow {...props} actions={<></>} handleClose={handleClose} id={isMatch ? match.params.id : null} hasEdit={CustomEdit !== undefined} />)
