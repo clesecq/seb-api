@@ -1,7 +1,7 @@
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import * as React from "react";
 import { Fragment } from 'react';
-import { BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, Create, Datagrid, DateField, DateInput, Edit, EditButton, List, ReferenceField, Resource, Show, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, Create, Datagrid, DateField, DateInput, Edit, EditButton, List, ListButton, ReferenceField, Resource, Show, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
 
 const MembersFilters = [
     <TextInput label="First Name" source="firstname" />,
@@ -32,14 +32,19 @@ const MembersList = (props) => (
             <TextField source="card" />
             <DateField source="created_at" />
             <DateField source="updated_at" />
-            <EditButton />
+            <ShowButton />
         </Datagrid>
     </List>
 );
- 
+
+const MembersCreateActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+    </TopToolbar>
+);
 
 const MembersCreate = (props) => (
-    <Create {...props}>
+    <Create {...props} actions={<MembersCreateActions />}>
         <SimpleForm>
             <TextInput source="firstname" />
             <TextInput source="lastname" />
@@ -50,8 +55,15 @@ const MembersCreate = (props) => (
     </Create>
 );
 
+const MembersEditActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+        <ShowButton basePath={basePath} record={data} />
+    </TopToolbar>
+);
+
 const MembersEdit = (props) => (
-    <Edit {...props}>
+    <Edit {...props} actions={<MembersEditActions />}>
         <SimpleForm>
             <TextInput disabled source="id" />
             <TextInput source="firstname" />
@@ -65,8 +77,15 @@ const MembersEdit = (props) => (
     </Edit>
 );
 
+const MembersShowActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+        <EditButton basePath={basePath} record={data} />
+    </TopToolbar>
+);
+
 const MembersShow = (props) => (
-    <Show {...props}>
+    <Show {...props} actions={<MembersShowActions />}>
         <SimpleShowLayout>
             <TextField source="id" />
             <TextField source="firstname" />

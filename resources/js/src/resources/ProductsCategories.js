@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Create, Datagrid, DateField, DateInput, Edit, EditButton, List, Resource, Show, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { Create, Datagrid, DateField, DateInput, Edit, EditButton, List, ListButton, Resource, Show, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
 
 const ProductsCategoriesFilters = [
     <TextInput label="Name" source="name" />
@@ -12,21 +12,34 @@ const ProductsCategoriesList = (props) => (
             <TextField source="name" />
             <DateField source="created_at" />
             <DateField source="updated_at" />
-            <EditButton />
+            <ShowButton />
         </Datagrid>
     </List>
 );
 
+const ProductsCategoriesCreateActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+    </TopToolbar>
+);
+
 const ProductsCategoriesCreate = (props) => (
-    <Create {...props}>
+    <Create {...props} actions={<ProductsCategoriesCreateActions />}>
         <SimpleForm>
             <TextInput source="name" />
         </SimpleForm>
     </Create>
 );
 
+const ProductsCategoriesEditActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+        <ShowButton basePath={basePath} record={data} />
+    </TopToolbar>
+);
+
 const ProductsCategoriesEdit = (props) => (
-    <Edit {...props}>
+    <Edit {...props} actions={<ProductsCategoriesEditActions />}>
         <SimpleForm>
             <TextInput disabled source="id" />
             <TextInput source="name" />
@@ -36,8 +49,15 @@ const ProductsCategoriesEdit = (props) => (
     </Edit>
 );
 
+const ProductsCategoriesShowActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+        <EditButton basePath={basePath} record={data} />
+    </TopToolbar>
+);
+
 const ProductsCategoriesShow = (props) => (
-    <Show {...props}>
+    <Show {...props} actions={<ProductsCategoriesShowActions />}>
         <SimpleShowLayout>
             <TextField source="id" />
             <TextField source="name" />

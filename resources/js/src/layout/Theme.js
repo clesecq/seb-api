@@ -62,6 +62,16 @@ export default merge(defaultTheme, {
                 width: "100%"
             }
         },
+        RaAutocompleteArrayInput: {
+            inputRoot: {
+                width: "100%"
+            }
+        },
+        MuiFormControl: {
+            root: {
+                width: "100%"
+            }
+        },
         MuiTableHead: {
             root: {
                 "border-radius": "4px 4px 0 0"

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Create, Datagrid, DateField, DateInput, Edit, EditButton, List, NumberField, ReferenceField, ReferenceInput, Resource, SelectInput, Show, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { Create, Datagrid, DateField, DateInput, Edit, EditButton, List, ListButton, NumberField, ReferenceField, ReferenceInput, Resource, SelectInput, Show, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
 
 const ProductsFilters = [
     <TextInput label="Name" source="name" />,
@@ -19,13 +19,19 @@ const ProductsList = (props) => (
             <NumberField source="count" />
             <DateField source="created_at" />
             <DateField source="updated_at" />
-            <EditButton />
+            <ShowButton />
         </Datagrid>
     </List>
 );
 
+const ProductsCreateActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+    </TopToolbar>
+);
+
 const ProductsCreate = (props) => (
-    <Create {...props}>
+    <Create {...props} actions={<ProductsCreateActions />}>
         <SimpleForm>
             <TextInput source="name" />
             <ReferenceInput label="Category" source="category_id" reference="products_categories">
@@ -37,8 +43,15 @@ const ProductsCreate = (props) => (
     </Create>
 );
 
+const ProductsEditActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+        <ShowButton basePath={basePath} record={data} />
+    </TopToolbar>
+);
+
 const ProductsEdit = (props) => (
-    <Edit {...props}>
+    <Edit {...props} actions={<ProductsEditActions />}>
         <SimpleForm>
             <TextInput disabled source="id" />
             <TextInput source="name" />
@@ -54,8 +67,15 @@ const ProductsEdit = (props) => (
     </Edit>
 );
 
+const ProductsShowActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+        <EditButton basePath={basePath} record={data} />
+    </TopToolbar>
+);
+
 const ProductsShow = (props) => (
-    <Show {...props}>
+    <Show {...props} actions={<ProductsShowActions />}>
         <SimpleShowLayout>
             <TextField source="id" />
             <TextField source="barcode" />

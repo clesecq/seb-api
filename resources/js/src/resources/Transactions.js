@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BooleanField, BooleanInput, Create, Datagrid, DateField, List, NumberField, NumberInput, ReferenceField, ReferenceInput, Resource, SelectInput, Show, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { BooleanField, BooleanInput, Create, Datagrid, DateField, List, ListButton, NumberField, NumberInput, ReferenceField, ReferenceInput, Resource, SelectInput, Show, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
 
 const TransactionsFilters = [
     <TextInput label="Name" source="name" />,
@@ -29,10 +29,15 @@ const TransactionsList = (props) => (
         </Datagrid>
     </List>
 );
- 
+
+const TransactionsCreateActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+    </TopToolbar>
+);
 
 const TransactionsCreate = (props) => (
-    <Create {...props}>
+    <Create {...props} actions={<TransactionsCreateActions />}>
         <SimpleForm>
             <TextInput source="name" />
             <NumberInput source="amount" />
@@ -44,8 +49,14 @@ const TransactionsCreate = (props) => (
     </Create>
 );
 
+const TransactionShowActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+    </TopToolbar>
+);
+
 const TransactionsShow = (props) => (
-    <Show {...props}>
+    <Show {...props} actions={<TransactionShowActions />}>
         <SimpleShowLayout>
             <TextField source="id" />
             <TextField source="name" />

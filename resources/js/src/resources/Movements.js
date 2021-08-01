@@ -1,7 +1,5 @@
-import keyBy from 'lodash/keyBy';
-import PropTypes from 'prop-types';
 import React from "react";
-import { ArrayInput, BooleanField, BooleanInput, Create, Datagrid, DateField, List, ListContextProvider, NumberInput, ReferenceField, ReferenceInput, Resource, SelectInput, Show, ShowButton, SimpleForm, SimpleFormIterator, SimpleShowLayout, TextField, TextInput, useRecordContext } from 'react-admin';
+import { ArrayField, ArrayInput, BooleanField, BooleanInput, Create, Datagrid, DateField, List, ListButton, NumberInput, ReferenceField, ReferenceInput, Resource, SelectInput, Show, ShowButton, SimpleForm, SimpleFormIterator, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
 
 const MovementsFilters = [
     <TextInput label="Name" source="name" />
@@ -22,8 +20,14 @@ const MovementsList = (props) => (
     </List>
 );
 
+const MovementsCreateActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+    </TopToolbar>
+);
+
 const MovementsCreate = (props) => (
-    <Create {...props}>
+    <Create {...props} actions={<MovementsCreateActions />}>
         <SimpleForm>
             <TextInput source="name" />
             <BooleanInput source="rectification" />
@@ -42,48 +46,25 @@ const MovementsCreate = (props) => (
     </Create>
 );
 
-
-const ProductsField = (props) => {
-    const { source } = props;
-    const record = useRecordContext(props);
-
-    return (record[source] !== undefined &&
-        <ListContextProvider value={{
-                data: keyBy(record[source], 'product_id'),
-                ids: record[source].map(({ product_id }) => product_id),
-                total: record[source].length,
-                currentSort: { field: 'product_id', order: 'ASC' },
-                basePath: "/posts",
-                resource: 'posts',
-                selectedIds: []
-        }}>
-            <Datagrid>
-                <TextField source="product_id" label="Id" />
-                <TextField source="product.name" label="Name" />
-                <TextField source="product.barcode" label="Barcode" />
-                <TextField source="count" label="Diff" />
-            </Datagrid>
-        </ListContextProvider >
-    );
-}
-
-ProductsField.defaultProps = {
-    label: 'Name',
-    addLabel: true,
-};
-
-ProductsField.propTypes = {
-    label: PropTypes.string,
-    record: PropTypes.object,
-    source: PropTypes.string.isRequired,
-};
+const MovementsShowActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+    </TopToolbar>
+);
 
 const MovementsShow = (props) => (
-    <Show {...props}>
+    <Show {...props} actions={<MovementsShowActions />}>
         <SimpleShowLayout>
             <TextField source="id" />
             <TextField source="name" />
-            <ProductsField label="Products" source="products" />
+            <ArrayField source="products">
+                <Datagrid>
+                    <TextField source="product_id" label="Id" />
+                    <TextField source="product.name" label="Name" />
+                    <TextField source="product.barcode" label="Barcode" />
+                    <TextField source="count" label="Diff" />
+                </Datagrid>
+            </ArrayField>
             <BooleanField source="rectification" />
             <ReferenceField label="User" source="user_id" reference="users">
                 <TextField source="name" />

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AutocompleteArrayInput, BooleanInput, ChipField, Create, Datagrid, DateField, DateInput, Edit, EditButton, List, PasswordInput, ReferenceArrayField, ReferenceArrayInput, Resource, Show, SimpleForm, SimpleShowLayout, SingleFieldList, TextField, TextInput } from 'react-admin';
+import { AutocompleteArrayInput, BooleanInput, ChipField, Create, Datagrid, DateField, DateInput, Edit, EditButton, List, ListButton, PasswordInput, ReferenceArrayField, ReferenceArrayInput, Resource, Show, ShowButton, SimpleForm, SimpleShowLayout, SingleFieldList, TextField, TextInput, TopToolbar } from 'react-admin';
 
 const UsersFilters = [
     <TextInput label="First Name" source="firstname" />,
@@ -22,12 +22,19 @@ const UsersList = (props) => (
             </ReferenceArrayField>
             <DateField source="created_at" />
             <DateField source="updated_at" />
-            <EditButton />
+            <ShowButton />
         </Datagrid>
     </List>
 );
+
+const UsersCreateActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+    </TopToolbar>
+);
+
 const UsersCreate = (props) => (
-    <Create {...props}>
+    <Create {...props} actions={<UsersCreateActions />}>
         <SimpleForm>
             <TextInput source="name" />
             <TextInput source="email" />
@@ -39,8 +46,15 @@ const UsersCreate = (props) => (
     </Create>
 );
 
+const UsersEditActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+        <ShowButton basePath={basePath} record={data} />
+    </TopToolbar>
+);
+
 const UsersEdit = (props) => (
-    <Edit {...props}>
+    <Edit {...props} actions={<UsersEditActions />}>
         <SimpleForm>
             <TextInput disabled source="id" />
             <TextInput source="name" />
@@ -54,8 +68,15 @@ const UsersEdit = (props) => (
     </Edit>
 );
 
+const UsersShowActions = ({ basePath, data }) => (
+    <TopToolbar>
+        <ListButton basePath={basePath} />
+        <EditButton basePath={basePath} record={data} />
+    </TopToolbar>
+);
+
 const UsersShow = (props) => (
-    <Show {...props}>
+    <Show {...props} actions={<UsersShowActions />}>
         <SimpleShowLayout>
             <TextField source="id" />
             <TextField source="name" />
