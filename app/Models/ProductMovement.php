@@ -9,6 +9,13 @@ class ProductMovement extends Pivot
 {
     use HasFactory;
 
+    protected static function booted()
+    {
+        static::created(function ($movement) {
+            $movement->product->recalculate();
+        });
+    }
+
     public $timestamps = false;
 
     protected $fillable = [

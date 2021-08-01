@@ -123,4 +123,11 @@ class ProductsController extends Controller
             return response([], 400);
         }
     }
+
+    /**
+     * Recalculates the amount stored in the products
+     */
+    public function reload(Request $request) {
+        Product::recalculateAll();
+    }
 }

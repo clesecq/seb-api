@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::group(['middleware' => ['permission:products']], function () {
         Route::delete("products", [ProductsController::class, "destroyMany"]);
         Route::put("products", [ProductsController::class, "updateMany"]);
+        Route::get("products/reload", [ProductsController::class, "reload"]);
         Route::resource("products", ProductsController::class);
 
         Route::delete("products_categories", [ProductCategoriesController::class, "destroyMany"]);
@@ -63,8 +64,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::group(['middleware' => ['permission:accounts']], function () {
         Route::delete("accounts", [AccountsController::class, "destroyMany"]);
-        Route::get("accounts/reload", [AccountsController::class, "reload"]);
         Route::put("accounts", [AccountsController::class, "updateMany"]);
+        Route::get("accounts/reload", [AccountsController::class, "reload"]);
         Route::resource("accounts", AccountsController::class);
 
         Route::delete("transactions", [TransactionsController::class, "destroyMany"]);

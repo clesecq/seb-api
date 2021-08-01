@@ -1,13 +1,35 @@
+import RefreshIcon from '@material-ui/icons/Refresh';
 import * as React from "react";
-import { Create, Datagrid, DateField, DateInput, Edit, EditButton, List, ListButton, NumberField, ReferenceField, ReferenceInput, Resource, SelectInput, Show, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
+import { Button, Create, CreateButton, Datagrid, DateField, DateInput, Edit, EditButton, ExportButton, FilterButton, List, ListButton, NumberField, ReferenceField, ReferenceInput, Resource, SelectInput, Show, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar, useDataProvider, useRefresh } from 'react-admin';
 
 const ProductsFilters = [
     <TextInput label="Name" source="name" />,
     <TextInput label="Barcode" source="barcode" />
 ];
 
+const ProductsListActions = (props) => {
+    const dataProvider = useDataProvider();
+    const refresh = useRefresh();
+
+    return (
+        <TopToolbar>
+            <FilterButton/>
+            <Button
+                onClick={() => {
+                    dataProvider.reload('products').then(() => {
+                        refresh();
+                    });
+                }}
+                label="Recalculate"
+            ><RefreshIcon/></Button>
+            <CreateButton/>
+            <ExportButton/>
+        </TopToolbar>
+    );
+};
+
 const ProductsList = (props) => (
-    <List {...props} filters={ProductsFilters}>
+    <List {...props} filters={ProductsFilters} actions={<ProductsListActions />}>
         <Datagrid>
             <TextField source="id" />
             <TextField source="barcode" />

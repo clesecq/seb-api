@@ -23,4 +23,19 @@ class Product extends Model
     public function category() {
         return $this->belongsTo(ProductCategory::class);
     }
+
+    public function movements() {
+        return $this->hasMany(ProductMovement::class);
+    }
+
+    public function recalculate() {
+        $this->count = $this->movements->sum('count');
+        $this->save();
+    }
+
+    public static function recalculateAll() {
+        foreach(static::all() as $product) {
+            $product->recalculate();
+        }
+    }
 }
