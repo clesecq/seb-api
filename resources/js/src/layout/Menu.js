@@ -1,4 +1,5 @@
 
+import { useMediaQuery } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -16,7 +17,9 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 import * as React from 'react';
 import { useState } from 'react';
-import { MenuItemLink, usePermissions } from 'react-admin';
+import { getResources, MenuItemLink, usePermissions } from 'react-admin';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 function hasPerm(permissions, perm) {
     if (permissions === undefined)
@@ -38,23 +41,23 @@ function hasPerm(permissions, perm) {
     return false;
 }
 
-const Accordeon = (props) => {
-    const { permissions } = usePermissions();
-    const [ open, setOpen] = useState(false);
+const Accordeon = ({children, title, permissions, ...props}) => {
+    const { perms } = usePermissions();
+    const [ open, setOpen] = useState(props.open);
 
     return (
-        <>{(!('permissions' in props) || hasPerm(permissions, props.permissions)) &&
+        <>{(!hasPerm(perms, permissions)) &&
             <>
-                <Tooltip title={props.title} placement="right">
+                <Tooltip title={title} placement="right">
                     <MenuItem button onClick={() => setOpen(!open)} className={"RaMenuItemLink-root-36 MuiMenuItem-root"}>
                         <ListItemIcon className={"RaMenuItemLink-icon-38"}>
                         {open ? <ExpandLess /> : <ExpandMore />}
                         </ListItemIcon>
-                        <ListItemText primary={props.title} />
+                        <ListItemText primary={title} />
                     </MenuItem>
                 </Tooltip>
                 <Collapse in={open}>
-                    {props.children}
+                    {children}
                 </Collapse>
             </>}
         </>
@@ -63,30 +66,39 @@ const Accordeon = (props) => {
 
 const Item = (props) => {
     const { permissions } = usePermissions();
+    const open = useSelector(state => state.admin.ui.sidebarOpen);
+    const location = useLocation();
+    const regex = new RegExp(`^${props.to}\/|^${props.to}$`);
+    console.log(regex);
+    console.log(location.pathname);
 
     return (
         <>{
             (!('permissions' in props) || hasPerm(permissions, props.permissions)) &&
-            <MenuItemLink {...props}/>
+            <MenuItemLink {...props} sidebarIsOpen={open} selected={regex.test(location.pathname)} />
         }</>
     );
 }
 
-const Menu = () => {
+const Menu = ({ onMenuClick, logout }) => {
+    const isXSmall = useMediaQuery(theme => theme.breakpoints.down('xs'));
+    const resources = useSelector(getResources);
+
     return (
         <>
             <Item to="/" primaryText="Dashboard" leftIcon={<DashboardIcon />}/>
-            <Accordeon title="Stocks" permissions={["stocks", "products"]}>
+            <Accordeon open={true} title="Stocks" permissions={["stocks", "products"]}>
                 <Item to="/products" permissions="products" primaryText="Products" leftIcon={<LocalCafeIcon />}/>
                 <Item to="/products_categories" permissions="products" primaryText="Caterogies" leftIcon={<CategoryIcon />}/>
                 <Item to="/movements" permissions="products" primaryText="Movements" leftIcon={<ShoppingCartIcon />}/>
             </Accordeon>
-            <Accordeon title="Accounting" permissions="accounts">
+            <Accordeon open={true} title="Accounting" permissions="accounts">
                 <Item to="/accounts" permissions="accounts" primaryText="Accounts" leftIcon={<AccountBalanceIcon />}/>
                 <Item to="/transactions" permissions="accounts" primaryText="Transactions" leftIcon={<SwapHorizIcon />}/>
             </Accordeon>
             <Item to="/members" permissions="members" primaryText="Members" leftIcon={<GroupIcon />}/>
             <Item to="/users" permissions="users" primaryText="Users" leftIcon={<AccountBoxIcon />}/>
+            {isXSmall && logout}
         </>
     );
 };

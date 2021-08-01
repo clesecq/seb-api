@@ -102,6 +102,11 @@ export default merge(defaultTheme, {
             root: {
                 padding: "8px, 0 !important"
             }
+        },
+        MuiListItemIcon: {
+            root: {
+                "min-width": null
+            }
         }
     }
 });
