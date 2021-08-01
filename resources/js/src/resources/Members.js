@@ -1,7 +1,7 @@
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import * as React from "react";
 import { Fragment } from 'react';
-import { BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, Datagrid, DateField, DateInput, EditButton, FunctionField, List, ReferenceField, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, Datagrid, DateField, DateInput, EditButton, FunctionField, List, ReferenceField, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
 
 const MembersFilters = [
@@ -33,7 +33,6 @@ const Members = (props) => (
                 </ReferenceField>
                 <TextField source="card" />
                 <EditButton />
-                <ShowButton />
             </Datagrid>
         </List>
         <CreateDialog {...props}>

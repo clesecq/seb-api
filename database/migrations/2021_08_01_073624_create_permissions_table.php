@@ -23,6 +23,7 @@ class CreatePermissionsTable extends Migration
         Permission::create(['id' => 'users', 'name' => 'Users']);
         Permission::create(['id' => 'members', 'name' => 'Members']);
         Permission::create(['id' => 'accounts', 'name' => 'Accounts']);
+        Permission::create(['id' => 'products', 'name' => 'Products']);
     }
 
     /**

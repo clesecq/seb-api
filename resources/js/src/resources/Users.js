@@ -18,7 +18,7 @@ const Users = (props) => (
                 <TextField source="name" />
                 <TextField source="email" />
                 <ReferenceArrayField label="Permissions" reference="permissions" source="permissions">
-                    <SingleFieldList>
+                    <SingleFieldList linkType={false}>
                         <ChipField source="name" />
                     </SingleFieldList>
                 </ReferenceArrayField>
@@ -55,7 +55,7 @@ const Users = (props) => (
                 <TextField source="name" />
                 <TextField source="email" />
                 <ReferenceArrayField label="Permissions" reference="permissions" source="permissions">
-                    <SingleFieldList>
+                    <SingleFieldList linkType={false}>
                         <ChipField source="name" />
                     </SingleFieldList>
                 </ReferenceArrayField>
