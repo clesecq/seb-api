@@ -73,7 +73,7 @@ class UsersController extends Controller
     {
         if ($id == $request->user()->id) {
             return response([
-                'message' => 'Please use the user endpoint to update yourself.'
+                'message' => 'Please use the profile endpoint to update yourself.'
             ], 400);
         }
 
@@ -142,7 +142,7 @@ class UsersController extends Controller
         if (is_array($request->ids)) {
             if (in_array($request->user()->id, $request->ids)) {
                 return response([
-                    'message' => 'Please use the user endpoint to update yourself.'
+                    'message' => 'Please use the profile endpoint to update yourself.'
                 ], 400);
             }
 

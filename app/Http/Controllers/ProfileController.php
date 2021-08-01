@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display the specified resource.
@@ -16,7 +16,9 @@ class UserController extends Controller
      */
     public function show(Request $request)
     {
-        return $request->user();
+        $data = $request->user()->toArray();
+        $data['id'] = 'me';
+        return ["data" => $data];
     }
 
     /**
@@ -31,13 +33,14 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => ['sometimes', 'required', 'string'],
             'email' => ['sometimes', 'required', 'email', 'unique:users,email'],
-            'password' => ['sometimes', 'required', 'string'],
+            'password' => ['sometimes', 'required', 'confirmed', 'string'],
         ]);
 
         if (array_key_exists('password', $data)) {
             $data['password'] = Hash::make($data['password']);
         }
 
-        return $request->user()->update($data);
+        $request->user()->update($data);
+        return ["data" => $request->user()];
     }
 }

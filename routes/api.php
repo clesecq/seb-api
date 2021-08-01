@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\MembersController;
 use App\Http\Controllers\ProductsController;
@@ -32,8 +32,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get("auth/check", function() {
         return response(["message" => "ok"], 200);
     });
-    Route::get("user", [UserController::class, 'show']);
-    Route::put("user", [UserController::class, 'update']);
+    Route::get("profile/me", [ProfileController::class, 'show']);
+    Route::put("profile/me", [ProfileController::class, 'update']);
 
     Route::group(['middleware' => ['permission:users']], function () {
         Route::delete("users", [UsersController::class, "destroyMany"]);
