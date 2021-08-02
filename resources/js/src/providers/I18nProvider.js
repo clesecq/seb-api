@@ -6,7 +6,11 @@ const messages = {
     'en': merge(englishMessages, {
         ra: {
             auth: {
-                email: "Email"
+                email: "Email",
+                forgot: "Forgot your password?",
+                back: "Go back",
+                reset_password: "Reset password",
+                password_confirmation: "Password confirmation"
             }
         }
     }),

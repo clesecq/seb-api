@@ -1,6 +1,6 @@
 import { Button, CardActions, CircularProgress, Link, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useLogin, useNotify, useSafeSetState, useTranslate } from 'ra-core';
+import { useNotify, useSafeSetState, useTranslate } from 'ra-core';
 import React from 'react';
 import { Login } from 'react-admin';
 import { Field, Form } from 'react-final-form';
@@ -24,52 +24,29 @@ const useStyles = makeStyles(
     { name: 'RaLoginForm' }
 );
 
-const Input = ({
-    meta: { touched, error }, // eslint-disable-line react/prop-types
-    input: inputProps, // eslint-disable-line react/prop-types
-    ...props
-}) => (
-    <TextField
-        error={!!(touched && error)}
-        helperText={touched && error}
-        {...inputProps}
-        {...props}
-        fullWidth
-    />
+const Input = ({ meta: { touched, error }, input: inputProps, ...props }) => (
+    <TextField error={!!(touched && error)} helperText={touched && error} {...inputProps} {...props} fullWidth />
 );
 
-const MyLoginPage = (props) => {
+const ForgotPassword = (props) => {
     const [loading, setLoading] = useSafeSetState(false);
-    const login = useLogin();
     const translate = useTranslate();
     const notify = useNotify();
     const classes = useStyles(props);
 
-    const submit = values => {
+    const submit = ({email}) => {
         setLoading(true);
-        login(values, "/")
-            .then(() => {
+        axios.get('/sanctum/csrf-cookie').then(response => {
+            return axios.post('/forgot-password', {
+                'email': email
+            }).then(response => {
                 setLoading(false);
-            })
-            .catch(error => {
+                notify(response.data.message)
+            }).catch(error => {
                 setLoading(false);
-                notify(
-                    typeof error === 'string'
-                        ? error
-                        : typeof error === 'undefined' || !error.message
-                            ? 'ra.auth.sign_in_error'
-                            : error.message,
-                    'warning',
-                    {
-                        _:
-                            typeof error === 'string'
-                                ? error
-                                : error && error.message
-                                    ? error.message
-                                    : undefined,
-                    }
-                );
+                notify(error?.response?.data?.message);
             });
+        });
     };
 
     return (
@@ -80,20 +57,14 @@ const MyLoginPage = (props) => {
                         <div className={classes.input}>
                             <Field autoFocus id="email" name="email" component={Input} label={translate('ra.auth.email')} disabled={loading} />
                         </div>
-                        <div className={classes.input}>
-                            <Field id="password" name="password" component={Input} label={translate('ra.auth.password')} type="password"
-                                disabled={loading} autoComplete="current-password" helperText={
-                                    <Link component={RouterLink} to="/forgot-password">{translate('ra.auth.forgot')}</Link>
-                                } />
-                        </div>
-                        
+                        <Link component={RouterLink} to="/login">{translate('ra.auth.back')}</Link>
                     </div>
                     <CardActions>
                         <Button variant="contained" type="submit" color="secondary" disabled={loading} className={classes.button} >
                             {loading && (
                                 <CircularProgress className={classes.icon} size={18} thickness={2} />
                             )}
-                            {translate('ra.auth.sign_in')}
+                            {translate('ra.auth.reset_password')}
                         </Button>
                     </CardActions>
                 </form>
@@ -102,4 +73,4 @@ const MyLoginPage = (props) => {
     );
 };
 
-export default MyLoginPage;
+export default ForgotPassword;

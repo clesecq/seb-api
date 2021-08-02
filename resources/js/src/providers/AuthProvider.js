@@ -3,15 +3,16 @@ class AuthProvider {
     /**
      * Authenticates an user
      */
-    login({email, password}) {
+    login({ email, password }) {
         return axios.get('/sanctum/csrf-cookie').then(response => {
             return axios.post('/login', {
                 'email': email,
                 'password': password
             }).then(response => {
                 let data = response.data.user;
-                data["fullName"] = response.data.email;
+                data["fullName"] = data.email;
                 localStorage.setItem('user', JSON.stringify(data));
+                localStorage.setItem('logged', "1");
                 return Promise.resolve();
             }).catch(error => {
                 if (error?.response?.data?.message) {
@@ -50,6 +51,8 @@ class AuthProvider {
     checkAuth(params) {
         if (localStorage.getItem('user')) {
             return Promise.resolve();
+        } else if (localStorage.getItem('logged') === "0") {
+            return Promise.reject();
         } else {
             return axios.get('/api/user').then(response => {
                 let data = response.data;
@@ -57,6 +60,7 @@ class AuthProvider {
                 localStorage.setItem('user', JSON.stringify(data));
                 return Promise.resolve();
             }).catch(error => {
+                localStorage.setItem('logged', "0");
                 return Promise.reject();
             });
         }
@@ -68,6 +72,7 @@ class AuthProvider {
     logout() {
         return axios.post('/logout').then(response => {
             localStorage.removeItem('user');
+            localStorage.setItem('logged', "0");
             return Promise.resolve();
         }).catch(error => {
             return Promise.reject();
@@ -81,7 +86,7 @@ class AuthProvider {
         if (localStorage.getItem('user')) {
             return Promise.resolve(JSON.parse(localStorage.getItem('user'))["permissions"]);
         } else {
-            return Promise.reject();
+            return Promise.resolve([]);
         }
     }
 }
