@@ -34,7 +34,7 @@ const ForgotPassword = (props) => {
     const notify = useNotify();
     const classes = useStyles(props);
 
-    const submit = ({email}) => {
+    const submit = ({ email }) => {
         setLoading(true);
         axios.get('/sanctum/csrf-cookie').then(response => {
             return axios.post('/forgot-password', {
@@ -55,9 +55,10 @@ const ForgotPassword = (props) => {
                 <form onSubmit={handleSubmit} noValidate>
                     <div className={classes.form}>
                         <div className={classes.input}>
-                            <Field autoFocus id="email" name="email" component={Input} label={translate('ra.auth.email')} disabled={loading} />
+                            <Field autoFocus id="email" name="email" component={Input} label={translate('ra.auth.email')} disabled={loading} helperText={
+                                <Link component={RouterLink} to="/login">{translate('ra.auth.back')}</Link>
+                            } />
                         </div>
-                        <Link component={RouterLink} to="/login">{translate('ra.auth.back')}</Link>
                     </div>
                     <CardActions>
                         <Button variant="contained" type="submit" color="secondary" disabled={loading} className={classes.button} >
