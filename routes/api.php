@@ -25,11 +25,6 @@ use App\Http\Controllers\PermissionsController;
 |
 */
 
-Route::prefix('auth')->group(function() {
-    Route::post('login', [AuthController::class, 'login']);
-    Route::get('logout', [AuthController::class, 'logout']);
-});
-
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get("auth/check", function() {
         return response(["message" => "ok"], 200);

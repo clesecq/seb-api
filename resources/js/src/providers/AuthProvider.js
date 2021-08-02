@@ -5,11 +5,11 @@ class AuthProvider {
      */
     login({username, password}) {
         return axios.get('/sanctum/csrf-cookie').then(response => {
-            return axios.post('/api/auth/login', {
+            return axios.post('/login', {
                 'email': username,
                 'password': password
             }).then(response => {
-                let data = response.data;
+                let data = response.data.user;
                 data["fullName"] = response.data.email;
                 localStorage.setItem('user', JSON.stringify(data));
                 return Promise.resolve();
@@ -66,7 +66,7 @@ class AuthProvider {
      * Log out
      */
     logout() {
-        return axios.get('/api/auth/logout').then(response => {
+        return axios.post('/logout').then(response => {
             localStorage.removeItem('user');
             return Promise.resolve();
         }).catch(error => {
