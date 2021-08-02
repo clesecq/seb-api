@@ -15,6 +15,7 @@ import products from './resources/Products';
 import productscategories from "./resources/ProductsCategories";
 import Profile from "./resources/Profile";
 import transactions from "./resources/Transactions";
+import transactionscategories from "./resources/TransactionsCategories";
 import users from "./resources/Users";
 
 const history = createBrowserHistory();
@@ -34,6 +35,7 @@ export default class App extends Component {
                 <Resource name="transactions" {...transactions} />
                 <Resource name="users" {...users} />
                 <Resource name="products_categories" {...productscategories} />
+                <Resource name="transactions_categories" {...transactionscategories} />
                 <Resource name="products" {...products} />
                 <Resource name="movements" {...movements} />
             </Admin>

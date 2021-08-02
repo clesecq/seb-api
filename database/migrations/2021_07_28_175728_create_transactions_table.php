@@ -20,6 +20,7 @@ class CreateTransactionsTable extends Migration
             $table->boolean('rectification')->default(false);
             $table->foreignId('user_id');
             $table->foreignId('account_id');
+            $table->foreignId('category_id');
             $table->timestamps();
         });
     }

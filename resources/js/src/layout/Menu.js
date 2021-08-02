@@ -69,8 +69,6 @@ const Item = (props) => {
     const open = useSelector(state => state.admin.ui.sidebarOpen);
     const location = useLocation();
     const regex = new RegExp(`^${props.to}\/|^${props.to}$`);
-    console.log(regex);
-    console.log(location.pathname);
 
     return (
         <>{
@@ -89,12 +87,13 @@ const Menu = ({ onMenuClick, logout }) => {
             <Item to="/" primaryText="Dashboard" leftIcon={<DashboardIcon />}/>
             <Accordeon open={true} title="Stocks" permissions={["stocks", "products"]}>
                 <Item to="/products" permissions="products" primaryText="Products" leftIcon={<LocalCafeIcon />}/>
-                <Item to="/products_categories" permissions="products" primaryText="Caterogies" leftIcon={<CategoryIcon />}/>
+                <Item to="/products_categories" permissions="products" primaryText="Categories" leftIcon={<CategoryIcon />}/>
                 <Item to="/movements" permissions="products" primaryText="Movements" leftIcon={<ShoppingCartIcon />}/>
             </Accordeon>
             <Accordeon open={true} title="Accounting" permissions="accounts">
                 <Item to="/accounts" permissions="accounts" primaryText="Accounts" leftIcon={<AccountBalanceIcon />}/>
                 <Item to="/transactions" permissions="accounts" primaryText="Transactions" leftIcon={<SwapHorizIcon />}/>
+                <Item to="/transactions_categories" permissions="accounts" primaryText="Categories" leftIcon={<CategoryIcon />}/>
             </Accordeon>
             <Item to="/members" permissions="members" primaryText="Members" leftIcon={<GroupIcon />}/>
             <Item to="/users" permissions="users" primaryText="Users" leftIcon={<AccountBoxIcon />}/>

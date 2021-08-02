@@ -21,6 +21,7 @@ class CreateConfigsTable extends Migration
 
         Config::create(['name' => 'members.contribution.amount', 'value' => '5']);
         Config::create(['name' => 'members.contribution.account', 'value' => '1']);
+        Config::create(['name' => 'members.contribution.category', 'value' => '1']);
         Config::create(['name' => 'members.contribution.transaction', 'value' => 'Contribution {member.firstname} {member.lastname}']);
     }
 

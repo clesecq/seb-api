@@ -23,6 +23,9 @@ const Transactions = (props) => (
                 <ReferenceField label="Account" source="account_id" reference="accounts">
                     <TextField source="name" />
                 </ReferenceField>
+                <ReferenceField label="Category" source="category_id" reference="transactions_categories">
+                    <TextField source="name" />
+                </ReferenceField>
                 <ReferenceField label="Creator" source="user_id" reference="users">
                     <TextField source="email" />
                 </ReferenceField>
@@ -38,6 +41,9 @@ const Transactions = (props) => (
                 <ReferenceInput label="Account" source="account_id" reference="accounts">
                     <SelectInput optionText="name" />
                 </ReferenceInput>
+                <ReferenceInput label="Category" source="category_id" reference="transactions_categories">
+                    <SelectInput optionText="name" />
+                </ReferenceInput>
             </SimpleForm>
         </CreateDialog>
         <ShowDialog>
@@ -47,6 +53,9 @@ const Transactions = (props) => (
                 <NumberField source="amount" />
                 <BooleanField source="rectification" />
                 <ReferenceField label="Account" source="account_id" reference="accounts">
+                    <TextField source="name" />
+                </ReferenceField>
+                <ReferenceField label="Category" source="category_id" reference="transactions_categories">
                     <TextField source="name" />
                 </ReferenceField>
                 <ReferenceField label="Creator" source="user_id" reference="users">

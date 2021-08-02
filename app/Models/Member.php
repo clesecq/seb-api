@@ -31,7 +31,8 @@ class Member extends Model
                 'amount' => Config::number('members.contribution.amount'),
                 'rectification' => false,
                 'user_id' => Auth::id() ?? 1,
-                'account_id' => Config::integer('members.contribution.account')
+                'account_id' => Config::integer('members.contribution.account'),
+                'category_id' => Config::integer('members.contribution.category')
             ])->id;
             $member->save();
         }

@@ -27,6 +27,7 @@ class TransactionFactory extends Factory
             'rectification' => $this->faker->boolean(),
             'user_id' => 1,
             'account_id' => $this->faker->numberBetween(1, 5),
+            'category_id' => $this->faker->numberBetween(2, 6),
         ];
     }
 }

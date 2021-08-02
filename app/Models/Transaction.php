@@ -26,10 +26,15 @@ class Transaction extends Model
         'amount',
         'rectification',
         'user_id',
-        'account_id'
+        'account_id',
+        'category_id'
     ];
 
     public function account() {
         return $this->belongsTo(Account::class);
+    }
+
+    public function category() {
+        return $this->belongsTo(TransactionCategory::class);
     }
 }

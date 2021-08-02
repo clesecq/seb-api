@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Transaction;
+use App\Models\TransactionCategory;
 use Illuminate\Http\Request;
 
-class TransactionsController extends Controller
+class TransactionCategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class TransactionsController extends Controller
     public function index(Request $request)
     {
         if (is_array($request->ids)) {
-            return ["data" => Transaction::whereIn('id', $request->ids)->get()];
+            return ["data" => TransactionCategory::whereIn('id', $request->ids)->get()];
         } else {
-            $data = Transaction::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
+            $data = TransactionCategory::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
                 foreach($request->filter as $k => $v) {
                     $data = $data->where($k, 'like', '%' . $v . '%');
@@ -40,16 +40,10 @@ class TransactionsController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
-            'rectification' => ['sometimes', 'required', 'boolean'],
-            'account_id' => ['required', 'exists:accounts,id'],
-            'category_id' => ['required', 'exists:transaction_categories,id'],
+            'name' => ['required', 'string']
         ]);
 
-        $data['user_id'] = $request->user()->id;
-
-        return ['data' => Transaction::create($data)];
+        return ['data' => TransactionCategory::create($data)];
     }
 
     /**
@@ -60,7 +54,7 @@ class TransactionsController extends Controller
      */
     public function show($id)
     {
-        return ['data' => Transaction::findOrFail($id)];
+        return ['data' => TransactionCategory::findOrFail($id)];
     }
 
     /**
@@ -72,7 +66,12 @@ class TransactionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        abort(405);
+        $data = $request->validate([
+            'name' => ['sometimes', 'required', 'string']
+        ]);
+
+        TransactionCategory::findOrFail($id)->update($data);
+        return ['data' => TransactionCategory::findOrFail($id)];
     }
 
     /**
@@ -83,20 +82,36 @@ class TransactionsController extends Controller
      */
     public function destroy($id)
     {
-        abort(405);
+        $category = TransactionCategory::findOrFail($id);
+        $category->delete();
+        return ['data' => $category];
     }
 
     /**
      * Destroy many of the specified resource
      */
     public function destroyMany(Request $request) {
-        abort(405);
+        if (is_array($request->ids)) {
+            TransactionCategory::whereIn('id', $request->ids)->delete();
+            return response(["data" => $request->ids], 200);
+        } else {
+            return response([], 400);
+        }
     }
 
     /**
      * Update many of the specified resource
      */
     public function updateMany(Request $request) {
-        abort(405);
+        $data = $request->validate([
+            'name' => ['sometimes', 'required', 'string']
+        ]);
+
+        if (is_array($request->ids)) {
+            TransactionCategory::whereIn('id', $request->ids)->update($data);
+            return response(["data" => $request->ids], 200);
+        } else {
+            return response([], 400);
+        }
     }
 }
