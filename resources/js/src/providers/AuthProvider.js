@@ -3,10 +3,10 @@ class AuthProvider {
     /**
      * Authenticates an user
      */
-    login({username, password}) {
+    login({email, password}) {
         return axios.get('/sanctum/csrf-cookie').then(response => {
             return axios.post('/login', {
-                'email': username,
+                'email': email,
                 'password': password
             }).then(response => {
                 let data = response.data.user;

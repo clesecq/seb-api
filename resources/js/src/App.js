@@ -5,9 +5,11 @@ import ReactDOM from 'react-dom';
 import { Route } from 'react-router-dom';
 import Dashboard from './layout/Dashboard';
 import Layout from './layout/Layout';
+import Login from './layout/Login';
 import Theme from "./layout/Theme";
 import AuthProvider from './providers/AuthProvider';
 import DataProvider from './providers/DataProvider';
+import I18nProvider from "./providers/I18nProvider";
 import accounts from "./resources/Accounts";
 import members from './resources/Members';
 import movements from "./resources/Movements";
@@ -23,7 +25,7 @@ const history = createBrowserHistory();
 export default class App extends Component {
     render() {
         return (
-            <Admin history={history} dashboard={Dashboard} theme={Theme} layout={Layout} dataProvider={DataProvider} authProvider={AuthProvider} title="Seb" disableTelemetry
+            <Admin i18nProvider={I18nProvider} loginPage={Login} history={history} dashboard={Dashboard} theme={Theme} layout={Layout} dataProvider={DataProvider} authProvider={AuthProvider} title="Seb" disableTelemetry
                 customRoutes={[
                     <Route path="/profile" component={Profile} />
                 ]}
