@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CategoryIcon from '@material-ui/icons/Category';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExpandLess from '@material-ui/icons/ExpandLess';
@@ -97,6 +98,7 @@ const Menu = ({ onMenuClick, logout }) => {
             </Accordeon>
             <Item to="/members" permissions="members" primaryText="Members" leftIcon={<GroupIcon />}/>
             <Item to="/users" permissions="users" primaryText="Users" leftIcon={<AccountBoxIcon />}/>
+            {isXSmall && <Item to="/profile" primaryText="Profile" leftIcon={<AccountCircleIcon />}/>}
             {isXSmall && logout}
         </>
     );

@@ -54,9 +54,9 @@ class AuthProvider {
         } else if (localStorage.getItem('logged') === "0") {
             return Promise.reject();
         } else {
-            return axios.get('/api/user').then(response => {
-                let data = response.data;
-                data["fullName"] = response.data.email;
+            return axios.get('/api/preofile/me').then(response => {
+                let data = response.data.data;
+                data["fullName"] = data.email;
                 localStorage.setItem('user', JSON.stringify(data));
                 return Promise.resolve();
             }).catch(error => {

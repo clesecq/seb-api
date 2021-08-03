@@ -10,7 +10,11 @@ const messages = {
                 forgot: "Forgot your password?",
                 back: "Go back",
                 reset_password: "Reset password",
-                password_confirmation: "Password confirmation"
+                password_confirmation: "Password confirmation",
+                new_password: "New password",
+                current_password: "Current password",
+                change_password: "Change password",
+                password_changed: "Password changed!"
             }
         }
     }),
