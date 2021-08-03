@@ -41,7 +41,9 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => ['required', 'string'],
+            'username' => ['required', 'string', 'unique:users,username'],
+            'firstname' => ['required', 'string'],
+            'lastname' => ['required', 'string'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string'],
             'permissions' => ['required', 'array'],
@@ -80,7 +82,9 @@ class UsersController extends Controller
         }
 
         $data = $request->validate([
-            'name' => ['sometimes', 'required', 'string'],
+            'username' => ['sometimes', 'required', 'string', 'unique:users,username'],
+            'firstname' => ['sometimes', 'required', 'string'],
+            'lastname' => ['sometimes', 'required', 'string'],
             'email' => ['sometimes', 'required', 'email', 'unique:users,email'],
             'password' => ['sometimes', 'required', 'string'],
             'permissions' => ['required', 'array'],

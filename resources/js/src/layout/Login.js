@@ -78,7 +78,7 @@ const MyLoginPage = (props) => {
                 <form onSubmit={handleSubmit} noValidate>
                     <div className={classes.form}>
                         <div className={classes.input}>
-                            <Field autoFocus id="email" name="email" component={Input} label={translate('ra.auth.email')} disabled={loading} />
+                            <Field autoFocus id="username" name="username" component={Input} label={translate('ra.auth.username')} disabled={loading} />
                         </div>
                         <div className={classes.input}>
                             <Field id="password" name="password" component={Input} label={translate('ra.auth.password')} type="password"

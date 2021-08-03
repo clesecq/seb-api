@@ -32,7 +32,9 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $data = $request->validate([
-            'name' => ['sometimes', 'required', 'string'],
+            'username' => ['sometimes', 'required', 'string', 'unique:users,username'],
+            'firstname' => ['sometimes', 'required', 'string'],
+            'lastname' => ['sometimes', 'required', 'string'],
             'email' => ['sometimes', 'required', 'email', 'unique:users,email']
         ]);
 

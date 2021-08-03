@@ -17,7 +17,9 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('username');
+            $table->string('firstname');
+            $table->string('lastname');
             $table->string('email')->unique();
             $table->string('password');
             $table->string('remember_token')->nullable()->default(null);
@@ -27,9 +29,11 @@ class CreateUsersTable extends Migration
         });
 
         $user = User::create([
-            'name' => 'root',
+            'username' => 'root',
+            'firstname' => 'Chuck',
+            'lastname' => 'NORRIS',
             'email' => 'root@localhost',
-            'password' => Hash::make('root'),
+            'password' => Hash::make('rootroot'),
             'permissions' => ["*"]
         ]);
     }
