@@ -44,20 +44,18 @@ const ResetPassword = (props) => {
 
     const submit = ({ password, password_confirmation }) => {
         setLoading(true);
-        axios.get('/sanctum/csrf-cookie').then(response => {
-            return axios.post('/reset-password', {
-                'token': token,
-                'email': email,
-                'password': password,
-                'password_confirmation': password_confirmation
-            }).then(response => {
-                setLoading(false);
-                notify(response.data.message)
-                redirect("/login");
-            }).catch(error => {
-                setLoading(false);
-                notify(error?.response?.data?.message);
-            });
+        return axios.post('/reset-password', {
+            'token': token,
+            'email': email,
+            'password': password,
+            'password_confirmation': password_confirmation
+        }).then(response => {
+            setLoading(false);
+            notify(response.data.message)
+            redirect("/login");
+        }).catch(error => {
+            setLoading(false);
+            notify(error?.response?.data?.message);
         });
     };
 
