@@ -39,6 +39,7 @@ const Input = ({
 );
 
 const MyLoginPage = (props) => {
+    const inputRef = React.useRef();
     const [loading, setLoading] = useSafeSetState(false);
     const [twoFA, setTwoFA] = useSafeSetState(false);
     const login = useLogin();
@@ -53,7 +54,6 @@ const MyLoginPage = (props) => {
                 code: values.code,
                 recovery_code: values.code
             }).then(response => {
-                console.log(response);
                 setLoading(false);
                 let data = response.data;
                 if (data?.two_factor === true) {
@@ -61,16 +61,13 @@ const MyLoginPage = (props) => {
                 } else {
                     login(data, "/");
                 }
-                console.log(data);
             }).catch(error => {
                 setLoading(false);
                 notify(error?.response?.data?.message, 'warning');
-                console.log(error);
             });
         } else {
             axios.get('/sanctum/csrf-cookie').then(response => {
                 axios.post('/login', values).then(response => {
-                    console.log(response);
                     setLoading(false);
                     let data = response.data;
                     if (data?.two_factor === true) {
@@ -78,11 +75,10 @@ const MyLoginPage = (props) => {
                     } else {
                         login(data, "/");
                     }
-                    console.log(data);
+                    inputRef.current.focus();
                 }).catch(error => {
                     setLoading(false);
                     notify(error?.response?.data?.message, 'warning');
-                    console.log(error);
                 });
             });
         }
@@ -94,7 +90,7 @@ const MyLoginPage = (props) => {
                 <form onSubmit={handleSubmit} noValidate>
                     <div className={classes.form}>
                         <div className={classes.input}>
-                            <Field autoFocus id="code" name="code" component={Input} label={translate('ra.auth.2fa.verification_code')} disabled={loading} />
+                            <Field inputRef={inputRef} id="code" name="code" component={Input} label={translate('ra.auth.2fa.verification_code')} disabled={loading} />
                         </div>
                     </div>
                     <CardActions>
