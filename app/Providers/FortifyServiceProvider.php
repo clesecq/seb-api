@@ -13,6 +13,10 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
 use App\Http\Responses\LoginResponse;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
+use App\Http\Responses\FailedTwoFactorLoginResponse;
+use Laravel\Fortify\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
+use App\Http\Responses\TwoFactorLoginResponse;
+use Laravel\Fortify\Contracts\TwoFactorLoginResponse as TwoFactorLoginResponseContract;
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -48,5 +52,7 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
+        $this->app->singleton(FailedTwoFactorLoginResponseContract::class, FailedTwoFactorLoginResponse::class);
+        $this->app->singleton(TwoFactorLoginResponseContract::class, TwoFactorLoginResponse::class);
     }
 }

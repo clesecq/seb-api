@@ -40,6 +40,7 @@ const Input = ({
 
 const MyLoginPage = (props) => {
     const [loading, setLoading] = useSafeSetState(false);
+    const [twoFA, setTwoFA] = useSafeSetState(false);
     const login = useLogin();
     const translate = useTranslate();
     const notify = useNotify();
@@ -47,34 +48,65 @@ const MyLoginPage = (props) => {
 
     const submit = values => {
         setLoading(true);
-        login(values, "/")
-            .then(() => {
+        if (twoFA) {
+            axios.post('/two-factor-challenge', {
+                code: values.code,
+                recovery_code: values.code
+            }).then(response => {
+                console.log(response);
                 setLoading(false);
-            })
-            .catch(error => {
+                let data = response.data;
+                if (data?.two_factor === true) {
+                    setTwoFA(true);
+                } else {
+                    login(data, "/");
+                }
+                console.log(data);
+            }).catch(error => {
                 setLoading(false);
-                notify(
-                    typeof error === 'string'
-                        ? error
-                        : typeof error === 'undefined' || !error.message
-                            ? 'ra.auth.sign_in_error'
-                            : error.message,
-                    'warning',
-                    {
-                        _:
-                            typeof error === 'string'
-                                ? error
-                                : error && error.message
-                                    ? error.message
-                                    : undefined,
-                    }
-                );
+                notify(error?.response?.data?.message, 'warning');
+                console.log(error);
             });
+        } else {
+            axios.get('/sanctum/csrf-cookie').then(response => {
+                axios.post('/login', values).then(response => {
+                    console.log(response);
+                    setLoading(false);
+                    let data = response.data;
+                    if (data?.two_factor === true) {
+                        setTwoFA(true);
+                    } else {
+                        login(data, "/");
+                    }
+                    console.log(data);
+                }).catch(error => {
+                    setLoading(false);
+                    notify(error?.response?.data?.message, 'warning');
+                    console.log(error);
+                });
+            });
+        }
     };
 
     return (
         <Login>
-            <Form onSubmit={submit} render={({ handleSubmit }) => (
+            <Form onSubmit={submit} render={({ handleSubmit }) => (twoFA ?
+                <form onSubmit={handleSubmit} noValidate>
+                    <div className={classes.form}>
+                        <div className={classes.input}>
+                            <Field autoFocus id="code" name="code" component={Input} label={translate('ra.auth.2fa.verification_code')} disabled={loading} />
+                        </div>
+                    </div>
+                    <CardActions>
+                        <Button variant="contained" type="submit" color="secondary" disabled={loading} className={classes.button} >
+                            {loading && (
+                                <CircularProgress className={classes.icon} size={18} thickness={2} />
+                            )}
+                            {translate('ra.auth.2fa.login')}
+                        </Button>
+                    </CardActions>
+                </form>
+                :
                 <form onSubmit={handleSubmit} noValidate>
                     <div className={classes.form}>
                         <div className={classes.input}>
@@ -86,7 +118,7 @@ const MyLoginPage = (props) => {
                                     <Link component={RouterLink} to="/forgot-password">{translate('ra.auth.forgot')}</Link>
                                 } />
                         </div>
-                        
+
                     </div>
                     <CardActions>
                         <Button variant="contained" type="submit" color="secondary" disabled={loading} className={classes.button} >

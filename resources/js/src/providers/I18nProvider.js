@@ -26,7 +26,8 @@ const messages = {
                     validate: "Done!",
                     disabled: "Two Factor Authentication has been disabled",
                     disable: "Disable 2FA",
-                    askdisable: "Do you really want to disable Two Factor Authentication?"
+                    askdisable: "Do you really want to disable Two Factor Authentication?",
+                    login: "Continue"
                 }
             }
         }

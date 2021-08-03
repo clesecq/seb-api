@@ -3,24 +3,12 @@ class AuthProvider {
     /**
      * Authenticates an user
      */
-    login({ username, password }) {
-        return axios.get('/sanctum/csrf-cookie').then(response => {
-            return axios.post('/login', {
-                'username': username,
-                'password': password
-            }).then(response => {
-                let data = response.data.user;
-                data["fullName"] = data.email;
-                localStorage.setItem('user', JSON.stringify(data));
-                localStorage.setItem('logged', "1");
-                return Promise.resolve();
-            }).catch(error => {
-                if (error?.response?.data?.message) {
-                    throw new Error(error?.response?.data?.message);
-                }
-                throw new Error("Unknown error");
-            });
-        });
+    login({ user }) {
+        let data = user;
+        data["fullName"] = data.email;
+        localStorage.setItem('user', JSON.stringify(data));
+        localStorage.setItem('logged', "1");
+        return Promise.resolve();
     }
 
     /**

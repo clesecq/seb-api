@@ -112,7 +112,6 @@ const TwoFactorAuthField = (props) => {
                     <StyledButton size="medium" ml="auto" label="Recovery Codes" onClick={() => {
                         startLoading();
                         return axios.get('/user/two-factor-recovery-codes').then(response => {
-                            handleClickOpen();
                             stopLoading();
                             setCodes(response.data);
                             handleClickOpen();
@@ -144,6 +143,25 @@ const TwoFactorAuthField = (props) => {
                     ))}
                 </DialogContent>
                 <DialogActions>
+                    <MuiButton autoFocus onClick={() => {
+                        startLoading();
+                        return axios.post('/user/two-factor-recovery-codes').then(response => {
+                            return axios.get('/user/two-factor-recovery-codes').then(response => {
+                                stopLoading();
+                                setCodes(response.data);
+                            }).catch(error => {
+                                stopLoading();
+                                console.log(error);
+                                notify(error?.response?.data?.message);
+                            });
+                        }).catch(error => {
+                            stopLoading();
+                            console.log(error);
+                            notify(error?.response?.data?.message);
+                        });
+                    }} color="primary">
+                        Regen
+                    </MuiButton>
                     <MuiButton autoFocus onClick={handleClose} color="primary">
                         Close
                     </MuiButton>
