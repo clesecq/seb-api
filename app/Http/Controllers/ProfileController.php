@@ -18,6 +18,7 @@ class ProfileController extends Controller
     {
         $data = $request->user()->toArray();
         $data['id'] = 'me';
+        $data['two_factor'] = $request->user()->two_factor_secret !== null;
         return ["data" => $data];
     }
 
@@ -32,8 +33,7 @@ class ProfileController extends Controller
     {
         $data = $request->validate([
             'name' => ['sometimes', 'required', 'string'],
-            'email' => ['sometimes', 'required', 'email', 'unique:users,email'],
-            'password' => ['sometimes', 'required', 'confirmed', 'string'],
+            'email' => ['sometimes', 'required', 'email', 'unique:users,email']
         ]);
 
         if (array_key_exists('password', $data)) {

@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('remember_token')->nullable()->default(null);
             $table->json('permissions')->default('[]');
             $table->timestamps();
+            $table->timestamp('password_changed_at')->nullable()->default(null);
         });
 
         $user = User::create([

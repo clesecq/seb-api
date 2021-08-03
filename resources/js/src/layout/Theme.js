@@ -107,6 +107,11 @@ export default merge(defaultTheme, {
             root: {
                 "min-width": null
             }
+        },
+        RaLabeled: {
+            value: {
+                padding: 0
+            }
         }
     }
 });

@@ -24,6 +24,7 @@ const Users = (props) => (
                 </ReferenceArrayField>
                 <DateField source="created_at" />
                 <DateField source="updated_at" />
+                <DateField source="password_changed_at" />
                 <EditButton />
             </Datagrid>
         </List>
@@ -61,6 +62,7 @@ const Users = (props) => (
                 </ReferenceArrayField>
                 <DateField source="created_at" />
                 <DateField source="updated_at" />
+                <DateField source="password_changed_at" />
             </SimpleShowLayout>
         </ShowDialog>
     </>
