@@ -15,4 +15,5 @@ mix.js('resources/js/app.js', 'public/js')
     .browserSync({proxy: '127.0.0.1:8000', files: "public/*", processCssUrls: false})
     .react()
     .sourceMaps()
+    .disableSuccessNotifications()
     .sass('resources/sass/app.scss', 'public/css');
