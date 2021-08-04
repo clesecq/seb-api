@@ -23,6 +23,10 @@ class CreateConfigsTable extends Migration
         Config::create(['name' => 'members.contribution.account', 'value' => '1']);
         Config::create(['name' => 'members.contribution.category', 'value' => '1']);
         Config::create(['name' => 'members.contribution.transaction', 'value' => 'Contribution {member.firstname} {member.lastname}']);
+        Config::create(['name' => 'sales.account', 'value' => '1']);
+        Config::create(['name' => 'sales.category', 'value' => '2']);
+        Config::create(['name' => 'sales.transaction', 'value' => 'Sale #{sale.id}']);
+        Config::create(['name' => 'sales.movement', 'value' => 'Sale #{sale.id}']);
     }
 
     /**

@@ -26,8 +26,8 @@ class TransactionFactory extends Factory
             'amount' => ($this->faker->boolean() ? -1 : 1) * $this->faker->randomFloat(2, 5, 60),
             'rectification' => $this->faker->boolean(),
             'user_id' => 1,
-            'account_id' => $this->faker->numberBetween(1, 5),
-            'category_id' => $this->faker->numberBetween(2, 6),
+            'account_id' => $this->faker->numberBetween(1000, 1004),
+            'category_id' => $this->faker->numberBetween(1000, 1004),
         ];
     }
 }

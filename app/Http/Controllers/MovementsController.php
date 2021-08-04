@@ -66,7 +66,7 @@ class MovementsController extends Controller
 
         $products_data = $request->validate([
             "products" => ['required', 'array'],
-            "products.*.id" => ["required", "exists:products,id"],
+            "products.*.id" => ["required", "exists:products,id", "distinct"],
             "products.*.diff" => ["required", "numeric", "integer"],
         ]);
 

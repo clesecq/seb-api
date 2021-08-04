@@ -7,7 +7,7 @@ import { spacing } from "@material-ui/system";
 import inflection from 'inflection';
 import * as React from "react";
 import { Create, DeleteButton, Edit, SaveButton, Show, Toolbar, useGetResourceLabel, useRedirect, useResourceContext, useResourceDefinition } from 'react-admin';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 
 const StyledDeleteButton = styled(DeleteButton)(spacing);
 
@@ -44,7 +44,7 @@ const MyDialogTitle = withStyles(styles)((props) => {
         </DialogTitle>
     );
 });
-const CreateDialog = ({ handleClose, syncWithLocation, children, ...props }) => {
+const CreateDialog = withRouter(({ history: { goBack }, handleClose, syncWithLocation, children, ...props }) => {
     const name = useResourceContext();
     const resource = useResourceDefinition(props);
     const label = useGetResourceLabel();
@@ -55,7 +55,7 @@ const CreateDialog = ({ handleClose, syncWithLocation, children, ...props }) => 
     return (
         <Route path={`/${name}/create`} exact render={() => {
             const handleClose = () => {
-                redirect(`/${name}`);
+                goBack();
             };
             return (
                 <Dialog fullScreen={fullScreen} open maxWidth="md" onClose={handleClose} fullWidth={true} scroll="body" fullScreen={fullScreen}>
@@ -63,7 +63,7 @@ const CreateDialog = ({ handleClose, syncWithLocation, children, ...props }) => 
                         <DialogContent>
                             <MyDialogTitle onClose={handleClose}>Create {inflection.humanize(label(name, 1), true)}</MyDialogTitle>
                             <Create title=" " {...props}>
-                                {React.cloneElement(children, {toolbar: (<CustomToolbar />)})}
+                                {React.cloneElement(children, { toolbar: (<CustomToolbar />) })}
                             </Create>
                         </DialogContent>
                     </>}
@@ -71,9 +71,9 @@ const CreateDialog = ({ handleClose, syncWithLocation, children, ...props }) => 
             );
         }} />
     );
-};
+});
 
-const EditDialog = ({ handleClose, syncWithLocation, children, ...props }) => {
+const EditDialog = withRouter(({ history: { goBack }, handleClose, syncWithLocation, children, ...props }) => {
     const name = useResourceContext();
     const resource = useResourceDefinition(props);
     const label = useGetResourceLabel();
@@ -84,7 +84,7 @@ const EditDialog = ({ handleClose, syncWithLocation, children, ...props }) => {
     return (
         <Route path={`/${name}/:id`} render={({ match }) => {
             const handleClose = () => {
-                redirect(`/${name}`);
+                goBack();
             };
             const isMatch = match && match.params && match.params.id !== 'create';
             return (
@@ -94,7 +94,7 @@ const EditDialog = ({ handleClose, syncWithLocation, children, ...props }) => {
                             <DialogContent>
                                 <MyDialogTitle onClose={handleClose}>Edit {inflection.humanize(label(name, 1), true)} #{isMatch ? match.params.id : null}</MyDialogTitle>
                                 <Edit actions={null} id={isMatch ? match.params.id : null} title=" " {...props}>
-                                    {React.cloneElement(children, {toolbar: (<CustomToolbar />)})}
+                                    {React.cloneElement(children, { toolbar: (<CustomToolbar />) })}
                                 </Edit>
                             </DialogContent>
                         </>)
@@ -103,9 +103,9 @@ const EditDialog = ({ handleClose, syncWithLocation, children, ...props }) => {
             );
         }} exact />
     );
-};
+});
 
-const ShowDialog = ({ handleClose, syncWithLocation, children, hasEdit, ...props }) => {
+const ShowDialog = withRouter(({ history: { goBack }, handleClose, syncWithLocation, children, hasEdit, ...props }) => {
     const name = useResourceContext();
     const resource = useResourceDefinition(props);
     const label = useGetResourceLabel();
@@ -116,7 +116,7 @@ const ShowDialog = ({ handleClose, syncWithLocation, children, hasEdit, ...props
     return (
         <Route path={`/${name}/:id/show`} render={({ match }) => {
             const handleClose = () => {
-                redirect(`/${name}`);
+                goBack();
             };
             const isMatch = match && match.params && match.params.id !== 'create';
             return (
@@ -134,6 +134,6 @@ const ShowDialog = ({ handleClose, syncWithLocation, children, hasEdit, ...props
             );
         }} exact />
     );
-};
+});
 
 export { CreateDialog, EditDialog, ShowDialog };

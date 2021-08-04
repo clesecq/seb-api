@@ -20,7 +20,12 @@ class CreateTransactionCategoriesTable extends Migration
             $table->timestamps();
         });
 
-        TransactionCategory::create(['name' => 'Contribution']);
+        TransactionCategory::create(['id' => 1, 'name' => 'Contributions']);
+        TransactionCategory::create(['id' => 2, 'name' => 'Sales']);
+
+        // Ensure next IDs are > 1000.
+        DB::table('transaction_categories')->insert(['id' => 999, 'name' => 'whatever']);
+        DB::table('transaction_categories')->where('id', 999)->delete();
     }
 
     /**

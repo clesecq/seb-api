@@ -15,6 +15,7 @@ import members from './resources/Members';
 import movements from "./resources/Movements";
 import products from './resources/Products';
 import productscategories from "./resources/ProductsCategories";
+import sales from "./resources/Sales";
 import transactions from "./resources/Transactions";
 import transactionscategories from "./resources/TransactionsCategories";
 import users from "./resources/Users";
@@ -35,6 +36,7 @@ export default class App extends Component {
                 <Resource name="transactions_categories" {...transactionscategories} />
                 <Resource name="products" {...products} />
                 <Resource name="movements" {...movements} />
+                <Resource name="sales" {...sales} />
             </Admin>
         );
     }

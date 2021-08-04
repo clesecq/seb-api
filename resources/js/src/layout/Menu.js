@@ -14,6 +14,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import GroupIcon from '@material-ui/icons/Group';
 import LocalCafeIcon from '@material-ui/icons/LocalCafe';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 import * as React from 'react';
@@ -86,6 +87,9 @@ const Menu = ({ onMenuClick, logout }) => {
     return (
         <>
             <Item to="/" primaryText="Dashboard" leftIcon={<DashboardIcon />}/>
+            <Accordeon open={true} title="Business" permissions={["sales"]}>
+                <Item to="/sales" permissions="sales" primaryText="Sales" leftIcon={<LocalOfferIcon />}/>
+            </Accordeon>
             <Accordeon open={true} title="Stocks" permissions={["stocks", "products"]}>
                 <Item to="/products" permissions="products" primaryText="Products" leftIcon={<LocalCafeIcon />}/>
                 <Item to="/products_categories" permissions="products" primaryText="Categories" leftIcon={<CategoryIcon />}/>

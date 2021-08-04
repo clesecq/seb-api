@@ -36,6 +36,10 @@ class CreateUsersTable extends Migration
             'password' => Hash::make('rootroot'),
             'permissions' => ["*"]
         ]);
+
+        // Ensure next IDs are > 1000.
+        DB::table('users')->insert(['id' => 999, 'username' => 'a', 'firstname' => 'a', 'lastname' => 'a', 'email' => 'a', 'password' => 'a']);
+        DB::table('users')->where('id', 999)->delete();
     }
 
     /**

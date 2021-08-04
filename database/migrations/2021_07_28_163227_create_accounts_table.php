@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Account;
 
 class CreateAccountsTable extends Migration
 {
@@ -21,6 +22,12 @@ class CreateAccountsTable extends Migration
             $table->decimal('balance', $precision = 12, $scale = 3)->default(0);
             $table->timestamps();
         });
+
+        Account::create(['id' => 1, 'name' => 'Cash Register']);
+
+        // Ensure next IDs are > 1000.
+        DB::table('accounts')->insert(['id' => 999, 'name' => 'whatever']);
+        DB::table('accounts')->where('id', 999)->delete();
     }
 
     /**

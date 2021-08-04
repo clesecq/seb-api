@@ -13,6 +13,7 @@ use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\TransactionCategoriesController;
 use App\Http\Controllers\MovementsController;
 use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\SalesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,5 +72,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::delete("transactions_categories", [TransactionCategoriesController::class, "destroyMany"]);
         Route::put("transactions_categories", [TransactionCategoriesController::class, "updateMany"]);
         Route::resource("transactions_categories", TransactionCategoriesController::class);
+    });
+
+    Route::group(['middleware' => ['permission:sales']], function () {
+        Route::delete("sales", [SalesController::class, "destroyMany"]);
+        Route::put("sales", [SalesController::class, "updateMany"]);
+        Route::resource("sales", SalesController::class);
     });
 });
