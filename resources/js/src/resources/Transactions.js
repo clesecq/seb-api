@@ -1,6 +1,8 @@
 import * as React from "react";
-import { BooleanField, BooleanInput, Datagrid, DateField, List, NumberField, NumberInput, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { BooleanField, BooleanInput, Datagrid, DateField, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
 import { CreateDialog, ShowDialog } from '../components/DialogForm';
+import MoneyField from "../components/MoneyField";
+import MoneyInput from "../components/MoneyInput";
 
 const TransactionsFilters = [
     <TextInput label="Name" source="name" />,
@@ -18,7 +20,7 @@ const Transactions = (props) => (
             <Datagrid>
                 <TextField source="id" />
                 <TextField source="name" />
-                <NumberField source="amount" />
+                <MoneyField noLabel={true} source="amount" />
                 <BooleanField source="rectification" />
                 <ReferenceField label="Account" source="account_id" reference="accounts">
                     <TextField source="name" />
@@ -36,7 +38,7 @@ const Transactions = (props) => (
         <CreateDialog {...props}>
             <SimpleForm redirect="list">
                 <TextInput source="name" />
-                <NumberInput source="amount" />
+                <MoneyInput source="amount" />
                 <BooleanInput source="rectification" />
                 <ReferenceInput label="Account" source="account_id" reference="accounts">
                     <SelectInput optionText="name" />
@@ -50,7 +52,7 @@ const Transactions = (props) => (
             <SimpleShowLayout>
                 <TextField source="id" />
                 <TextField source="name" />
-                <NumberField source="amount" />
+                <MoneyField source="amount" />
                 <BooleanField source="rectification" />
                 <ReferenceField label="Account" source="account_id" reference="accounts">
                     <TextField source="name" />

@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrayField, ArrayInput, Datagrid, DateField, List, NumberInput, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleFormIterator, SimpleShowLayout, TextField } from 'react-admin';
 import { CreateDialog, ShowDialog } from '../components/DialogForm';
+import MoneyField from "../components/MoneyField";
 
 const SalesFilters = [
     
@@ -12,11 +13,14 @@ const Sales = (props) => (
             <Datagrid>
                 <TextField source="id" />
                 <DateField source="created_at" label="Date" />
-                <TextField source="transaction.amount" label="Amount" />
+                <MoneyField noLabel={true} source="transaction.amount" label="Amount" />
                 <ReferenceField label="User" source="transaction.user_id" reference="users" link="show">
                     <TextField source="username" />
                 </ReferenceField>
                 <ReferenceField label="Movement" source="movement_id" reference="movements" link="show">
+                    <TextField source="name" />
+                </ReferenceField>
+                <ReferenceField label="Transaction" source="transaction_id" reference="transactions" link="show">
                     <TextField source="name" />
                 </ReferenceField>
                 <ShowButton />
@@ -37,7 +41,7 @@ const Sales = (props) => (
         <ShowDialog>
             <SimpleShowLayout>
                 <TextField source="id" />
-                <TextField source="transaction.amount" label="Amount" />
+                <MoneyField source="transaction.amount" label="Amount" />
                 <ReferenceField label="User" source="transaction.user_id" reference="users" link="show">
                     <TextField source="username" />
                 </ReferenceField>

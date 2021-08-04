@@ -1,6 +1,8 @@
 import * as React from "react";
 import { CreateButton, Datagrid, DateField, DateInput, EditButton, ExportButton, FilterButton, List, NumberField, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
+import MoneyField from "../components/MoneyField";
+import MoneyInput from "../components/MoneyInput";
 import { RecalculateButton } from '../components/RecalculateButton';
 
 const ProductsFilters = [
@@ -28,7 +30,7 @@ const Products = (props) => (
                 <ReferenceField label="Category" source="category_id" reference="products_categories" >
                     <TextField source="name" />
                 </ReferenceField>
-                <TextField source="price" />
+                <MoneyField source="price" />
                 <NumberField source="count" />
                 <DateField source="created_at" />
                 <DateField source="updated_at" />
@@ -42,7 +44,7 @@ const Products = (props) => (
                     <SelectInput optionText="name" />
                 </ReferenceInput>
                 <TextInput source="barcode" />
-                <TextInput source="price" />
+                <MoneyInput source="price" />
             </SimpleForm>
         </CreateDialog>
         <EditDialog {...props}>
@@ -53,7 +55,7 @@ const Products = (props) => (
                     <SelectInput optionText="name" />
                 </ReferenceInput>
                 <TextInput source="barcode" />
-                <TextInput source="price" />
+                <MoneyInput source="price" />
                 <NumberField disabled source="count" />
                 <DateInput disabled source="created_at" />
                 <DateInput disabled source="updated_at" />
@@ -67,7 +69,7 @@ const Products = (props) => (
                 <ReferenceField label="Category" source="category_id" reference="products_categories" >
                     <TextField source="name" />
                 </ReferenceField>
-                <TextField source="price" />
+                <MoneyInput source="price" />
                 <NumberField source="count" />
                 <DateField source="created_at" />
                 <DateField source="updated_at" />
