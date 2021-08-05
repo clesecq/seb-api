@@ -87,6 +87,7 @@ const Menu = ({ onMenuClick, logout }) => {
     return (
         <>
             <Item to="/" primaryText="Dashboard" leftIcon={<DashboardIcon />}/>
+            <Item to="/sell" permissions="sales" primaryText="Sell" leftIcon={<LocalOfferIcon />}/>
             <Accordeon open={true} title="Business" permissions={["sales"]}>
                 <Item to="/sales" permissions="sales" primaryText="Sales" leftIcon={<LocalOfferIcon />}/>
             </Accordeon>

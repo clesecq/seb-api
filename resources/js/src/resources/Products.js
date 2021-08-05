@@ -7,7 +7,10 @@ import { RecalculateButton } from '../components/RecalculateButton';
 
 const ProductsFilters = [
     <TextInput label="Name" source="name" />,
-    <TextInput label="Barcode" source="barcode" />
+    <TextInput label="Barcode" source="barcode" />,
+    <ReferenceInput label="Category" source="category_id" reference="products_categories">
+        <SelectInput optionText="name" />
+    </ReferenceInput>
 ];
 
 const ProductsListActions = ({ basePath, ...props }) => (
