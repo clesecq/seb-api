@@ -30,7 +30,7 @@ const BreadCrumb = () => {
             {path.map((val, key) => {
                 link += "/" + val;
                 return (
-                    <MuiLink component={Link} color="inherit" to={link}>
+                    <MuiLink component={Link} color="inherit" to={link} key={link}>
                         {inflection.humanize(val)}
                     </MuiLink>
                 );

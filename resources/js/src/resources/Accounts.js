@@ -1,6 +1,7 @@
 import * as React from "react";
-import { CreateButton, Datagrid, DateField, DateInput, EditButton, ExportButton, FilterButton, List, NumberField, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
+import { CreateButton, Datagrid, DateField, DateInput, EditButton, ExportButton, FilterButton, List, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
+import MoneyField from "../components/MoneyField";
 import { RecalculateButton } from '../components/RecalculateButton';
 
 const AccountsFilters = [
@@ -26,7 +27,7 @@ const Accounts = (props) => (
                 <TextField source="name" />
                 <TextField source="iban" />
                 <TextField source="bic" />
-                <NumberField source="balance" />
+                <MoneyField noLabel={true} source="balance" />
                 <EditButton />
             </Datagrid>
         </List>
@@ -53,7 +54,7 @@ const Accounts = (props) => (
                 <TextField source="name" />
                 <TextField source="iban" />
                 <TextField source="bic" />
-                <NumberField source="balance" />
+                <MoneyField source="balance" />
                 <DateField source="created_at" />
                 <DateField source="updated_at" />
             </SimpleShowLayout>

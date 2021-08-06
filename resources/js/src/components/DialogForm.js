@@ -44,7 +44,7 @@ const MyDialogTitle = withStyles(styles)((props) => {
         </DialogTitle>
     );
 });
-const CreateDialog = withRouter(({ history: { goBack }, handleClose, syncWithLocation, children, ...props }) => {
+const CreateDialog = withRouter(({ history: { goBack }, handleClose, staticContext, syncWithLocation, children, ...props }) => {
     const name = useResourceContext();
     const resource = useResourceDefinition(props);
     const label = useGetResourceLabel();
@@ -73,7 +73,7 @@ const CreateDialog = withRouter(({ history: { goBack }, handleClose, syncWithLoc
     );
 });
 
-const EditDialog = withRouter(({ history: { goBack }, handleClose, syncWithLocation, children, ...props }) => {
+const EditDialog = withRouter(({ history: { goBack }, handleClose, staticContext, syncWithLocation, children, ...props }) => {
     const name = useResourceContext();
     const resource = useResourceDefinition(props);
     const label = useGetResourceLabel();
@@ -105,7 +105,7 @@ const EditDialog = withRouter(({ history: { goBack }, handleClose, syncWithLocat
     );
 });
 
-const ShowDialog = withRouter(({ history: { goBack }, handleClose, syncWithLocation, children, hasEdit, ...props }) => {
+const ShowDialog = withRouter(({ history: { goBack }, handleClose, staticContext, syncWithLocation, children, hasEdit, ...props }) => {
     const name = useResourceContext();
     const resource = useResourceDefinition(props);
     const label = useGetResourceLabel();

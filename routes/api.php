@@ -27,56 +27,21 @@ use App\Http\Controllers\SalesController;
 */
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get("auth/check", function() {
-        return response(["message" => "ok"], 200);
-    });
-    Route::get("profile/me", [ProfileController::class, 'show']);
-    Route::put("profile/me", [ProfileController::class, 'update']);
-    Route::resource("permissions", PermissionsController::class);
+    Route::get("permissions", [PermissionsController::class, 'index']);
 
-    Route::group(['middleware' => ['permission:users']], function () {
-        Route::delete("users", [UsersController::class, "destroyMany"]);
-        Route::put("users", [UsersController::class, "updateMany"]);
-        Route::resource("users", UsersController::class);
+    // Editing a profile should be allowed only when logged in via session
+    Route::group(['middleware' => ['guard:web']], function () {
+        Route::get("profile/me", [ProfileController::class, 'show']);
+        Route::put("profile/me", [ProfileController::class, 'update']);
     });
 
-    Route::group(['middleware' => ['permission:members']], function () {
-        Route::delete("members", [MembersController::class, "destroyMany"]);
-        Route::put("members", [MembersController::class, "updateMany"]);
-        Route::resource("members", MembersController::class);
-    });
-    
-    Route::group(['middleware' => ['permission:products']], function () {
-        Route::delete("products", [ProductsController::class, "destroyMany"]);
-        Route::put("products", [ProductsController::class, "updateMany"]);
-        Route::get("products/reload", [ProductsController::class, "reload"]);
-        Route::resource("products", ProductsController::class);
-
-        Route::delete("products_categories", [ProductCategoriesController::class, "destroyMany"]);
-        Route::put("products_categories", [ProductCategoriesController::class, "updateMany"]);
-        Route::resource("products_categories", ProductCategoriesController::class);
-
-        Route::resource("movements", MovementsController::class);
-    });
-
-    Route::group(['middleware' => ['permission:accounts']], function () {
-        Route::delete("accounts", [AccountsController::class, "destroyMany"]);
-        Route::put("accounts", [AccountsController::class, "updateMany"]);
-        Route::get("accounts/reload", [AccountsController::class, "reload"]);
-        Route::resource("accounts", AccountsController::class);
-
-        Route::delete("transactions", [TransactionsController::class, "destroyMany"]);
-        Route::put("transactions", [TransactionsController::class, "updateMany"]);
-        Route::resource("transactions", TransactionsController::class);
-
-        Route::delete("transactions_categories", [TransactionCategoriesController::class, "destroyMany"]);
-        Route::put("transactions_categories", [TransactionCategoriesController::class, "updateMany"]);
-        Route::resource("transactions_categories", TransactionCategoriesController::class);
-    });
-
-    Route::group(['middleware' => ['permission:sales']], function () {
-        Route::delete("sales", [SalesController::class, "destroyMany"]);
-        Route::put("sales", [SalesController::class, "updateMany"]);
-        Route::resource("sales", SalesController::class);
-    });
+    Route::res("users", UsersController::class);
+    Route::res("members", MembersController::class);
+    Route::res("products", ProductsController::class, "true");
+    Route::res("products_categories", ProductCategoriesController::class);
+    Route::res("movements", MovementsController::class);
+    Route::res("accounts", AccountsController::class, true);
+    Route::res("transactions_categories", TransactionCategoriesController::class);
+    Route::res("transactions", TransactionsController::class);
+    Route::res("sales", SalesController::class);
 });

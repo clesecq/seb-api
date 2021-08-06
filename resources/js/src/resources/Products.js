@@ -33,7 +33,7 @@ const Products = (props) => (
                 <ReferenceField label="Category" source="category_id" reference="products_categories" >
                     <TextField source="name" />
                 </ReferenceField>
-                <MoneyField source="price" />
+                <MoneyField noLabel={true} source="price" />
                 <NumberField source="count" />
                 <DateField source="created_at" />
                 <DateField source="updated_at" />
@@ -72,7 +72,7 @@ const Products = (props) => (
                 <ReferenceField label="Category" source="category_id" reference="products_categories" >
                     <TextField source="name" />
                 </ReferenceField>
-                <MoneyInput source="price" />
+                <MoneyField source="price" />
                 <NumberField source="count" />
                 <DateField source="created_at" />
                 <DateField source="updated_at" />

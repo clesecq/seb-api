@@ -26,6 +26,7 @@ class AuthProvider {
      * Check if the error is an authentication error
      */
     checkError(error) {
+        const status = error.status;
         if (status === 401 || status === 403 || error.message === "Unauthenticated.") {
             localStorage.removeItem('user');
             return Promise.reject();
@@ -48,8 +49,9 @@ class AuthProvider {
                 localStorage.setItem('user', JSON.stringify(data));
                 return Promise.resolve();
             }).catch(error => {
+                console.log(error);
                 localStorage.setItem('logged', "0");
-                return Promise.reject();
+                return Promise.reject(error);
             });
         }
     }
