@@ -6,7 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { spacing } from "@material-ui/system";
 import inflection from 'inflection';
 import * as React from "react";
-import { Create, DeleteButton, Edit, SaveButton, Show, Toolbar, useGetResourceLabel, useRedirect, useResourceContext, useResourceDefinition } from 'react-admin';
+import { Create, DeleteButton, Edit, SaveButton, Show, Toolbar, useGetResourceLabel, useResourceContext, useResourceDefinition } from 'react-admin';
 import { Route, withRouter } from 'react-router-dom';
 
 const StyledDeleteButton = styled(DeleteButton)(spacing);
@@ -48,7 +48,6 @@ const CreateDialog = withRouter(({ history: { goBack }, handleClose, staticConte
     const name = useResourceContext();
     const resource = useResourceDefinition(props);
     const label = useGetResourceLabel();
-    const redirect = useRedirect();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -59,7 +58,7 @@ const CreateDialog = withRouter(({ history: { goBack }, handleClose, staticConte
             };
             return (
                 <Dialog fullScreen={fullScreen} open maxWidth="md" onClose={handleClose} fullWidth={true} scroll="body" fullScreen={fullScreen}>
-                    {resource.hasCreate === undefined ? redirect(`/${name}`) : <>
+                    {resource.hasCreate === undefined ? goBack() : <>
                         <DialogContent>
                             <MyDialogTitle onClose={handleClose}>Create {inflection.humanize(label(name, 1), true)}</MyDialogTitle>
                             <Create title=" " {...props}>
@@ -77,7 +76,6 @@ const EditDialog = withRouter(({ history: { goBack }, handleClose, staticContext
     const name = useResourceContext();
     const resource = useResourceDefinition(props);
     const label = useGetResourceLabel();
-    const redirect = useRedirect();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -90,7 +88,7 @@ const EditDialog = withRouter(({ history: { goBack }, handleClose, staticContext
             return (
                 <Dialog fullScreen={fullScreen} open={isMatch} maxWidth="md" onClose={handleClose} fullWidth={true} scroll="body" fullScreen={fullScreen}>
                     {isMatch ? (
-                        (resource.hasEdit === undefined ? redirect(`/${name}`) : <>
+                        (resource.hasEdit === undefined ? goBack() : <>
                             <DialogContent>
                                 <MyDialogTitle onClose={handleClose}>Edit {inflection.humanize(label(name, 1), true)} #{isMatch ? match.params.id : null}</MyDialogTitle>
                                 <Edit actions={null} id={isMatch ? match.params.id : null} title=" " {...props}>
@@ -109,7 +107,6 @@ const ShowDialog = withRouter(({ history: { goBack }, handleClose, staticContext
     const name = useResourceContext();
     const resource = useResourceDefinition(props);
     const label = useGetResourceLabel();
-    const redirect = useRedirect();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -129,7 +126,7 @@ const ShowDialog = withRouter(({ history: { goBack }, handleClose, staticContext
                                     {children}
                                 </Show>
                             </DialogContent>
-                        </> : redirect(`/${name}`))) : ""}
+                        </> : goBack())) : ""}
                 </Dialog>
             );
         }} exact />
