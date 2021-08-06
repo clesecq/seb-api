@@ -37,11 +37,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::res("users", UsersController::class);
     Route::res("members", MembersController::class);
-    Route::res("products", ProductsController::class, "true");
+    Route::res("products", ProductsController::class, ['reload']);
     Route::res("products_categories", ProductCategoriesController::class);
-    Route::res("movements", MovementsController::class);
-    Route::res("accounts", AccountsController::class, true);
+    Route::res("movements", MovementsController::class, ['final']);
+    Route::res("accounts", AccountsController::class, ['reload']);
     Route::res("transactions_categories", TransactionCategoriesController::class);
-    Route::res("transactions", TransactionsController::class);
-    Route::res("sales", SalesController::class);
+    Route::res("transactions", TransactionsController::class, ['final']);
+    Route::res("sales", SalesController::class, ['final']);
 });

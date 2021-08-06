@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration
             'lastname' => 'NORRIS',
             'email' => 'root@localhost',
             'password' => Hash::make('rootroot'),
-            'permissions' => ["*"]
+            'permissions' => ["*.*"]
         ]);
 
         // Ensure next IDs are > 1000.

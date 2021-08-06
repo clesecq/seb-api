@@ -29,18 +29,21 @@ class AppServiceProvider extends ServiceProvider
             return view('app');
         });
 
-        Route::macro('res', function ($name, $controller, $reload = false) {
-            if ($reload) {
+        Route::macro('res', function ($name, $controller, $options = []) {
+            if (in_array('reload', $options)) {
                 Route::get($name . "/reload", [$controller, "reload"])->middleware('permission:' . $name . '.reload');
             }
 
-            Route::delete($name, [$controller, "destroyMany"])->middleware('permission:' . $name . '.destroy');
-            Route::put($name, [$controller, "updateMany"])->middleware('permission:' . $name . '.update');
-            Route::get($name, [$controller, "index"])->middleware('permission:' . $name . '.list');
-            Route::post($name, [$controller, "store"])->middleware('permission:' . $name . '.store');
+            if (!in_array('final', $options)) {
+                Route::delete($name . "/{id}", [$controller, "destroy"])->middleware('permission:' . $name . '.delete');
+                Route::delete($name, [$controller, "destroyMany"])->middleware('permission:' . $name . '.delete');
+                Route::put($name . "/{id}", [$controller, "update"])->middleware('permission:' . $name . '.update');
+                Route::put($name, [$controller, "updateMany"])->middleware('permission:' . $name . '.update');
+            }
+
+            Route::get($name, [$controller, "index"])->middleware('permission:' . $name . '.show');
             Route::get($name . "/{id}", [$controller, "show"])->middleware('permission:' . $name . '.show');
-            Route::put($name . "/{id}", [$controller, "update"])->middleware('permission:' . $name . '.update');
-            Route::delete($name . "/{id}", [$controller, "destroy"])->middleware('permission:' . $name . '.destroy');
+            Route::post($name, [$controller, "store"])->middleware('permission:' . $name . '.create');
         });
     }
 }

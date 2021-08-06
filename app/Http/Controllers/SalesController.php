@@ -108,41 +108,4 @@ class SalesController extends Controller
     {
         return ['data' => Sale::with(['movement', 'movement.products', 'movement.products.product', 'transaction'])->findOrFail($id)];
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        abort(405);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        abort(405);
-    }
-
-    /**
-     * Destroy many of the specified resource
-     */
-    public function destroyMany(Request $request) {
-        abort(405);
-    }
-
-    /**
-     * Update many of the specified resource
-     */
-    public function updateMany(Request $request) {
-        abort(405);
-    }
 }

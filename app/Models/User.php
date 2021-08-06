@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -48,7 +49,12 @@ class User extends Authenticatable
         'permissions' => 'array'
     ];
 
-    public function hasPermission(string $name) {
-        return in_array('*', $this->permissions) || in_array($name, $this->permissions);
+    public function hasPermission(string $name)
+    {
+        $split = explode('.', $name);
+        $resource = $split[0];
+        $action = $split[1];
+
+        return in_array('*.*', $this->permissions) || in_array($resource . '.*', $this->permissions) || in_array('*.' . $action, $this->permissions) || in_array($name, $this->permissions);
     }
 }
