@@ -27,18 +27,24 @@ function hasPerm(permissions, perm) {
     if (permissions === undefined)
         return false;
 
-    if (permissions.includes("*")) {
+    if (permissions.includes("*.*")) {
         return true;
     }
     
     if (Array.isArray(perm)) {
         for (let p of perm) {
-            if (permissions.includes(p)) {
-                return true;
+            for (let up of permissions) {
+                if (up.startsWith(p)) {
+                    return true
+                }
             }
         }
     } else {
-        return permissions.includes(perm);
+        for (let up of permissions) {
+            if (up.startsWith(perm)) {
+                return true
+            }
+        }
     }
     return false;
 }
@@ -88,18 +94,16 @@ const Menu = ({ onMenuClick, logout }) => {
         <>
             <Item to="/" primaryText="Dashboard" leftIcon={<DashboardIcon />}/>
             <Item to="/sell" permissions="sales" primaryText="Sell" leftIcon={<LocalOfferIcon />}/>
-            <Accordeon open={true} title="Business" permissions={["sales"]}>
-                <Item to="/sales" permissions="sales" primaryText="Sales" leftIcon={<LocalOfferIcon />}/>
-            </Accordeon>
-            <Accordeon open={true} title="Stocks" permissions={["stocks", "products"]}>
+            <Accordeon open={true} title="Stocks" permissions={["products", "products_categories", "movements"]}>
                 <Item to="/products" permissions="products" primaryText="Products" leftIcon={<LocalCafeIcon />}/>
-                <Item to="/products_categories" permissions="products" primaryText="Categories" leftIcon={<CategoryIcon />}/>
-                <Item to="/movements" permissions="products" primaryText="Movements" leftIcon={<ShoppingCartIcon />}/>
+                <Item to="/products_categories" permissions="products_categories" primaryText="Categories" leftIcon={<CategoryIcon />}/>
+                <Item to="/movements" permissions="movements" primaryText="Movements" leftIcon={<ShoppingCartIcon />}/>
             </Accordeon>
-            <Accordeon open={true} title="Accounting" permissions="accounts">
+            <Accordeon open={true} title="Accounting" permissions={["accounts", "transactions", "transactions_categories", "sales"]}>
                 <Item to="/accounts" permissions="accounts" primaryText="Accounts" leftIcon={<AccountBalanceIcon />}/>
-                <Item to="/transactions" permissions="accounts" primaryText="Transactions" leftIcon={<SwapHorizIcon />}/>
-                <Item to="/transactions_categories" permissions="accounts" primaryText="Categories" leftIcon={<CategoryIcon />}/>
+                <Item to="/transactions" permissions="transactions" primaryText="Transactions" leftIcon={<SwapHorizIcon />}/>
+                <Item to="/transactions_categories" permissions="transactions_categories" primaryText="Categories" leftIcon={<CategoryIcon />}/>
+                <Item to="/sales" permissions="sales" primaryText="Sales" leftIcon={<LocalOfferIcon />}/>
             </Accordeon>
             <Item to="/members" permissions="members" primaryText="Members" leftIcon={<GroupIcon />}/>
             <Item to="/users" permissions="users" primaryText="Users" leftIcon={<AccountBoxIcon />}/>
