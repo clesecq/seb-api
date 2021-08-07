@@ -24,6 +24,12 @@ import { getResources, MenuItemLink, usePermissions } from 'react-admin';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
+function permMatch(userperms, elemperm) {
+    const [resource, access] = elemperm.split(".");
+
+    return userperms.includes("*.*") || userperms.includes(resource + ".*") || userperms.includes("*." + access) || userperms.includes(elemperm);
+}
+
 function hasPerm(permissions, perm) {
     if (permissions === undefined)
         return false;
@@ -31,28 +37,22 @@ function hasPerm(permissions, perm) {
     if (permissions.includes("*.*")) {
         return true;
     }
-    
+
     if (Array.isArray(perm)) {
         for (let p of perm) {
-            for (let up of permissions) {
-                if (up.startsWith(p)) {
-                    return true
-                }
-            }
+            if (permMatch(permissions, p))
+                return true;
         }
     } else {
-        for (let up of permissions) {
-            if (up.startsWith(perm)) {
-                return true
-            }
-        }
+        if (permMatch(permissions, perm))
+            return true;
     }
     return false;
 }
 
-const Accordeon = ({children, title, permissions, ...props}) => {
+const Accordeon = ({ children, title, permissions, ...props }) => {
     const { perms } = usePermissions();
-    const [ open, setOpen] = useState(props.open);
+    const [open, setOpen] = useState(props.open);
 
     return (
         <>{(!hasPerm(perms, permissions)) &&
@@ -60,7 +60,7 @@ const Accordeon = ({children, title, permissions, ...props}) => {
                 <Tooltip title={title} placement="right">
                     <MenuItem button onClick={() => setOpen(!open)} className={"RaMenuItemLink-root-36 MuiMenuItem-root"}>
                         <ListItemIcon className={"RaMenuItemLink-icon-38"}>
-                        {open ? <ExpandLess /> : <ExpandMore />}
+                            {open ? <ExpandLess /> : <ExpandMore />}
                         </ListItemIcon>
                         <ListItemText primary={title} />
                     </MenuItem>
@@ -93,23 +93,24 @@ const Menu = ({ onMenuClick, logout }) => {
 
     return (
         <>
-            <Item to="/" primaryText="Dashboard" leftIcon={<DashboardIcon />}/>
-            <Item to="/sales/create" permissions="sales" primaryText="Sell" leftIcon={<LocalOfferIcon />}/>
-            <Item to="/members" permissions="members" primaryText="Members" leftIcon={<GroupIcon />}/>
-            <Accordeon open={true} title="Stocks" permissions={["products", "products_categories", "movements"]}>
-                <Item to="/products" permissions="products" primaryText="Products" leftIcon={<LocalCafeIcon />}/>
-                <Item to="/products_categories" permissions="products_categories" primaryText="Categories" leftIcon={<CategoryIcon />}/>
-                <Item to="/movements" permissions="movements" primaryText="Movements" leftIcon={<ShoppingCartIcon />}/>
+            <Item to="/" primaryText="Dashboard" leftIcon={<DashboardIcon />} />
+            <Item to="/sales/create" permissions="sales.create" primaryText="Sell" leftIcon={<LocalOfferIcon />} />
+            <Item to="/accounts_counts/create" permissions="accounts_counts.create" primaryText="Accounts Counts" leftIcon={<MoneyIcon />} />
+            <Item to="/members" permissions="members.*" primaryText="Members" leftIcon={<GroupIcon />} />
+            <Accordeon open={true} title="Stocks" permissions={["products.*", "products_categories.*", "movements.*"]}>
+                <Item to="/products" permissions="products.*" primaryText="Products" leftIcon={<LocalCafeIcon />} />
+                <Item to="/products_categories" permissions="products_categories.*" primaryText="Categories" leftIcon={<CategoryIcon />} />
+                <Item to="/movements" permissions="movements.*" primaryText="Movements" leftIcon={<ShoppingCartIcon />} />
             </Accordeon>
-            <Accordeon open={true} title="Accounting" permissions={["accounts", "accounts_counts", "transactions", "transactions_categories", "sales"]}>
-                <Item to="/accounts" permissions="accounts" primaryText="Accounts" leftIcon={<AccountBalanceIcon />}/>
-                <Item to="/accounts_counts" permissions="accounts_counts" primaryText="Accounts Counts" leftIcon={<MoneyIcon />}/>
-                <Item to="/transactions" permissions="transactions" primaryText="Transactions" leftIcon={<SwapHorizIcon />}/>
-                <Item to="/transactions_categories" permissions="transactions_categories" primaryText="Categories" leftIcon={<CategoryIcon />}/>
-                <Item to="/sales" permissions="sales" primaryText="Sales" leftIcon={<LocalOfferIcon />}/>
+            <Accordeon open={true} title="Accounting" permissions={["accounts.*", "accounts_counts.*", "transactions.*", "transactions_categories.*", "sales.*"]}>
+                <Item to="/accounts" permissions="accounts.*" primaryText="Accounts" leftIcon={<AccountBalanceIcon />} />
+                <Item to="/accounts_counts" permissions="accounts_counts.*" primaryText="Accounts Counts" leftIcon={<MoneyIcon />} />
+                <Item to="/transactions" permissions="transactions.*" primaryText="Transactions" leftIcon={<SwapHorizIcon />} />
+                <Item to="/transactions_categories" permissions="transactions_categories.*" primaryText="Categories" leftIcon={<CategoryIcon />} />
+                <Item to="/sales" permissions="sales.*" primaryText="Sales" leftIcon={<LocalOfferIcon />} />
             </Accordeon>
-            <Item to="/users" permissions="users" primaryText="Users" leftIcon={<AccountBoxIcon />}/>
-            {isXSmall && <Item to="/profile" primaryText="Profile" leftIcon={<AccountCircleIcon />}/>}
+            <Item to="/users" permissions="users.*" primaryText="Users" leftIcon={<AccountBoxIcon />} />
+            {isXSmall && <Item to="/profile" primaryText="Profile" leftIcon={<AccountCircleIcon />} />}
             {isXSmall && logout}
         </>
     );

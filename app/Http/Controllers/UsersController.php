@@ -47,7 +47,7 @@ class UsersController extends Controller
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string'],
             'permissions' => ['required', 'array'],
-            'permissions.*' => ['string', 'exists:permissions,id', "distinct"]
+            'permissions.*' => ['string', "distinct"]
         ]);
 
         $data['password'] = Hash::make($data['password']);
@@ -88,7 +88,7 @@ class UsersController extends Controller
             'email' => ['sometimes', 'required', 'email', 'unique:users,email'],
             'password' => ['sometimes', 'required', 'string'],
             'permissions' => ['required', 'array'],
-            'permissions.*' => ['string', 'exists:permissions,id', "distinct"]
+            'permissions.*' => ['string', "distinct"]
         ]);
 
         if (array_key_exists('password', $data)) {
