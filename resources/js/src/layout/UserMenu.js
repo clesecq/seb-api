@@ -1,3 +1,4 @@
+import CopyrightIcon from '@material-ui/icons/Copyright';
 import SettingsIcon from '@material-ui/icons/Settings';
 import React, { Component } from 'react';
 import { crudGetOne, MenuItemLink, UserMenu } from 'react-admin';
@@ -21,6 +22,11 @@ class MyUserMenuView extends Component {
                     to="/profile"
                     primaryText="Profile"
                     leftIcon={<SettingsIcon />}
+                />
+                <MenuItemLink
+                    to="/copying"
+                    primaryText="Copying"
+                    leftIcon={<CopyrightIcon />}
                 />
             </UserMenu>
         );

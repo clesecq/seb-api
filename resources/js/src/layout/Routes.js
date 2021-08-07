@@ -3,6 +3,7 @@ import { RouteWithoutLayout } from 'react-admin';
 import { Route } from 'react-router-dom';
 import Profile from "../resources/Profile";
 import ChangePassword from './forms/ChangePassword';
+import Copying from "./forms/Copying";
 import ForgotPassword from './forms/ForgotPassword';
 import ResetPassword from './forms/ResetPassword';
 import TokenClear from "./forms/TokenClear";
@@ -18,5 +19,6 @@ export const customRoutes = [
     <RouteWithoutLayout exact path="/two-factor/enable" component={TwoFactorEnable} />,
     <RouteWithoutLayout exact path="/two-factor/disable" component={TwoFactorDisable} />,
     <RouteWithoutLayout exact path="/tokens/create" component={TokenNew}/>,
-    <RouteWithoutLayout exact path="/tokens/clear" component={TokenClear} />
+    <RouteWithoutLayout exact path="/tokens/clear" component={TokenClear} />,
+    <RouteWithoutLayout exact path="/copying" component={Copying} />
 ];

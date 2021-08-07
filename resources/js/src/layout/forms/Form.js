@@ -51,6 +51,7 @@ const Form = props => {
         notification,
         staticContext,
         backgroundImage,
+        noLock,
         ...rest
     } = props;
     const containerRef = useRef();
@@ -88,11 +89,13 @@ const Form = props => {
                 ref={containerRef}
             >
                 <Card className={classes.card}>
-                    <div className={classes.avatar}>
-                        <Avatar className={classes.icon}>
-                            <LockIcon />
-                        </Avatar>
-                    </div>
+                    {(noLock === true ? "" :
+                        <div className={classes.avatar}>
+                            <Avatar className={classes.icon}>
+                                <LockIcon />
+                            </Avatar>
+                        </div>
+                    )}
                     {children}
                 </Card>
                 {notification ? createElement(notification) : null}

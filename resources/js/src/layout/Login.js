@@ -1,4 +1,4 @@
-import { Button, CardActions, CircularProgress, Link, TextField } from '@material-ui/core';
+import { Button, CardActions, CircularProgress, Link, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useLogin, useNotify, useSafeSetState, useTranslate } from 'ra-core';
 import React from 'react';
@@ -20,6 +20,18 @@ const useStyles = makeStyles(
         icon: {
             marginRight: theme.spacing(1),
         },
+        copying: {
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1000,
+            textAlign: 'center',
+            color: 'white'
+        },
+        link: {
+            color: "#ade6fd"
+        }
     }),
     { name: 'RaLoginForm' }
 );
@@ -85,6 +97,7 @@ const MyLoginPage = (props) => {
     };
 
     return (
+        <>
         <Login>
             <Form onSubmit={submit} render={({ handleSubmit }) => (twoFA ?
                 <form onSubmit={handleSubmit} noValidate>
@@ -111,7 +124,7 @@ const MyLoginPage = (props) => {
                         <div className={classes.input}>
                             <Field id="password" name="password" component={Input} label={translate('ra.auth.password')} type="password"
                                 disabled={loading} autoComplete="current-password" helperText={
-                                    <Link component={RouterLink} to="/forgot-password">{translate('ra.auth.forgot')}</Link>
+                                    <Link component={RouterLink} to="/forgot-password" className={classes.link}>{translate('ra.auth.forgot')}</Link>
                                 } />
                         </div>
 
@@ -127,6 +140,12 @@ const MyLoginPage = (props) => {
                 </form>
             )} />
         </Login>
+        <div className={classes.copying}>
+            <Typography>
+                Copyright © 2021 Amicale CORE - Released under the <Link to="/copying" component={RouterLink} className={classes.link}>GNU AGPLv3</Link>
+            </Typography>
+        </div>
+        </>
     );
 };
 
