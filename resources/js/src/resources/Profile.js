@@ -200,8 +200,6 @@ const TokenField = ({ onClick, ...props }) => {
     const { source } = props;
     const classes = useStyles(props);
     const record = useRecordContext(props);
-    const refresh = useRefresh();
-    console.log(record);
 
     const { loading, handleDelete } = useDeleteWithUndoController({
         resource: "tokens",
@@ -223,10 +221,6 @@ const TokensField = (props) => {
     const redirect = useRedirect();
     const classes = useStyles(props);
 
-    const deleteToken = (id) => {
-        console.log(id);
-    };
-
     return (<>
         <StyledGrid container mb={2} alignItems="center">
             <Grid item xs>
@@ -245,7 +239,7 @@ const TokensField = (props) => {
                         <TextField source="name" label="Name" />
                         <DateField source="last_used_at" label="Last use" />
                         <DateField source="created_at" label="Created at" />
-                        <TokenField source="id" label="" onClick={deleteToken} />
+                        <TokenField source="id" label=""/>
                     </Datagrid>
                 </ArrayField>
             }

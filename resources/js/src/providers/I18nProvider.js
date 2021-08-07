@@ -38,7 +38,7 @@ const messages = {
                         validate: "Done!"
                     },
                     clear: {
-                        ask: "Do you really want to clear all tokens? Warning: You'll have to generate new tokens to long in the App.",
+                        ask: "Do you really want to clear all tokens? Warning: You'll have to generate new tokens to log in the App.",
                         clear: "Clear",
                         cleared: "Your tokens have been cleared"
                     }

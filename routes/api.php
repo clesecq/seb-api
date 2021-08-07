@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AccountCountsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TokensController;
 use App\Http\Controllers\ProfileController;
@@ -46,6 +46,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::res("products_categories", ProductCategoriesController::class);
     Route::res("movements", MovementsController::class, ['final']);
     Route::res("accounts", AccountsController::class, ['reload']);
+    Route::res("accounts_counts", AccountCountsController::class, ['final']);
     Route::res("transactions_categories", TransactionCategoriesController::class);
     Route::res("transactions", TransactionsController::class, ['final']);
     Route::res("sales", SalesController::class, ['final']);

@@ -22,6 +22,7 @@ class CreateTransactionCategoriesTable extends Migration
 
         TransactionCategory::create(['id' => 1, 'name' => 'Contributions']);
         TransactionCategory::create(['id' => 2, 'name' => 'Sales']);
+        TransactionCategory::create(['id' => 3, 'name' => 'Count']);
 
         // Ensure next IDs are > 1000.
         DB::table('transaction_categories')->insert(['id' => 999, 'name' => 'whatever']);
