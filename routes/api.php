@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TokensController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\MembersController;
@@ -33,6 +33,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::group(['middleware' => ['guard:web']], function () {
         Route::get("profile/me", [ProfileController::class, 'show']);
         Route::put("profile/me", [ProfileController::class, 'update']);
+
+        Route::get("tokens", [TokensController::class, 'list']);
+        Route::post("tokens", [TokensController::class, 'create']);
+        Route::delete("tokens/{token}", [TokensController::class, 'delete']);
+        Route::delete("tokens", [TokensController::class, 'clear']);
     });
 
     Route::res("users", UsersController::class);

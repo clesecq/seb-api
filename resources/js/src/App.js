@@ -28,6 +28,7 @@ export default class App extends Component {
             <Admin customRoutes={customRoutes} i18nProvider={I18nProvider} loginPage={Login} history={history} dashboard={Dashboard} theme={Theme} layout={Layout} dataProvider={DataProvider} authProvider={AuthProvider} title="Seb" disableTelemetry>
                 <Resource name="permissions" />
                 <Resource name="profile" />
+                <Resource name="tokens" />
                 <Resource name="accounts" {...accounts} />
                 <Resource name="members" {...members} />
                 <Resource name="transactions" {...transactions} />

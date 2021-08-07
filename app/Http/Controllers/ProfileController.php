@@ -19,6 +19,14 @@ class ProfileController extends Controller
         $data = $request->user()->toArray();
         $data['id'] = 'me';
         $data['two_factor'] = $request->user()->two_factor_secret !== null;
+
+        $tokens = [];
+
+        foreach ($request->user()->tokens as $token) {
+            $tokens[] = $token->only(['id', 'name', 'last_used_at', 'created_at']);
+        }
+
+        $data['tokens'] = $tokens;
         return ["data" => $data];
     }
 

@@ -28,6 +28,20 @@ const messages = {
                     disable: "Disable 2FA",
                     askdisable: "Do you really want to disable Two Factor Authentication?",
                     login: "Continue"
+                },
+                token: {
+                    new: {
+                        ask: "Do you really want to create a new API token?",
+                        create: "Create",
+                        name: "Token name",
+                        scan: "Here is your new token. You can now scan it in the App or save it. Keep it preciously: you'll never see it again.",
+                        validate: "Done!"
+                    },
+                    clear: {
+                        ask: "Do you really want to clear all tokens? Warning: You'll have to generate new tokens to long in the App.",
+                        clear: "Clear",
+                        cleared: "Your tokens have been cleared"
+                    }
                 }
             }
         }
