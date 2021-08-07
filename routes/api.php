@@ -31,7 +31,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // Editing a profile should be allowed only when logged in via session
     Route::group(['middleware' => ['guard:web']], function () {
-        Route::get("profile/me", [ProfileController::class, 'show']);
         Route::put("profile/me", [ProfileController::class, 'update']);
 
         Route::get("tokens", [TokensController::class, 'list']);
@@ -40,6 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::delete("tokens", [TokensController::class, 'clear']);
     });
 
+    Route::get("profile/me", [ProfileController::class, 'show']);
     Route::res("users", UsersController::class);
     Route::res("members", MembersController::class);
     Route::res("products", ProductsController::class, ['reload']);
