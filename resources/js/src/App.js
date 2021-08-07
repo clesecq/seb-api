@@ -11,6 +11,7 @@ import AuthProvider from './providers/AuthProvider';
 import DataProvider from './providers/DataProvider';
 import I18nProvider from "./providers/I18nProvider";
 import accounts from "./resources/Accounts";
+import accountscounts from './resources/AccountsCounts';
 import members from './resources/Members';
 import movements from "./resources/Movements";
 import products from './resources/Products';
@@ -30,6 +31,7 @@ export default class App extends Component {
                 <Resource name="profile" />
                 <Resource name="tokens" />
                 <Resource name="accounts" {...accounts} />
+                <Resource name="accounts_counts" {...accountscounts} />
                 <Resource name="members" {...members} />
                 <Resource name="transactions" {...transactions} />
                 <Resource name="users" {...users} />

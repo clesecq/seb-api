@@ -19,9 +19,9 @@ class AccountCountsController extends Controller
     public function index(Request $request)
     {
         if (is_array($request->ids)) {
-            return ["data" => AccountCount::whereIn('id', $request->ids)->get()];
+            return ["data" => AccountCount::with('transaction')->whereIn('id', $request->ids)->get()];
         } else {
-            $data = AccountCount::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
+            $data = AccountCount::with('transaction')->orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
                 foreach ($request->filter as $k => $v) {
                     $data = $data->where($k, 'like', '%' . $v . '%');
@@ -108,9 +108,7 @@ class AccountCountsController extends Controller
         $count->transaction_id = $transaction->id;
         $count->save();
 
-        
-
-        dd($count);
+        return ['data' => $count];
     }
 
     /**
@@ -121,6 +119,6 @@ class AccountCountsController extends Controller
      */
     public function show($id)
     {
-        return ['data' => AccountCount::findOrFail($id)];
+        return ['data' => AccountCount::with('transaction')->findOrFail($id)];
     }
 }

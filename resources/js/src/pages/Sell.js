@@ -59,13 +59,22 @@ const Item = ({ product, filterCategory, filterName, updatePrice, ...props }) =>
                         <Grid item container alignItems="center" className={classes.rows} xs={4}>
                             <Grid item>
                                 <TextField
-                                    disabled={true}
                                     id="standard-number"
                                     type="text"
                                     inputProps={{ min: 0, style: { textAlign: 'center' } }}
                                     value={count}
                                     InputLabelProps={{
                                         shrink: true,
+                                    }}
+                                    onChange={(e) => {
+                                        let val = e.target.value;
+                                        if(val === "")
+                                            val = "0";
+                                        val = parseInt(val);
+                                        if (val !== NaN && val >= 0) {
+                                            setCount(val);
+                                            updatePrice(product, val);
+                                        }
                                     }}
                                 />
                             </Grid>

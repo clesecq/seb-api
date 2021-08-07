@@ -1,19 +1,13 @@
 import React from "react";
-import { ArrayField, ArrayInput, Datagrid, DateField, List, NumberInput, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleFormIterator, SimpleShowLayout, TextField, useRefresh } from 'react-admin';
-import { withRouter } from "react-router-dom";
-import { CreateDialog, ShowDialog } from '../components/DialogForm';
+import { ArrayField, Datagrid, DateField, List, ReferenceField, ShowButton, SimpleShowLayout, TextField } from 'react-admin';
+import { ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
+import Sell from "../pages/Sell";
 
-const SalesFilters = [
-
-];
-
-const Sales =  withRouter(({ history: { goBack }, ...props}) => {
-    const refresh = useRefresh();
-
+const Sales = (props) => {
     return (
         <>
-            <List {...props} filters={SalesFilters} >
+            <List {...props} >
                 <Datagrid>
                     <TextField source="id" />
                     <DateField source="created_at" label="Date" />
@@ -30,18 +24,6 @@ const Sales =  withRouter(({ history: { goBack }, ...props}) => {
                     <ShowButton />
                 </Datagrid>
             </List>
-            <CreateDialog {...props} onSuccess={() => {refresh(); goBack()}}>
-                <SimpleForm redirect="list">
-                    <ArrayInput source="products">
-                        <SimpleFormIterator>
-                            <ReferenceInput label="Product" source="id" reference="products">
-                                <SelectInput optionText="name" />
-                            </ReferenceInput>
-                            <NumberInput source="count" label="Count" />
-                        </SimpleFormIterator>
-                    </ArrayInput>
-                </SimpleForm>
-            </CreateDialog>
             <ShowDialog>
                 <SimpleShowLayout>
                     <TextField source="id" />
@@ -62,10 +44,10 @@ const Sales =  withRouter(({ history: { goBack }, ...props}) => {
             </ShowDialog>
         </>
     );
-});
+};
 
 export default {
     list: Sales,
-    create: Sales,
+    create: Sell,
     show: Sales
 };
