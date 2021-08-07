@@ -20,7 +20,15 @@ class ProductsController extends Controller
             $data = Product::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
                 foreach($request->filter as $k => $v) {
-                    $data = $data->where($k, 'like', '%' . $v . '%');
+                    if ($k == "alerts") {
+                        if ($v) {
+                            $data = $data->whereColumn('count', '<=', 'alert_level');
+                        } else {
+                            $data = $data->whereColumn('count', '>', 'alert_level');
+                        }
+                    } else {
+                        $data = $data->where($k, 'like', '%' . $v . '%');
+                    }
                 }
             }
             if (!is_null($request->per_page))
@@ -43,6 +51,7 @@ class ProductsController extends Controller
             'barcode' => ['required', 'string', 'digits_between:8,13', 'unique:products,barcode'],
             'name' => ['required', 'string'],
             'price' => ['required', 'numeric'],
+            'alert_level' => ['required', 'numeric', 'integer'],
             'category_id' => ['required', 'exists:product_categories,id']
         ]);
 
@@ -73,6 +82,7 @@ class ProductsController extends Controller
             'barcode' => ['sometimes', 'required', 'string', 'digits_between:8,13', 'unique:products,barcode'],
             'name' => ['sometimes', 'required', 'string'],
             'price' => ['sometimes', 'required', 'numeric'],
+            'alert_level' => ['sometimes', 'required', 'numeric', 'integer'],
             'category_id' => ['sometimes', 'required', 'exists:product_categories,id']
         ]);
 
@@ -113,6 +123,7 @@ class ProductsController extends Controller
             'barcode' => ['sometimes', 'required', 'string', 'digits_between:8,13', 'unique:products,barcode'],
             'name' => ['sometimes', 'required', 'string'],
             'price' => ['sometimes', 'required', 'numeric'],
+            'alert_level' => ['sometimes', 'required', 'numeric', 'integer'],
             'category_id' => ['sometimes', 'required', 'exists:product_categories,id']
         ]);
 

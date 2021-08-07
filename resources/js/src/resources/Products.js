@@ -1,5 +1,5 @@
 import * as React from "react";
-import { CreateButton, Datagrid, DateField, DateInput, EditButton, ExportButton, FilterButton, List, NumberField, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
+import { CreateButton, Datagrid, DateField, DateInput, EditButton, ExportButton, FilterButton, List, NullableBooleanInput, NumberField, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
 import MoneyInput from "../components/MoneyInput";
@@ -10,7 +10,8 @@ const ProductsFilters = [
     <TextInput label="Barcode" source="barcode" />,
     <ReferenceInput label="Category" source="category_id" reference="products_categories">
         <SelectInput optionText="name" />
-    </ReferenceInput>
+    </ReferenceInput>,
+    <NullableBooleanInput label="Alerts" source="alerts" />
 ];
 
 const ProductsListActions = ({ basePath, ...props }) => (
@@ -35,6 +36,7 @@ const Products = (props) => (
                 </ReferenceField>
                 <MoneyField noLabel={true} source="price" />
                 <NumberField source="count" />
+                <NumberField source="alert_level" />
                 <DateField source="created_at" />
                 <DateField source="updated_at" />
                 <EditButton />
@@ -48,6 +50,7 @@ const Products = (props) => (
                 </ReferenceInput>
                 <TextInput source="barcode" />
                 <MoneyInput source="price" />
+                <NumberField source="alert_level" />
             </SimpleForm>
         </CreateDialog>
         <EditDialog {...props}>
@@ -60,6 +63,7 @@ const Products = (props) => (
                 <TextInput source="barcode" />
                 <MoneyInput source="price" />
                 <NumberField disabled source="count" />
+                <NumberField source="alert_level" />
                 <DateInput disabled source="created_at" />
                 <DateInput disabled source="updated_at" />
             </SimpleForm>
@@ -74,6 +78,7 @@ const Products = (props) => (
                 </ReferenceField>
                 <MoneyField source="price" />
                 <NumberField source="count" />
+                <NumberField source="alert_level" />
                 <DateField source="created_at" />
                 <DateField source="updated_at" />
             </SimpleShowLayout>

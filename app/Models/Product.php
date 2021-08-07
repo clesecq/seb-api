@@ -14,6 +14,7 @@ class Product extends Model
         'name',
         'price',
         'category_id',
+        'alert_level'
     ];
 
     protected $casts = [

@@ -9,6 +9,7 @@ use App\Http\Controllers\MembersController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProductCategoriesController;
 use App\Http\Controllers\AccountsController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\TransactionCategoriesController;
 use App\Http\Controllers\MovementsController;
@@ -40,6 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
     Route::get("profile/me", [ProfileController::class, 'show']);
+    Route::get("dashboard", [DashboardController::class, 'dashboard']);
     Route::res("users", UsersController::class);
     Route::res("members", MembersController::class);
     Route::res("products", ProductsController::class, ['reload']);
