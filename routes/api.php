@@ -15,6 +15,7 @@ use App\Http\Controllers\TransactionCategoriesController;
 use App\Http\Controllers\MovementsController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ProductCountsController;
+use App\Http\Controllers\PurchasesController;
 use App\Http\Controllers\SalesController;
 
 /*
@@ -45,6 +46,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get("dashboard", [DashboardController::class, 'dashboard']);
     Route::res("users", UsersController::class);
     Route::res("members", MembersController::class);
+    Route::res("purchases", PurchasesController::class, ['final']);
     Route::res("products", ProductsController::class, ['reload']);
     Route::res("products_counts", ProductCountsController::class, ['final']);
     Route::res("products_categories", ProductCategoriesController::class);

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Sale extends Model
+class Purchase extends Model
 {
     use HasFactory;
 
@@ -19,6 +19,7 @@ class Sale extends Model
 
     protected $fillable = [
         'transaction_id',
-        'movement_id'
+        'movement_id',
+        'name'
     ];
 }
