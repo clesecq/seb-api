@@ -17,6 +17,7 @@ import movements from "./resources/Movements";
 import products from './resources/Products';
 import productscategories from "./resources/ProductsCategories";
 import productscounts from './resources/ProductsCounts';
+import purchases from './resources/Purchases';
 import sales from "./resources/Sales";
 import transactions from "./resources/Transactions";
 import transactionscategories from "./resources/TransactionsCategories";
@@ -42,6 +43,7 @@ export default class App extends Component {
                 <Resource name="products" {...products} />
                 <Resource name="movements" {...movements} />
                 <Resource name="sales" {...sales} />
+                <Resource name="purchases" {...purchases} />
             </Admin>
         );
     }

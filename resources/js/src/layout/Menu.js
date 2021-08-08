@@ -96,6 +96,7 @@ const Menu = ({ onMenuClick, logout }) => {
         <>
             <Item to="/" primaryText="Dashboard" leftIcon={<DashboardIcon />} />
             <Item to="/sales/create" permissions="sales.create" primaryText="Sell" leftIcon={<LocalOfferIcon />} />
+            <Item to="/purchases/create" permissions="purchases.create" primaryText="Buy" leftIcon={<ShoppingCartIcon />} />
             <Item to="/accounts_counts/create" permissions="accounts_counts.create" primaryText="Count money" leftIcon={<MoneyIcon />} />
             <Item to="/products_counts/create" permissions="products_counts.create" primaryText="Count products" leftIcon={<BarChartIcon />} />
             <Item to="/members" permissions="members.*" primaryText="Members" leftIcon={<GroupIcon />} />
@@ -103,14 +104,15 @@ const Menu = ({ onMenuClick, logout }) => {
                 <Item to="/products" permissions="products.*" primaryText="Products" leftIcon={<LocalCafeIcon />} />
                 <Item to="/products_categories" permissions="products_categories.*" primaryText="Categories" leftIcon={<CategoryIcon />} />
                 <Item to="/products_counts" permissions="products_counts.*" primaryText="Products Counts" leftIcon={<BarChartIcon />} />
-                <Item to="/movements" permissions="movements.*" primaryText="Movements" leftIcon={<ShoppingCartIcon />} />
+                <Item to="/movements" permissions="movements.*" primaryText="Movements" leftIcon={<SwapHorizIcon />} />
             </Accordeon>
-            <Accordeon open={false} title="Accounting" permissions={["accounts.*", "accounts_counts.*", "transactions.*", "transactions_categories.*", "sales.*"]}>
+            <Accordeon open={false} title="Accounting" permissions={["accounts.*", "accounts_counts.*", "transactions.*", "transactions_categories.*", "sales.*", "purchases.*"]}>
                 <Item to="/accounts" permissions="accounts.*" primaryText="Accounts" leftIcon={<AccountBalanceIcon />} />
                 <Item to="/accounts_counts" permissions="accounts_counts.*" primaryText="Accounts Counts" leftIcon={<MoneyIcon />} />
                 <Item to="/transactions" permissions="transactions.*" primaryText="Transactions" leftIcon={<SwapHorizIcon />} />
                 <Item to="/transactions_categories" permissions="transactions_categories.*" primaryText="Categories" leftIcon={<CategoryIcon />} />
                 <Item to="/sales" permissions="sales.*" primaryText="Sales" leftIcon={<LocalOfferIcon />} />
+                <Item to="/purchases" permissions="purchases.*" primaryText="Purchases" leftIcon={<ShoppingCartIcon />} />
             </Accordeon>
             <Item to="/users" permissions="users.*" primaryText="Users" leftIcon={<AccountBoxIcon />} />
             {isXSmall && <Item to="/profile" primaryText="Profile" leftIcon={<AccountCircleIcon />} />}
