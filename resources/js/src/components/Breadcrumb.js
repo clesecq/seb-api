@@ -25,7 +25,7 @@ const BreadCrumb = () => {
     return (
         <MuiBreadcrumbs aria-label="breadcrumb" style={{ paddingBottom: '5px' }}>
             <MuiLink component={Link} color="inherit" to="/">
-                Root
+                Dashboard
             </MuiLink>
             {path.map((val, key) => {
                 link += "/" + val;
