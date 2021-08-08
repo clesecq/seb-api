@@ -8,6 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import BarChartIcon from '@material-ui/icons/BarChart';
 import CategoryIcon from '@material-ui/icons/Category';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExpandLess from '@material-ui/icons/ExpandLess';
@@ -95,14 +96,16 @@ const Menu = ({ onMenuClick, logout }) => {
         <>
             <Item to="/" primaryText="Dashboard" leftIcon={<DashboardIcon />} />
             <Item to="/sales/create" permissions="sales.create" primaryText="Sell" leftIcon={<LocalOfferIcon />} />
-            <Item to="/accounts_counts/create" permissions="accounts_counts.create" primaryText="Accounts Counts" leftIcon={<MoneyIcon />} />
+            <Item to="/accounts_counts/create" permissions="accounts_counts.create" primaryText="Count money" leftIcon={<MoneyIcon />} />
+            <Item to="/products_counts/create" permissions="products_counts.create" primaryText="Count products" leftIcon={<BarChartIcon />} />
             <Item to="/members" permissions="members.*" primaryText="Members" leftIcon={<GroupIcon />} />
-            <Accordeon open={true} title="Stocks" permissions={["products.*", "products_categories.*", "movements.*"]}>
+            <Accordeon open={false} title="Stocks" permissions={["products.*", "products_categories.*", "movements.*", "products_counts.*"]}>
                 <Item to="/products" permissions="products.*" primaryText="Products" leftIcon={<LocalCafeIcon />} />
                 <Item to="/products_categories" permissions="products_categories.*" primaryText="Categories" leftIcon={<CategoryIcon />} />
+                <Item to="/products_counts" permissions="products_counts.*" primaryText="Products Counts" leftIcon={<BarChartIcon />} />
                 <Item to="/movements" permissions="movements.*" primaryText="Movements" leftIcon={<ShoppingCartIcon />} />
             </Accordeon>
-            <Accordeon open={true} title="Accounting" permissions={["accounts.*", "accounts_counts.*", "transactions.*", "transactions_categories.*", "sales.*"]}>
+            <Accordeon open={false} title="Accounting" permissions={["accounts.*", "accounts_counts.*", "transactions.*", "transactions_categories.*", "sales.*"]}>
                 <Item to="/accounts" permissions="accounts.*" primaryText="Accounts" leftIcon={<AccountBalanceIcon />} />
                 <Item to="/accounts_counts" permissions="accounts_counts.*" primaryText="Accounts Counts" leftIcon={<MoneyIcon />} />
                 <Item to="/transactions" permissions="transactions.*" primaryText="Transactions" leftIcon={<SwapHorizIcon />} />

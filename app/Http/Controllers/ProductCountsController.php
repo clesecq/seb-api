@@ -84,6 +84,6 @@ class ProductCountsController extends Controller
      */
     public function show($id)
     {
-        return ['data' => ProductCount::with('transaction')->findOrFail($id)];
+        return ['data' => ProductCount::with('movement')->findOrFail($id)];
     }
 }
