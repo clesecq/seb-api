@@ -146,7 +146,6 @@ const Sell = () => {
                 p.push({ 'id': parseInt(id), 'count': counts[id].count });
             }
         }
-        console.log(p);
         dataProvider.create('sales', {data: {products: p}}).then((response) => {
             doRefresh(prev => prev + 1);
             notify('Sale created!');

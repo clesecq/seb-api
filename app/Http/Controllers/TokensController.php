@@ -38,7 +38,7 @@ class TokensController extends Controller
                 new SvgImageBackEnd
             )
         ))->writeString(json_encode([
-            'url' => URL::to('/'),
+            'url' => config('app.url'),
             'token' => $token->plainTextToken
         ]));
 
