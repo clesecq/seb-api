@@ -63,7 +63,7 @@ const Products = (props) => (
                 <TextInput source="barcode" />
                 <MoneyInput source="price" />
                 <NumberField disabled source="count" />
-                <NumberField source="alert_level" />
+                <NumberInput source="alert_level" />
                 <DateInput disabled source="created_at" />
                 <DateInput disabled source="updated_at" />
             </SimpleForm>
