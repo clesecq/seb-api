@@ -29,6 +29,7 @@ class CreateConfigsTable extends Migration
         Config::create(['name' => 'sales.movement', 'value' => 'Sale #{sale.id}']);
         Config::create(['name' => 'counts.category', 'value' => '3']);
         Config::create(['name' => 'counts.transaction', 'value' => 'Count #{count.id}']);
+        Config::create(['name' => 'counts.movement', 'value' => 'Count #{count.id}']);
     }
 
     /**
