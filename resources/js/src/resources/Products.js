@@ -1,5 +1,5 @@
 import * as React from "react";
-import { CreateButton, Datagrid, DateField, DateInput, EditButton, ExportButton, FilterButton, List, NullableBooleanInput, NumberField, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
+import { CreateButton, Datagrid, DateField, DateInput, EditButton, ExportButton, FilterButton, List, NullableBooleanInput, NumberField, NumberInput, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
 import MoneyInput from "../components/MoneyInput";
@@ -50,7 +50,7 @@ const Products = (props) => (
                 </ReferenceInput>
                 <TextInput source="barcode" />
                 <MoneyInput source="price" />
-                <NumberField source="alert_level" />
+                <NumberInput source="alert_level" />
             </SimpleForm>
         </CreateDialog>
         <EditDialog {...props}>
