@@ -51,7 +51,7 @@ class ProductsController extends Controller
             'barcode' => ['required', 'string', 'digits_between:8,13', 'unique:products,barcode'],
             'name' => ['required', 'string'],
             'price' => ['required', 'numeric'],
-            'alert_level' => ['required', 'numeric', 'integer'],
+            'alert_level' => ['required', 'numeric', 'integer', 'min:0'],
             'category_id' => ['required', 'exists:product_categories,id']
         ]);
 
