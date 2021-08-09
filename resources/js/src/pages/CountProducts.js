@@ -38,7 +38,7 @@ const Item = ({ product, filterCategory, filterName, updatePrice, ...props }) =>
 
         if (c + x < 0) {
             setCount("");
-            updatePrice("");
+            updatePrice(product, "");
             return;
         }
 
