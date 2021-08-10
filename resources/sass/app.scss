@@ -46,3 +46,7 @@ a:hover {
 .MuiGrid-spacing-xs-3 > .MuiGrid-item {
     width:100%;
 }
+
+.MuiSnackbarContent-message {
+    white-space: pre;
+}
