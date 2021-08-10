@@ -11,7 +11,7 @@ import SecurityIcon from '@material-ui/icons/Security';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { spacing } from "@material-ui/system";
 import React, { useState } from 'react';
-import { ArrayField, Button, ChipField, Datagrid, DateField, Edit, Labeled, ReferenceArrayField, SaveButton, SimpleForm, SingleFieldList, TextField, TextInput, Toolbar, useDeleteWithUndoController, useNotify, useRecordContext, useRedirect, useRefresh, useUpdateLoading } from 'react-admin';
+import { ArrayField, Button, ChipField, Datagrid, DateField, Edit, Labeled, ReferenceArrayField, SaveButton, SimpleForm, SingleFieldList, TextField, TextInput, Toolbar, useDeleteWithUndoController, useNotify, useRecordContext, useRedirect, useRefresh, useTranslate, useUpdateLoading } from 'react-admin';
 const StyledButton = styled(Button)(spacing);
 const StyledGrid = styled(Grid)(spacing);
 
@@ -19,21 +19,22 @@ const ChangePasswordField = (props) => {
     const { source } = props;
     const record = useRecordContext(props);
     const redirect = useRedirect();
+    const translate = useTranslate();
     return <>
         <StyledGrid container mb={2} alignItems="center">
             <Grid item xs>
                 {record[source] !== null ?
-                    <Labeled label="Last password change" {...props}>
+                    <Labeled label={translate('resources.profile.password.last_change')} {...props}>
                         <DateField {...props} />
                     </Labeled>
                     :
-                    <Labeled label="Last password change" {...props}>
-                        <><Typography component="span" variant="body2">Never</Typography></>
+                    <Labeled label={translate('resources.profile.password.last_change')} {...props}>
+                        <><Typography component="span" variant="body2">{translate('resources.profile.password.never')}</Typography></>
                     </Labeled>
                 }
             </Grid>
             <Grid item>
-                <StyledButton size="medium" ml="auto" label="Change password" onClick={() => redirect("/change-password")}><VpnKeyIcon /></StyledButton>
+                <StyledButton size="medium" ml="auto" label={translate('resources.profile.password.change')} onClick={() => redirect("/change-password")}><VpnKeyIcon /></StyledButton>
             </Grid>
         </StyledGrid>
     </>;
@@ -90,6 +91,7 @@ const TwoFactorAuthField = (props) => {
     const [open, setOpen] = useState(false);
     const [codes, setCodes] = useState([]);
     const { startLoading, stopLoading } = useUpdateLoading();
+    const translate = useTranslate();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -101,23 +103,23 @@ const TwoFactorAuthField = (props) => {
     return <>
         <StyledGrid container mb={2} alignItems="center">
             <Grid item xs>
-                <Labeled label="Two Factor Authentication Status" {...props}>
+                <Labeled label={translate('resources.profile.2fa.status')} {...props}>
                     {record[source] ? (
                         <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
                             <DoneIcon />
-                            <span style={{ marginLeft: '8px' }}>Two Factor Authentication is enabled</span>
+                            <span style={{ marginLeft: '8px' }}>{translate('resources.profile.2fa.enabled')}</span>
                         </div>
                     ) : (
                         <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
                             <ClearIcon />
-                            <span style={{ marginLeft: '8px' }}>Two Factor Authentication is disabled</span>
+                            <span style={{ marginLeft: '8px' }}>{translate('resources.profile.2fa.disabled')}</span>
                         </div>
                     )}
                 </Labeled>
             </Grid>
             <Grid item>
                 {record[source] ? (<>
-                    <StyledButton size="medium" ml="auto" label="Recovery Codes" onClick={() => {
+                    <StyledButton size="medium" ml="auto" label={translate('resources.profile.2fa.recovery')} onClick={() => {
                         startLoading();
                         return axios.get('/user/two-factor-recovery-codes').then(response => {
                             stopLoading();
@@ -129,21 +131,20 @@ const TwoFactorAuthField = (props) => {
                             notify(error?.response?.data?.message);
                         });
                     }}><SecurityIcon /></StyledButton>
-                    <StyledButton className={classes.deleteButton} size="medium" ml="auto" label="Disable 2FA" onClick={() => redirect("/two-factor/disable")}><LockOpenIcon /></StyledButton>
+                    <StyledButton className={classes.deleteButton} size="medium" ml="auto" label={translate('resources.profile.2fa.disable')} onClick={() => redirect("/two-factor/disable")}><LockOpenIcon /></StyledButton>
                 </>) : (
-                    <StyledButton size="medium" ml="auto" label="Enable 2FA" onClick={() => redirect("/two-factor/enable")}><LockIcon /></StyledButton>
+                    <StyledButton size="medium" ml="auto" label={translate('resources.profile.2fa.enable')} onClick={() => redirect("/two-factor/enable")}><LockIcon /></StyledButton>
                 )}
             </Grid>
         </StyledGrid>
         {record[source] ?
             <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
                 <MyDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Two Factor Authentication Recovery Codes
+                    {translate('resources.profile.2fa.recovery')}
                 </MyDialogTitle>
                 <DialogContent>
                     <Typography gutterBottom style={{ marginBottom: '16px' }}>
-                        These codes will help you recover your account if you lose your 2FA device. Please
-                        keep them carefully.
+                        {translate('resources.profile.2fa.recovery_message')}
                     </Typography>
                     {codes.map((code, key) => (
                         <Typography style={{ fontFamily: 'monospace', textAlign: 'center' }} gutterBottom key={key}>
@@ -200,6 +201,7 @@ const TokenField = ({ onClick, ...props }) => {
     const { source } = props;
     const classes = useStyles(props);
     const record = useRecordContext(props);
+    const translate = useTranslate();
 
     const { loading, handleDelete } = useDeleteWithUndoController({
         resource: "tokens",
@@ -209,7 +211,7 @@ const TokenField = ({ onClick, ...props }) => {
     return (
         <>
             <div style={{ width: '100%', display: 'flex', alignItems: 'end' }}>
-                <StyledButton size="medium" ml="auto" className={classes.deleteButton} label="Delete" onClick={handleDelete} disabled={loading}>
+                <StyledButton size="medium" ml="auto" className={classes.deleteButton} label= {translate('ra.action.delete')} onClick={handleDelete} disabled={loading}>
                     <ClearIcon />
                 </StyledButton>
             </div>
@@ -220,25 +222,26 @@ const TokenField = ({ onClick, ...props }) => {
 const TokensField = (props) => {
     const redirect = useRedirect();
     const classes = useStyles(props);
+    const translate = useTranslate();
 
     return (<>
         <StyledGrid container mb={2} alignItems="center">
             <Grid item xs>
-                <Typography variant="h5" component="h2">API Tokens</Typography>
+                <Typography variant="h5" component="h2">{translate('resources.profile.tokens.title')}</Typography>
             </Grid>
             <Grid item>
-                <StyledButton size="medium" ml="auto" label="New token" onClick={() => redirect("/tokens/create")}><AddIcon /></StyledButton>
-                <StyledButton className={classes.deleteButton} size="medium" ml="auto" label="Clear tokens" onClick={() => redirect("/tokens/clear")}><ClearIcon /></StyledButton>
+                <StyledButton size="medium" ml="auto" label={translate('resources.profile.tokens.new')} onClick={() => redirect("/tokens/create")}><AddIcon /></StyledButton>
+                <StyledButton className={classes.deleteButton} size="medium" ml="auto" label={translate('resources.profile.tokens.clear')} onClick={() => redirect("/tokens/clear")}><ClearIcon /></StyledButton>
             </Grid>
         </StyledGrid>
         <>
-            {props.record.tokens.length == 0 ? <Typography>You don't have any token yet.</Typography> :
+            {props.record.tokens.length == 0 ? <Typography>{translate('resources.profile.tokens.none')}</Typography> :
                 <ArrayField source="tokens" {...props}>
                     <Datagrid>
-                        <TextField source="id" />
-                        <TextField source="name" />
-                        <DateField source="last_used_at" />
-                        <DateField source="created_at" />
+                        <TextField source="id" label={translate('resources.profile.tokens.id')} />
+                        <TextField source="name" label={translate('resources.profile.tokens.name')} />
+                        <DateField source="last_used_at" label={translate('resources.profile.tokens.last_used_at')} />
+                        <DateField source="created_at" label={translate('resources.profile.tokens.created_at')} />
                         <TokenField source="id" label="" />
                     </Datagrid>
                 </ArrayField>
@@ -258,31 +261,33 @@ const ProfileEditToolbar = (props) => {
 };
 
 const ProfileEdit = ({ staticContext, ...props }) => {
+    const translate = useTranslate();
+
     return (
-        <Edit height={1} id="me" resource="profile" basePath="/profile" redirect={false} title="My profile" {...props} >
+        <Edit height={1} id="me" resource="profile" basePath="/profile" redirect={false} title={translate('resources.profile.me')} {...props} >
             <SimpleForm redirect={false} toolbar={<ProfileEditToolbar />}>
-                <><Typography variant="h5" component="h2">Profile</Typography></>
+                <><Typography variant="h5" component="h2">{translate('resources.profile.name')}</Typography></>
                 <TextInput source="username" />
                 <>{((props) => (
                     <Grid container spacing={3}>
                         <Grid item xs={12} md={6}>
-                            <TextInput {...props} source="firstname" />
+                            <TextInput {...props} source="firstname" label={translate('resources.profile.fields.firstname')} />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <TextInput {...props} source="lastname" />
+                            <TextInput {...props} source="lastname" label={translate('resources.profile.fields.lastname')}/>
                         </Grid>
                     </Grid>
                 ))()}</>
                 <TextInput source="email" />
-                <><Typography variant="h5" component="h2">Permissions</Typography></>
+                <><Typography variant="h5" component="h2">{translate('resources.profile.permissions.title')}</Typography></>
                 <><ReferenceArrayField reference="permissions" source="permissions" style={{ marginBottom: '2px', marginTop: '2px' }}>
                     <SingleFieldList linkType={false}>
                         <ChipField source="name" />
                     </SingleFieldList>
                 </ReferenceArrayField></>
-                <><Typography variant="h5" component="h2">Password</Typography></>
+                <><Typography variant="h5" component="h2">{translate('resources.profile.password.title')}</Typography></>
                 <ChangePasswordField source="password_changed_at" />
-                <><Typography variant="h5" component="h2">Two factor Authentication</Typography></>
+                <><Typography variant="h5" component="h2">{translate('resources.profile.2fa.title')}</Typography></>
                 <TwoFactorAuthField source="two_factor" />
                 <TokensField />
             </SimpleForm>

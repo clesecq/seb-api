@@ -13,7 +13,7 @@ class Locale
 
     public function handle(Request $request, Closure $next)
     {
-        $guard = Auth::guard('api');
+        $guard = Auth::guard('sanctum');
         if (!$guard->check()) {
             $locale = 'en';
 

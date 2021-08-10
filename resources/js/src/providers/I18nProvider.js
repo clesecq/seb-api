@@ -192,6 +192,7 @@ const messages = {
                 show: "Voir",
                 products_categories: "Catégories de Produits",
                 transactions_categories: "Catégories de Transactions",
+                profile: "Profil",
             }
         },
         resources: {
@@ -366,6 +367,36 @@ const messages = {
                     firstname: 'Prénom',
                     lastname: 'Nom',
                     email: 'Adresse email'
+                },
+                me: "Mon Profil",
+                permissions:  {
+                    title: "Permissions",
+                },
+                password: {
+                    title: "Mot de passe",
+                    last_change: "Dernier changement",
+                    never: "Jamais",
+                    change: 'Changer le mot de passe'
+                },
+                '2fa': {
+                    title: 'Authentification à deux Facteurs',
+                    enable: 'Activer l\'A2F',
+                    disable: 'Désactiver l\'A2F',
+                    enabled: 'L\'A2F est activée',
+                    disabled: 'L\'A2F est désactivée',
+                    status: 'Status de l\'A2F',
+                    recovery: 'Codes de récupération',
+                    recovery_message: 'Ces codes vous permettent de récupérer votre compte en ça de perte de votre périphérique d\'A2F. Veuillez les conserver précieusement.'
+                },
+                tokens: {
+                    title: 'Tokens d\'API',
+                    id: '#',
+                    name: 'Nom',
+                    last_used_at: 'Dernière utilisation',
+                    created_at: 'Créé le',
+                    clear: 'Effacer les tokens',
+                    new: 'Nouveau token',
+                    none: 'Vous n\'avez pas de tokens d\'API'
                 }
             }
         },
