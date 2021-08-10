@@ -84,10 +84,10 @@ const MyLoginPage = (props) => {
                     let data = response.data;
                     if (data?.two_factor === true) {
                         setTwoFA(true);
+                        inputRef.current.focus();
                     } else {
                         login(data, "/");
                     }
-                    inputRef.current.focus();
                 }).catch(error => {
                     setLoading(false);
                     notify(error?.response?.data?.message, 'warning');
