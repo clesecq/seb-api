@@ -5,11 +5,11 @@ import MoneyField from "../components/MoneyField";
 import MoneyInput from "../components/MoneyInput";
 
 const TransactionsFilters = [
-    <TextInput label="Name" source="name" />,
-    <ReferenceInput label="Account" source="account_id" reference="accounts">
+    <TextInput source="name" />,
+    <ReferenceInput source="account_id" reference="accounts">
         <SelectInput optionText="name" />
     </ReferenceInput>,
-    <ReferenceInput label="Creator" source="user_id" reference="users">
+    <ReferenceInput source="user_id" reference="users">
         <SelectInput optionText="email" />
     </ReferenceInput>
 ];
@@ -22,13 +22,13 @@ const Transactions = (props) => (
                 <TextField source="name" />
                 <MoneyField noLabel={true} source="amount" />
                 <BooleanField source="rectification" />
-                <ReferenceField label="Account" source="account_id" reference="accounts">
+                <ReferenceField source="account_id" reference="accounts">
                     <TextField source="name" />
                 </ReferenceField>
-                <ReferenceField label="Category" source="category_id" reference="transactions_categories">
+                <ReferenceField source="category_id" reference="transactions_categories">
                     <TextField source="name" />
                 </ReferenceField>
-                <ReferenceField label="Creator" source="user_id" reference="users">
+                <ReferenceField source="user_id" reference="users">
                     <TextField source="email" />
                 </ReferenceField>
                 <DateField source="created_at" />
@@ -40,10 +40,10 @@ const Transactions = (props) => (
                 <TextInput source="name" />
                 <MoneyInput source="amount" />
                 <BooleanInput source="rectification" />
-                <ReferenceInput label="Account" source="account_id" reference="accounts">
+                <ReferenceInput source="account_id" reference="accounts">
                     <SelectInput optionText="name" />
                 </ReferenceInput>
-                <ReferenceInput label="Category" source="category_id" reference="transactions_categories">
+                <ReferenceInput source="category_id" reference="transactions_categories">
                     <SelectInput optionText="name" />
                 </ReferenceInput>
             </SimpleForm>
@@ -54,13 +54,13 @@ const Transactions = (props) => (
                 <TextField source="name" />
                 <MoneyField source="amount" />
                 <BooleanField source="rectification" />
-                <ReferenceField label="Account" source="account_id" reference="accounts">
+                <ReferenceField source="account_id" reference="accounts">
                     <TextField source="name" />
                 </ReferenceField>
-                <ReferenceField label="Category" source="category_id" reference="transactions_categories">
+                <ReferenceField source="category_id" reference="transactions_categories">
                     <TextField source="name" />
                 </ReferenceField>
-                <ReferenceField label="Creator" source="user_id" reference="users">
+                <ReferenceField source="user_id" reference="users">
                     <TextField source="email" />
                 </ReferenceField>
                 <DateField source="created_at" />

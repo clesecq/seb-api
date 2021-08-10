@@ -6,12 +6,12 @@ import MoneyInput from "../components/MoneyInput";
 import { RecalculateButton } from '../components/RecalculateButton';
 
 const ProductsFilters = [
-    <TextInput label="Name" source="name" />,
-    <TextInput label="Barcode" source="barcode" />,
-    <ReferenceInput label="Category" source="category_id" reference="products_categories">
+    <TextInput source="name" />,
+    <TextInput source="barcode" />,
+    <ReferenceInput source="category_id" reference="products_categories">
         <SelectInput optionText="name" />
     </ReferenceInput>,
-    <NullableBooleanInput label="Alerts" source="alerts" />
+    <NullableBooleanInput source="alerts" />
 ];
 
 const ProductsListActions = ({ basePath, ...props }) => (
@@ -31,7 +31,7 @@ const Products = (props) => (
                 <TextField source="id" />
                 <TextField source="barcode" />
                 <TextField source="name" />
-                <ReferenceField label="Category" source="category_id" reference="products_categories" >
+                <ReferenceField source="category_id" reference="products_categories" >
                     <TextField source="name" />
                 </ReferenceField>
                 <MoneyField noLabel={true} source="price" />
@@ -45,7 +45,7 @@ const Products = (props) => (
         <CreateDialog {...props}>
             <SimpleForm redirect="list">
                 <TextInput source="name" />
-                <ReferenceInput label="Category" source="category_id" reference="products_categories">
+                <ReferenceInput source="category_id" reference="products_categories">
                     <SelectInput optionText="name" />
                 </ReferenceInput>
                 <TextInput source="barcode" />
@@ -57,7 +57,7 @@ const Products = (props) => (
             <SimpleForm redirect="list">
                 <TextInput disabled source="id" />
                 <TextInput source="name" />
-                <ReferenceInput label="Category" source="category_id" reference="products_categories">
+                <ReferenceInput source="category_id" reference="products_categories">
                     <SelectInput optionText="name" />
                 </ReferenceInput>
                 <TextInput source="barcode" />
@@ -73,7 +73,7 @@ const Products = (props) => (
                 <TextField source="id" />
                 <TextField source="barcode" />
                 <TextField source="name" />
-                <ReferenceField label="Category" source="category_id" reference="products_categories" >
+                <ReferenceField source="category_id" reference="products_categories" >
                     <TextField source="name" />
                 </ReferenceField>
                 <MoneyField source="price" />

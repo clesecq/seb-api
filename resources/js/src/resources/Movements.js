@@ -3,7 +3,7 @@ import { ArrayField, ArrayInput, BooleanField, BooleanInput, Datagrid, DateField
 import { CreateDialog, ShowDialog } from '../components/DialogForm';
 
 const MovementsFilters = [
-    <TextInput label="Name" source="name" />
+    <TextInput source="name" />
 ];
 
 const Movements = (props) => (
@@ -13,7 +13,7 @@ const Movements = (props) => (
                 <TextField source="id" />
                 <TextField source="name" />
                 <BooleanField source="rectification" />
-                <ReferenceField label="User" source="user_id" reference="users">
+                <ReferenceField source="user_id" reference="users">
                     <TextField source="name" />
                 </ReferenceField>
                 <DateField source="created_at" />
@@ -26,11 +26,11 @@ const Movements = (props) => (
                 <BooleanInput source="rectification" />
                 <ArrayInput source="products">
                     <SimpleFormIterator>
-                        <ReferenceInput label="Product" source="id" reference="products">
+                        <ReferenceInput source="id" reference="products">
                             <SelectInput optionText="name" />
                         </ReferenceInput>
 
-                        <NumberInput source="diff" label="Diff" />
+                        <NumberInput source="diff" />
                     </SimpleFormIterator>
                 </ArrayInput>
             </SimpleForm>
@@ -41,14 +41,14 @@ const Movements = (props) => (
                 <TextField source="name" />
                 <ArrayField source="products">
                     <Datagrid>
-                        <TextField source="product_id" label="Id" />
-                        <TextField source="product.name" label="Name" />
-                        <TextField source="product.barcode" label="Barcode" />
-                        <TextField source="count" label="Diff" />
+                        <TextField source="product_id" />
+                        <TextField source="product.name" />
+                        <TextField source="product.barcode" />
+                        <TextField source="count" />
                     </Datagrid>
                 </ArrayField>
                 <BooleanField source="rectification" />
-                <ReferenceField label="User" source="user_id" reference="users">
+                <ReferenceField source="user_id" reference="users">
                     <TextField source="name" />
                 </ReferenceField>
                 <DateField source="created_at" />

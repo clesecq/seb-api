@@ -5,9 +5,9 @@ import MoneyField from "../components/MoneyField";
 import { RecalculateButton } from '../components/RecalculateButton';
 
 const AccountsFilters = [
-    <TextInput label="Name" source="name" />,
-    <TextInput label="IBAN" source="iban" />,
-    <TextInput label="BIC" source="bic" />,
+    <TextInput source="name" />,
+    <TextInput source="iban" />,
+    <TextInput source="bic" />,
 ];
 
 const AccountsListActions = ({ basePath, ...props }) => (

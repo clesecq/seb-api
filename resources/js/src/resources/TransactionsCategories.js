@@ -3,7 +3,7 @@ import { Datagrid, DateField, DateInput, EditButton, List, SimpleForm, SimpleSho
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
 
 const TransactionsCategoriesFilters = [
-    <TextInput label="Name" source="name" />
+    <TextInput source="name" />
 ];
 
 const TransactionsCategories = (props) => (

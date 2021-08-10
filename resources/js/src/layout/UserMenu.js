@@ -1,37 +1,32 @@
 import CopyrightIcon from '@material-ui/icons/Copyright';
 import SettingsIcon from '@material-ui/icons/Settings';
-import React, { Component } from 'react';
-import { crudGetOne, MenuItemLink, UserMenu } from 'react-admin';
+import React, { useEffect } from 'react';
+import { crudGetOne, MenuItemLink, UserMenu, useTranslate } from 'react-admin';
 import { connect } from 'react-redux';
 
-class MyUserMenuView extends Component {
-    componentDidMount() {
-        this.fetchProfile();
-    }
+const MyUserMenuView = (props) => {
+    useEffect(() => {
+        props.crudGetOne('profile', 'me', '/profile', false);
+    });
 
-    fetchProfile = () => {
-        this.props.crudGetOne('profile', 'me', '/profile', false);
-    };
+    const { crudGetOne, profile, ...alt } = props;
+    const translate = useTranslate();
 
-    render() {
-        const { crudGetOne, profile, ...props } = this.props;
-
-        return (
-            <UserMenu label={profile ? profile.nickname : ''} {...props}>
-                <MenuItemLink
-                    to="/profile"
-                    primaryText="Profile"
-                    leftIcon={<SettingsIcon />}
-                />
-                <MenuItemLink
-                    to="/copying"
-                    primaryText="Copying"
-                    leftIcon={<CopyrightIcon />}
-                />
-            </UserMenu>
-        );
-    }
-}
+    return (
+        <UserMenu label={profile ? profile.nickname : ''} {...alt}>
+            <MenuItemLink
+                to="/profile"
+                primaryText={translate("menu.user.profile")}
+                leftIcon={<SettingsIcon />}
+            />
+            <MenuItemLink
+                to="/copying"
+                primaryText={translate("menu.user.copying")}
+                leftIcon={<CopyrightIcon />}
+            />
+        </UserMenu>
+    );
+};
 
 const mapStateToProps = state => {
     const resource = 'profile';

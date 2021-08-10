@@ -21,7 +21,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 import * as React from 'react';
 import { useState } from 'react';
-import { getResources, MenuItemLink, usePermissions } from 'react-admin';
+import { getResources, MenuItemLink, usePermissions, useTranslate } from 'react-admin';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
@@ -91,31 +91,56 @@ const Item = (props) => {
 const Menu = ({ onMenuClick, logout }) => {
     const isXSmall = useMediaQuery(theme => theme.breakpoints.down('xs'));
     const resources = useSelector(getResources);
+    const translate = useTranslate();
+    
+/*
 
+
+            menu.left: {
+                dashboard: "Dashboard",
+                sell: "Sell",
+                buy: "Buy",
+                count_money: "Count Money",
+                count_stocks: "Count Stocks",
+                members: "Members",
+                stocks: "Stocks",
+                products: "Products",
+                categories: "Categories",
+                products_counts: "Stocks Counts",
+                movements: "Stocks Movements",
+                accounting: "Accounting",
+                accounts: "Accounts",
+                accounts_counts: "Accounts Counts",
+                transactions: "Transactions",
+                sales: "Sales",
+                purchases: "Purchases",
+                users: "Users"
+            }
+*/
     return (
         <>
-            <Item to="/" primaryText="Dashboard" leftIcon={<DashboardIcon />} />
-            <Item to="/sales/create" permissions="sales.create" primaryText="Sell" leftIcon={<LocalOfferIcon />} />
-            <Item to="/purchases/create" permissions="purchases.create" primaryText="Buy" leftIcon={<ShoppingCartIcon />} />
-            <Item to="/accounts_counts/create" permissions="accounts_counts.create" primaryText="Count money" leftIcon={<MoneyIcon />} />
-            <Item to="/products_counts/create" permissions="products_counts.create" primaryText="Count products" leftIcon={<BarChartIcon />} />
-            <Item to="/members" permissions="members.*" primaryText="Members" leftIcon={<GroupIcon />} />
-            <Accordeon open={false} title="Stocks" permissions={["products.*", "products_categories.*", "movements.*", "products_counts.*"]}>
-                <Item to="/products" permissions="products.*" primaryText="Products" leftIcon={<LocalCafeIcon />} />
-                <Item to="/products_categories" permissions="products_categories.*" primaryText="Categories" leftIcon={<CategoryIcon />} />
-                <Item to="/products_counts" permissions="products_counts.*" primaryText="Products Counts" leftIcon={<BarChartIcon />} />
-                <Item to="/movements" permissions="movements.*" primaryText="Movements" leftIcon={<SwapHorizIcon />} />
+            <Item to="/" primaryText={translate('menu.left.dashboard')} leftIcon={<DashboardIcon />} />
+            <Item to="/sales/create" permissions="sales.create" primaryText={translate('menu.left.sell')} leftIcon={<LocalOfferIcon />} />
+            <Item to="/purchases/create" permissions="purchases.create" primaryText={translate('menu.left.buy')} leftIcon={<ShoppingCartIcon />} />
+            <Item to="/accounts_counts/create" permissions="accounts_counts.create" primaryText={translate('menu.left.buy')} leftIcon={<MoneyIcon />} />
+            <Item to="/products_counts/create" permissions="products_counts.create" primaryText={translate('menu.left.count_money')} leftIcon={<BarChartIcon />} />
+            <Item to="/members" permissions="members.*" primaryText={translate('menu.left.members')} leftIcon={<GroupIcon />} />
+            <Accordeon open={false} title={translate('menu.left.stocks')}permissions={["products.*", "products_categories.*", "movements.*", "products_counts.*"]}>
+                <Item to="/products" permissions="products.*" primaryText={translate('menu.left.products')} leftIcon={<LocalCafeIcon />} />
+                <Item to="/products_categories" permissions="products_categories.*" primaryText={translate('menu.left.categories')} leftIcon={<CategoryIcon />} />
+                <Item to="/products_counts" permissions="products_counts.*" primaryText={translate('menu.left.products_counts')} leftIcon={<BarChartIcon />} />
+                <Item to="/movements" permissions="movements.*" primaryText={translate('menu.left.movements')} leftIcon={<SwapHorizIcon />} />
             </Accordeon>
-            <Accordeon open={false} title="Accounting" permissions={["accounts.*", "accounts_counts.*", "transactions.*", "transactions_categories.*", "sales.*", "purchases.*"]}>
-                <Item to="/accounts" permissions="accounts.*" primaryText="Accounts" leftIcon={<AccountBalanceIcon />} />
-                <Item to="/accounts_counts" permissions="accounts_counts.*" primaryText="Accounts Counts" leftIcon={<MoneyIcon />} />
-                <Item to="/transactions" permissions="transactions.*" primaryText="Transactions" leftIcon={<SwapHorizIcon />} />
-                <Item to="/transactions_categories" permissions="transactions_categories.*" primaryText="Categories" leftIcon={<CategoryIcon />} />
-                <Item to="/sales" permissions="sales.*" primaryText="Sales" leftIcon={<LocalOfferIcon />} />
-                <Item to="/purchases" permissions="purchases.*" primaryText="Purchases" leftIcon={<ShoppingCartIcon />} />
+            <Accordeon open={false} title={translate('menu.left.accounting')}permissions={["accounts.*", "accounts_counts.*", "transactions.*", "transactions_categories.*", "sales.*", "purchases.*"]}>
+                <Item to="/accounts" permissions="accounts.*" primaryText={translate('menu.left.accounts')} leftIcon={<AccountBalanceIcon />} />
+                <Item to="/accounts_counts" permissions="accounts_counts.*" primaryText={translate('menu.left.accounts_counts')} leftIcon={<MoneyIcon />} />
+                <Item to="/transactions" permissions="transactions.*" primaryText={translate('menu.left.transactions')} leftIcon={<SwapHorizIcon />} />
+                <Item to="/transactions_categories" permissions="transactions_categories.*" primaryText={translate('menu.left.categories')} leftIcon={<CategoryIcon />} />
+                <Item to="/sales" permissions="sales.*" primaryText={translate('menu.left.sales')} leftIcon={<LocalOfferIcon />} />
+                <Item to="/purchases" permissions="purchases.*" primaryText={translate('menu.left.purchases')} leftIcon={<ShoppingCartIcon />} />
             </Accordeon>
-            <Item to="/users" permissions="users.*" primaryText="Users" leftIcon={<AccountBoxIcon />} />
-            {isXSmall && <Item to="/profile" primaryText="Profile" leftIcon={<AccountCircleIcon />} />}
+            <Item to="/users" permissions="users.*" primaryText={translate('menu.left.users')} leftIcon={<AccountBoxIcon />} />
+            {isXSmall && <Item to="/profile" primaryText={translate('menu.left.logout')} leftIcon={<AccountCircleIcon />} />}
             {isXSmall && logout}
         </>
     );

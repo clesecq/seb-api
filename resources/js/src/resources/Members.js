@@ -1,23 +1,26 @@
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import * as React from "react";
 import { Fragment } from 'react';
-import { BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, Datagrid, DateField, DateInput, EditButton, FunctionField, List, ReferenceField, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, Datagrid, DateField, DateInput, EditButton, FunctionField, List, ReferenceField, SimpleForm, SimpleShowLayout, TextField, TextInput, useTranslate } from 'react-admin';
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
 
 const MembersFilters = [
-    <TextInput label="First Name" source="firstname" />,
-    <TextInput label="Last Name" source="lastname" />,
-    <TextInput label="Email" source="email" />,
-    <TextInput label="Card" source="card" />,
-    <BooleanInput label="Payed" source="payed" />
+    <TextInput source="firstname" />,
+    <TextInput source="lastname" />,
+    <TextInput source="email" />,
+    <TextInput source="card" />,
+    <BooleanInput source="payed" />
 ];
 
-const MembersBulkActionButtons = props => (
-    <Fragment>
-        <BulkUpdateButton {...props} label="Mark Payed" data={{ "payed": true }} icon={<AttachMoneyIcon />} />
-        <BulkDeleteButton {...props} />
-    </Fragment>
-);
+const MembersBulkActionButtons = props => {
+    const translate = useTranslate();
+    return (
+        <Fragment>
+            <BulkUpdateButton {...props} label={translate('resources.members.mark_payed')} data={{ "payed": true }} icon={<AttachMoneyIcon />} />
+            <BulkDeleteButton {...props} />
+        </Fragment>
+    );
+};
 
 const Members = (props) => (
     <>
@@ -28,7 +31,7 @@ const Members = (props) => (
                 <TextField source="lastname" />
                 <TextField source="email" />
                 <BooleanField source="payed" />
-                <ReferenceField label="Transaction" source="transaction_id" reference="transactions" link="show" >
+                <ReferenceField source="transaction_id" reference="transactions" link="show" >
                     <FunctionField render={r => "#" + r.id} />
                 </ReferenceField>
                 <TextField source="card" />

@@ -1,12 +1,13 @@
 import RefreshIcon from '@material-ui/icons/Refresh';
 import * as React from "react";
-import { Button, useDataProvider, useRefresh, useResourceContext } from 'react-admin';
+import { Button, useDataProvider, useRefresh, useResourceContext, useTranslate } from 'react-admin';
 
 
 const RecalculateButton = (props) => {
     const dataProvider = useDataProvider();
     const name = useResourceContext();
     const refresh = useRefresh();
+    const translate = useTranslate();
 
     return (
         <Button
@@ -15,7 +16,7 @@ const RecalculateButton = (props) => {
                     refresh();
                 });
             }}
-            label="Recalculate"
+            label={translate('actions.recalculate')}
         ><RefreshIcon /></Button>
     );
 };

@@ -235,11 +235,11 @@ const TokensField = (props) => {
             {props.record.tokens.length == 0 ? <Typography>You don't have any token yet.</Typography> :
                 <ArrayField source="tokens" {...props}>
                     <Datagrid>
-                        <TextField source="id" label="Id" />
-                        <TextField source="name" label="Name" />
-                        <DateField source="last_used_at" label="Last use" />
-                        <DateField source="created_at" label="Created at" />
-                        <TokenField source="id" label=""/>
+                        <TextField source="id" />
+                        <TextField source="name" />
+                        <DateField source="last_used_at" />
+                        <DateField source="created_at" />
+                        <TokenField source="id" label="" />
                     </Datagrid>
                 </ArrayField>
             }

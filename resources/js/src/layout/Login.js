@@ -142,7 +142,7 @@ const MyLoginPage = (props) => {
         </Login>
         <div className={classes.copying}>
             <Typography>
-                Copyright © 2021 Amicale CORE - Released under the <Link to="/copying" component={RouterLink} className={classes.link}>GNU AGPLv3</Link>
+                {translate('copying.bottommessage')} <Link to="/copying" component={RouterLink} className={classes.link}>GNU AGPLv3</Link>
             </Typography>
         </div>
         </>
