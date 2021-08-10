@@ -58,7 +58,7 @@ const Item = ({ product, filterCategory, filterName, updatePrice, ...props }) =>
                     <Typography variant="h6" gutterBottom>{product.name}</Typography>
                     <Grid container style={{ justifyContent: "center" }}>
                         <Grid item className={classes.rows}>
-                            <IconButton aria-label="sub" onClick={() => { addCount(-1) }}>
+                            <IconButton aria-label="sub" onClick={(e) => { addCount(e.shiftKey ? -10 : -1) }}>
                                 <RemoveIcon />
                             </IconButton>
                         </Grid>
@@ -89,7 +89,7 @@ const Item = ({ product, filterCategory, filterName, updatePrice, ...props }) =>
                             </Grid>
                         </Grid>
                         <Grid item className={classes.rows}>
-                            <IconButton aria-label="add" onClick={() => { addCount(1) }}>
+                            <IconButton aria-label="add" onClick={(e) => { addCount(e.shiftKey ? 10 : 1) }}>
                                 <AddIcon />
                             </IconButton>
                         </Grid>

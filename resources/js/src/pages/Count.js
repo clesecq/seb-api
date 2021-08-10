@@ -32,6 +32,8 @@ const Item = ({ value, updatePrice, ...props }) => {
     const addCount = ((x) => {
 
         if (count + x < 0) {
+            setCount(0);
+            updatePrice(value, 0);
             return;
         }
 
@@ -50,7 +52,7 @@ const Item = ({ value, updatePrice, ...props }) => {
                 <Typography variant="h6" gutterBottom>{Number(value).toFixed(2)} €</Typography>
                 <Grid container style={{ justifyContent: "center" }}>
                     <Grid item className={classes.rows}>
-                        <IconButton aria-label="sub" onClick={() => { addCount(-1) }}>
+                        <IconButton aria-label="sub" onClick={(e) => { addCount(e.shiftKey ? -10 : -1) }}>
                             <RemoveIcon />
                         </IconButton>
                     </Grid>
@@ -78,7 +80,7 @@ const Item = ({ value, updatePrice, ...props }) => {
                         </Grid>
                     </Grid>
                     <Grid item className={classes.rows}>
-                        <IconButton aria-label="add" onClick={() => { addCount(1) }}>
+                        <IconButton aria-label="add" onClick={(e) => { addCount(e.shiftKey ? 10 : 1) }}>
                             <AddIcon />
                         </IconButton>
                     </Grid>
@@ -138,9 +140,9 @@ const Count = () => {
         if (selectType === "cash") {
             data["data"] = counts;
         } else {
-            data["data"] = {amount: price};
+            data["data"] = { amount: price };
         }
-        
+
         dataProvider.create('accounts_counts', { data: data }).then((response) => {
             doRefresh(prev => prev + 1);
             notify('Count saved!');
