@@ -370,9 +370,41 @@ const messages = {
             }
         },
         actions: {
-            recalculate: "Recalculer"
+            recalculate: "Recalculer",
+            clear: "Réinitialiser"
+        },
+        dashboard: {
+            welcome: "Bienvenue sur Seb™",
+            alerts: {
+                none: "Pas d'alertes",
+                title: "Alertes de stocks",
+                id: "#",
+                name: "Nom",
+                count: "Nombre",
+                treshold: "Seuil d'alerte"
+            }
+        },
+        sell: {
+            name: "Nom",
+            category: "Catégorie",
+            price: "Prix",
+            account: "Compte",
+            transaction_category: "Catégorie de Transaction",
+            has_products: "L'achat concerne des produits",
+            none: 'Aucun',
+            add_products: 'Ajouter des Produits',
+            type: 'Type',
+            cash: 'Liquide',
+            value: 'Valeur absolue',
+            balance: 'Solde'
         }
     }),
 };
 
-export default polyglotI18nProvider(locale => messages[locale], 'fr');
+// TODO: Make this a setting
+const locale = 'fr';
+
+axios.defaults.params = {}
+axios.defaults.params['lang'] = locale;
+
+export default polyglotI18nProvider(locale => messages[locale], locale);

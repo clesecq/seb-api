@@ -11,7 +11,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import RemoveIcon from '@material-ui/icons/Remove';
 import SaveIcon from '@material-ui/icons/Save';
 import { useEffect, useState } from "react";
-import { Title, useDataProvider, useNotify } from 'react-admin';
+import { Title, useDataProvider, useNotify, useTranslate } from 'react-admin';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -111,6 +111,7 @@ const Buy = () => {
     const [selectTransactionCategory, setSelectTransactionCategory] = useState("");
     const classes = useStyles();
     const notify = useNotify();
+    const translate = useTranslate();
 
     useEffect(() => {
         dataProvider.getList('products', { pagination: { perPage: 100000, page: 1 }, sort: { field: 'id', order: 'asc' } }).then(({ data }) => {
@@ -186,19 +187,19 @@ const Buy = () => {
         <>
             <Grid container>
                 <Grid item className="MuiToolbar-root MuiToolbar-regular RaTopToolbar-root-56" style={{ flexGrow: 1, display: 'flex', justifyContent: 'end' }}>
-                    <Button color="primary" startIcon={<ClearIcon />} onClick={() => doRefresh(prev => prev + 1)}>Clear</Button>
-                    <Button color="primary" startIcon={<SaveIcon />} onClick={save}>Save</Button>
+                    <Button color="primary" startIcon={<ClearIcon />} onClick={() => doRefresh(prev => prev + 1)}>{translate('actions.clear')}</Button>
+                    <Button color="primary" startIcon={<SaveIcon />} onClick={save}>{translate('ra.action.save')}</Button>
                 </Grid>
             </Grid>
             <Card>
                 <CardContent>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <TextField value={name} onChange={(e) => { setName(e.target.value) }} variant="filled" type="text" label="Name" />
+                            <TextField value={name} onChange={(e) => { setName(e.target.value) }} variant="filled" type="text" label={translate('sell.name')} />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField select variant="filled" type="text" label="Account" value={selectAccount} onChange={(e) => { setSelectAccount(e.target.value) }}>
-                                <MenuItem key={""} value={""}><span style={{ color: 'transparent' }}>None</span></MenuItem>
+                            <TextField select variant="filled" type="text" label={translate('sell.account')} value={selectAccount} onChange={(e) => { setSelectAccount(e.target.value) }}>
+                                <MenuItem key={""} value={""}><span style={{ color: 'transparent' }}>{translate('sell.none')}</span></MenuItem>
                                 {accounts.map((cat) => (
                                     <MenuItem key={cat.id} value={cat.id}>
                                         {cat.name}
@@ -207,8 +208,8 @@ const Buy = () => {
                             </TextField>
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField select variant="filled" type="text" label="Transaction category" value={selectTransactionCategory} onChange={(e) => { setSelectTransactionCategory(e.target.value) }}>
-                                <MenuItem key={""} value={""}><span style={{ color: 'transparent' }}>None</span></MenuItem>
+                            <TextField select variant="filled" type="text" label={translate('sell.transaction_category')} value={selectTransactionCategory} onChange={(e) => { setSelectTransactionCategory(e.target.value) }}>
+                                <MenuItem key={""} value={""}><span style={{ color: 'transparent' }}>{translate('sell.none')}</span></MenuItem>
                                 {transactionCategories.map((cat) => (
                                     <MenuItem key={cat.id} value={cat.id}>
                                         {cat.name}
@@ -217,10 +218,10 @@ const Buy = () => {
                             </TextField>
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField value={price} onChange={(e) => setPrice(e.target.value)} variant="filled" type="text" label="Price" />
+                            <TextField value={price} onChange={(e) => setPrice(e.target.value)} variant="filled" type="text" label={translate('sell.price')} />
                         </Grid>
                         <Grid item xs={12}>
-                            <FormControlLabel control={<Switch checked={hasProducts} onChange={(e) => setHasProducts(e.target.checked)} />} label="Has products ?" style={{ marginTop: "10px" }} />
+                            <FormControlLabel control={<Switch checked={hasProducts} onChange={(e) => setHasProducts(e.target.checked)} />} label={translate('sell.has_products')} style={{ marginTop: "10px" }} />
                         </Grid>
                     </Grid>
                 </CardContent>
@@ -228,14 +229,14 @@ const Buy = () => {
             {(hasProducts ? (
                 <Grid container>
                     <Grid item xs={12}>
-                        <Typography variant="h5">Add products</Typography>
+                        <Typography variant="h5">{translate('sell.add_products')}</Typography>
                     </Grid>
                     <Grid item xs={12} md={6} style={{ padding: '0 4px' }}>
-                        <TextField value={filterName} onChange={(e) => { setFilterName(e.target.value) }} variant="filled" type="text" label="Product name" />
+                        <TextField value={filterName} onChange={(e) => { setFilterName(e.target.value) }} variant="filled" type="text" label={translate('sell.name')} />
                     </Grid>
                     <Grid item xs={12} md={6} style={{ padding: '0 4px' }}>
-                        <TextField select variant="filled" type="text" label="Category" value={selectCategory} onChange={(e) => { setSelectCategory(e.target.value) }}>
-                            <MenuItem key={""} value={""}><span style={{ color: 'transparent' }}>None</span></MenuItem>
+                        <TextField select variant="filled" type="text" label={translate('sell.category')} value={selectCategory} onChange={(e) => { setSelectCategory(e.target.value) }}>
+                            <MenuItem key={""} value={""}><span style={{ color: 'transparent' }}>{translate('sell.none')}</span></MenuItem>
                             {categories.map((cat) => (
                                 <MenuItem key={cat.id} value={cat.id}>
                                     {cat.name}
@@ -246,7 +247,7 @@ const Buy = () => {
                 </Grid>
             ) : "")}
             <Card>
-                <Title title="Sell" />
+                <Title title={translate('menu.left.buy')} />
                 {(hasProducts ? (
                     <CardContent>
                         <Grid container spacing={3} >

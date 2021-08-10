@@ -93,37 +93,13 @@ const Menu = ({ onMenuClick, logout }) => {
     const resources = useSelector(getResources);
     const translate = useTranslate();
     
-/*
-
-
-            menu.left: {
-                dashboard: "Dashboard",
-                sell: "Sell",
-                buy: "Buy",
-                count_money: "Count Money",
-                count_stocks: "Count Stocks",
-                members: "Members",
-                stocks: "Stocks",
-                products: "Products",
-                categories: "Categories",
-                products_counts: "Stocks Counts",
-                movements: "Stocks Movements",
-                accounting: "Accounting",
-                accounts: "Accounts",
-                accounts_counts: "Accounts Counts",
-                transactions: "Transactions",
-                sales: "Sales",
-                purchases: "Purchases",
-                users: "Users"
-            }
-*/
     return (
         <>
             <Item to="/" primaryText={translate('menu.left.dashboard')} leftIcon={<DashboardIcon />} />
             <Item to="/sales/create" permissions="sales.create" primaryText={translate('menu.left.sell')} leftIcon={<LocalOfferIcon />} />
             <Item to="/purchases/create" permissions="purchases.create" primaryText={translate('menu.left.buy')} leftIcon={<ShoppingCartIcon />} />
-            <Item to="/accounts_counts/create" permissions="accounts_counts.create" primaryText={translate('menu.left.buy')} leftIcon={<MoneyIcon />} />
-            <Item to="/products_counts/create" permissions="products_counts.create" primaryText={translate('menu.left.count_money')} leftIcon={<BarChartIcon />} />
+            <Item to="/accounts_counts/create" permissions="accounts_counts.create" primaryText={translate('menu.left.count_money')} leftIcon={<MoneyIcon />} />
+            <Item to="/products_counts/create" permissions="products_counts.create" primaryText={translate('menu.left.count_stocks')} leftIcon={<BarChartIcon />} />
             <Item to="/members" permissions="members.*" primaryText={translate('menu.left.members')} leftIcon={<GroupIcon />} />
             <Accordeon open={false} title={translate('menu.left.stocks')}permissions={["products.*", "products_categories.*", "movements.*", "products_counts.*"]}>
                 <Item to="/products" permissions="products.*" primaryText={translate('menu.left.products')} leftIcon={<LocalCafeIcon />} />

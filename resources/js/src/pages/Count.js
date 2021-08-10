@@ -11,7 +11,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import RemoveIcon from '@material-ui/icons/Remove';
 import SaveIcon from '@material-ui/icons/Save';
 import { useEffect, useState } from "react";
-import { Title, useDataProvider, useNotify } from 'react-admin';
+import { Title, useDataProvider, useNotify, useTranslate } from 'react-admin';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -103,6 +103,7 @@ const Count = () => {
     const [error, setError] = useState();
     const [refresh, doRefresh] = useState(0);
     const notify = useNotify();
+    const translate = useTranslate();
 
     useEffect(() => {
         dataProvider.getList('accounts', { pagination: { perPage: 100000, page: 1 }, sort: { field: 'id', order: 'asc' } }).then(({ data }) => {
@@ -154,9 +155,13 @@ const Count = () => {
     return (
         <>
             <Grid container>
-                <Grid item xs={12} md={6} lg={3} style={{ padding: '0 4px' }}>
-                    <TextField select variant="filled" type="text" label="Account" value={selectAccount} onChange={(e) => { setSelectAccount(e.target.value) }}>
-                        <MenuItem key={""} value={""}><span style={{ color: 'transparent' }}>None</span></MenuItem>
+                <Grid xs={12} item className="MuiToolbar-root MuiToolbar-regular RaTopToolbar-root-56" style={{ flexGrow: 1, display: 'flex', justifyContent: 'end' }}>
+                    {(selectType === "cash" ? <Button color="primary" startIcon={<ClearIcon />} onClick={() => doRefresh(prev => prev + 1)}>{translate('actions.clear')}</Button> : "")}
+                    <Button color="primary" startIcon={<SaveIcon />} onClick={save}>{translate('ra.action.save')}</Button>
+                </Grid>
+                <Grid item xs={12} md={6} lg={4} style={{ padding: '0 4px' }}>
+                    <TextField select variant="filled" type="text" label={translate('sell.account')} value={selectAccount} onChange={(e) => { setSelectAccount(e.target.value) }}>
+                        <MenuItem key={""} value={""}><span style={{ color: 'transparent' }}>{translate('sell.none')}</span></MenuItem>
                         {accounts.map((account) => (
                             <MenuItem key={account.id} value={account.id}>
                                 {account.name}
@@ -164,30 +169,26 @@ const Count = () => {
                         ))}
                     </TextField>
                 </Grid>
-                <Grid item xs={12} md={6} lg={3} style={{ padding: '0 4px' }}>
-                    <TextField select variant="filled" type="text" label="Type" value={selectType} onChange={(e) => { setSelectType(e.target.value) }}>
+                <Grid item xs={12} md={6} lg={4} style={{ padding: '0 4px' }}>
+                    <TextField select variant="filled" type="text" label={translate('sell.type')} value={selectType} onChange={(e) => { setSelectType(e.target.value) }}>
                         <MenuItem key="cash" value="cash">
-                            Cash
+                            {translate('sell.cash')}
                         </MenuItem>
                         <MenuItem key="value" value="value">
-                            Value
+                            {translate('sell.value')}
                         </MenuItem>
                     </TextField>
                 </Grid>
-                <Grid item xs={12} md={6} lg={3} style={{ padding: '0 4px' }}>
+                <Grid item xs={12} lg={4} style={{ padding: '0 4px' }}>
                     {(selectType === "cash" ?
-                        <TextField value={Number(price).toFixed(2) + " €"} disabled variant="filled" type="text" label="Balance" />
+                        <TextField value={Number(price).toFixed(2) + " €"} disabled variant="filled" type="text" label={translate('sell.balance')} />
                         :
-                        <TextField value={price} onChange={(e) => { setPrice(e.target.value) }} variant="filled" type="text" label="Balance" />
+                        <TextField value={price} onChange={(e) => { setPrice(e.target.value) }} variant="filled" type="text" label={translate('sell.balance')} />
                     )}
-                </Grid>
-                <Grid item className="MuiToolbar-root MuiToolbar-regular RaTopToolbar-root-56" style={{ flexGrow: 1, display: 'flex', justifyContent: 'end' }}>
-                    {(selectType === "cash" ? <Button color="primary" startIcon={<ClearIcon />} onClick={() => doRefresh(prev => prev + 1)}>Clear</Button> : "")}
-                    <Button color="primary" startIcon={<SaveIcon />} onClick={save}>Save</Button>
                 </Grid>
             </Grid>
             <Card>
-                <Title title="Count" />
+                <Title title={translate('menu.left.count_money')} />
                 {(selectType === "cash" ?
                     <CardContent>
                         <Grid container spacing={3} >

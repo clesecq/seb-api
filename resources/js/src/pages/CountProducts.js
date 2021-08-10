@@ -11,7 +11,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import RemoveIcon from '@material-ui/icons/Remove';
 import SaveIcon from '@material-ui/icons/Save';
 import { useEffect, useState } from "react";
-import { Title, useDataProvider, useNotify } from 'react-admin';
+import { Title, useDataProvider, useNotify, useTranslate } from 'react-admin';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -112,6 +112,7 @@ const CountProducts = () => {
     const [refresh, doRefresh] = useState(0);
     const classes = useStyles();
     const notify = useNotify();
+    const translate = useTranslate();
 
     useEffect(() => {
         dataProvider.getList('products', { pagination: { perPage: 100000, page: 1 }, sort: { field: 'id', order: 'asc' } }).then(({ data }) => {
@@ -162,12 +163,16 @@ const CountProducts = () => {
     return (
         <>
             <Grid container>
-                <Grid item xs={12} md={6} lg={3} style={{ padding: '0 4px' }}>
-                    <TextField value={filterName} onChange={(e) => { setFilterName(e.target.value) }} variant="filled" type="text" label="Name" />
+                <Grid item xs={12} className="MuiToolbar-root MuiToolbar-regular RaTopToolbar-root-56" style={{ flexGrow: 1, display: 'flex', justifyContent: 'end' }}>
+                    <Button color="primary" startIcon={<ClearIcon />} onClick={() => doRefresh(prev => prev + 1)}>{translate('actions.clear')}</Button>
+                    <Button color="primary" startIcon={<SaveIcon />} onClick={save}>{translate('ra.action.save')}</Button>
                 </Grid>
-                <Grid item xs={12} md={6} lg={3} style={{ padding: '0 4px' }}>
-                    <TextField select variant="filled" type="text" label="Category" value={selectCategory} onChange={(e) => { setSelectCategory(e.target.value) }}>
-                        <MenuItem key={""} value={""}><span style={{ color: 'transparent' }}>None</span></MenuItem>
+                <Grid item xs={12} md={6} style={{ padding: '0 4px' }}>
+                    <TextField value={filterName} onChange={(e) => { setFilterName(e.target.value) }} variant="filled" type="text" label={translate('sell.name')} />
+                </Grid>
+                <Grid item xs={12} md={6} style={{ padding: '0 4px' }}>
+                    <TextField select variant="filled" type="text" label={translate('sell.category')} value={selectCategory} onChange={(e) => { setSelectCategory(e.target.value) }}>
+                        <MenuItem key={""} value={""}><span style={{ color: 'transparent' }}>{translate('sell.none')}</span></MenuItem>
                         {categories.map((cat) => (
                             <MenuItem key={cat.id} value={cat.id}>
                                 {cat.name}
@@ -175,13 +180,9 @@ const CountProducts = () => {
                         ))}
                     </TextField>
                 </Grid>
-                <Grid item className="MuiToolbar-root MuiToolbar-regular RaTopToolbar-root-56" style={{ flexGrow: 1, display: 'flex', justifyContent: 'end' }}>
-                    <Button color="primary" startIcon={<ClearIcon />} onClick={() => doRefresh(prev => prev + 1)}>Clear</Button>
-                    <Button color="primary" startIcon={<SaveIcon />} onClick={save}>Save</Button>
-                </Grid>
             </Grid>
             <Card>
-                <Title title="Count Products" />
+                <Title title={translate('menu.left.count_stocks')} />
                 <CardContent>
                     <Grid container spacing={3} >
                         {items}

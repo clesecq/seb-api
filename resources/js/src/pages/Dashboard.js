@@ -1,11 +1,12 @@
 import { Card, CardContent, CardHeader, Grid, Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import axios from 'axios';
 import * as React from "react";
-import { useNotify } from 'react-admin';
+import { Title, useNotify, useTranslate } from 'react-admin';
 
 export default () => {
     const notify = useNotify();
     const [data, setData] = React.useState({});
+    const translate = useTranslate();
 
     React.useEffect(() => {
         axios.get('/api/dashboard').then((response) => {
@@ -18,26 +19,21 @@ export default () => {
 
     return (
         <Grid container spacing={1}>
-            <Grid item xs={12}>
-                <Card>
-                    <CardHeader title="Welcome to the administration" />
-                    <CardContent>Lorem ipsum sic dolor amet...</CardContent>
-                </Card>
-            </Grid>
+            <Title title={translate('dashboard.welcome')} />
             {('products_alerts' in data ? (
                 <Grid item xs={12} md={6}>
                     <Card>
-                        <CardHeader title="Products Alerts" />
+                        <CardHeader title={translate('dashboard.alerts.title')} />
                         <CardContent>
-                            {data['products_alerts'].length == 0 ? "No products alerts" : (
+                            {data['products_alerts'].length == 0 ? translate('dashboard.alerts.none') : (
 
                                 <Table size="small">
                                     <TableBody>
                                         <TableRow>
-                                            <TableCell>ID</TableCell>
-                                            <TableCell>Name</TableCell>
-                                            <TableCell>Count</TableCell>
-                                            <TableCell>Treshold</TableCell>
+                                            <TableCell>{translate('dashboard.alerts.id')}</TableCell>
+                                            <TableCell>{translate('dashboard.alerts.name')}</TableCell>
+                                            <TableCell>{translate('dashboard.alerts.count')}</TableCell>
+                                            <TableCell>{translate('dashboard.alerts.treshold')}</TableCell>
                                         </TableRow>
                                         {data['products_alerts'].map((value) => (
                                             <TableRow key={value.id}>

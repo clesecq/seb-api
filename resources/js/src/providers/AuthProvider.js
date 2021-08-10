@@ -28,6 +28,7 @@ class AuthProvider {
     checkError(error) {
         const status = error.status;
         if (status === 401 || status === 403 || error.message === "Unauthenticated.") {
+            localStorage.setItem('logged', "0");
             localStorage.removeItem('user');
             return Promise.reject();
         }
@@ -51,6 +52,7 @@ class AuthProvider {
             }).catch(error => {
                 console.log(error);
                 localStorage.setItem('logged', "0");
+                localStorage.removeItem('user');
                 return Promise.reject(error);
             });
         }
