@@ -126,7 +126,7 @@ const messages = {
                 },
                 token: {
                     new: {
-                        ask: "µVoulez vous vraiment créer un nouveau token d'API ?",
+                        ask: "Voulez vous vraiment créer un nouveau token d'API ?",
                         create: "Créer",
                         name: "Nom du token",
                         scan: "Voici votre nouveau token. Vous pouvez maintenant le scanner dans l'App ou le noter. Gardez le précieusement : vous ne le reverez jamais.",
@@ -217,7 +217,7 @@ const messages = {
                     id: '#',
                     barcode: 'Code barre',
                     name: 'Nom',
-                    category_id: 'Catégory',
+                    category_id: 'Catégorie',
                     price: 'Price',
                     count: 'Nombre',
                     alert_level: 'Niveau d\'alerte',
@@ -241,7 +241,8 @@ const messages = {
                     movement_id: 'Mouvement',
                     'movement.user_id': 'Créateur',
                     created_at: 'Créé le',
-                    updated_at: 'Modifié le'
+                    updated_at: 'Modifié le',
+                    data: 'Produits'
                 }
             },
             movements: {
@@ -256,7 +257,8 @@ const messages = {
                     product_id: '#',
                     'product.name': 'Nom',
                     'product.barcode': 'Code barre',
-                    count: 'Différence'
+                    count: 'Différence',
+                    products: 'Produits'
                 }
             },
             accounts: {
