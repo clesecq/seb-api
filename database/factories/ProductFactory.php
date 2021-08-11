@@ -24,7 +24,6 @@ class ProductFactory extends Factory
         $this->faker->addProvider(new \FakerRestaurant\Provider\en_US\Restaurant($this->faker));
         return [
             'name' => $this->faker->beverageName(),
-            'barcode' => $this->faker->ean13(),
             'price' => $this->faker->randomFloat(2, 0.5, 5),
             'category_id' => $this->faker->numberBetween(1, 5),
             'alert_level' => $this->faker->numberBetween(2, 10),

@@ -35,7 +35,6 @@ const Sales = (props) => {
                         <Datagrid>
                             <TextField source="product_id" />
                             <TextField source="product.name" />
-                            <TextField source="product.barcode" />
                             <TextField source="count" />
                         </Datagrid>
                     </ArrayField>

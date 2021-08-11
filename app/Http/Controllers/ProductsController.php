@@ -48,7 +48,6 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'barcode' => ['required', 'string', 'digits_between:8,13', 'unique:products,barcode'],
             'name' => ['required', 'string'],
             'price' => ['required', 'numeric'],
             'alert_level' => ['required', 'numeric', 'integer', 'min:0'],
@@ -79,7 +78,6 @@ class ProductsController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'barcode' => ['sometimes', 'required', 'string', 'digits_between:8,13', 'unique:products,barcode'],
             'name' => ['sometimes', 'required', 'string'],
             'price' => ['sometimes', 'required', 'numeric'],
             'alert_level' => ['sometimes', 'required', 'numeric', 'integer'],
@@ -120,7 +118,6 @@ class ProductsController extends Controller
      */
     public function updateMany(Request $request) {
         $data = $request->validate([
-            'barcode' => ['sometimes', 'required', 'string', 'digits_between:8,13', 'unique:products,barcode'],
             'name' => ['sometimes', 'required', 'string'],
             'price' => ['sometimes', 'required', 'numeric'],
             'alert_level' => ['sometimes', 'required', 'numeric', 'integer'],

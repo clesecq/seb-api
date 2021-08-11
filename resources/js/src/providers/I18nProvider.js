@@ -215,7 +215,6 @@ const messages = {
                 name: 'Produit |||| Produits',
                 fields: {
                     id: '#',
-                    barcode: 'Code barre',
                     name: 'Nom',
                     category_id: 'Catégorie',
                     price: 'Price',
@@ -256,7 +255,6 @@ const messages = {
                     updated_at: 'Modifié le',
                     product_id: '#',
                     'product.name': 'Nom',
-                    'product.barcode': 'Code barre',
                     count: 'Différence',
                     products: 'Produits'
                 }
@@ -326,7 +324,6 @@ const messages = {
                     'movement.products': 'Produits',
                     product_id: '#',
                     'product_id.name': 'Nom',
-                    'product.barcode': 'Code barre',
                     count: 'Nombre'
                 }
             },
@@ -344,7 +341,6 @@ const messages = {
                     'movement_id.products': 'Produits',
                     product_id: '#',
                     'product.name': 'Nom',
-                    'product.barcode': 'Code barre',
                     count: 'Nombre'
                 }
             },

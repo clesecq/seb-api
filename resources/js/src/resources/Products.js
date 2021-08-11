@@ -7,7 +7,6 @@ import { RecalculateButton } from '../components/RecalculateButton';
 
 const ProductsFilters = [
     <TextInput source="name" />,
-    <TextInput source="barcode" />,
     <ReferenceInput source="category_id" reference="products_categories">
         <SelectInput optionText="name" />
     </ReferenceInput>,
@@ -29,7 +28,6 @@ const Products = (props) => (
         <List {...props} filters={ProductsFilters} actions={<ProductsListActions />}>
             <Datagrid>
                 <TextField source="id" />
-                <TextField source="barcode" />
                 <TextField source="name" />
                 <ReferenceField source="category_id" reference="products_categories" >
                     <TextField source="name" />
@@ -48,7 +46,6 @@ const Products = (props) => (
                 <ReferenceInput source="category_id" reference="products_categories">
                     <SelectInput optionText="name" />
                 </ReferenceInput>
-                <TextInput source="barcode" />
                 <MoneyInput source="price" />
                 <NumberInput source="alert_level" />
             </SimpleForm>
@@ -60,7 +57,6 @@ const Products = (props) => (
                 <ReferenceInput source="category_id" reference="products_categories">
                     <SelectInput optionText="name" />
                 </ReferenceInput>
-                <TextInput source="barcode" />
                 <MoneyInput source="price" />
                 <NumberField disabled source="count" />
                 <NumberInput source="alert_level" />
@@ -71,7 +67,6 @@ const Products = (props) => (
         <ShowDialog>
             <SimpleShowLayout>
                 <TextField source="id" />
-                <TextField source="barcode" />
                 <TextField source="name" />
                 <ReferenceField source="category_id" reference="products_categories" >
                     <TextField source="name" />
