@@ -17,9 +17,8 @@ class Member extends Model
     protected $fillable = [
         'firstname',
         'lastname',
-        'email',
-        'payed',
-        'card'
+        'discord_id',
+        'payed'
     ];
 
     private static function pay($member) {

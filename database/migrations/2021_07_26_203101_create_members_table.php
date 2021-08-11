@@ -17,10 +17,9 @@ class CreateMembersTable extends Migration
             $table->id();
             $table->string('firstname');
             $table->string('lastname');
-            $table->string('email')->unique();
+            $table->string('discord_id')->unique()->nullable()->default(null);
             $table->boolean('payed')->default(false);
             $table->foreignId('transaction_id')->nullable()->default(null);
-            $table->string('card');
             $table->timestamps();
         });
     }

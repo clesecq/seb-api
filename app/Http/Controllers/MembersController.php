@@ -42,9 +42,8 @@ class MembersController extends Controller
         $data = $request->validate([
             'firstname' => ['required', 'string'],
             'lastname' => ['required', 'string'],
-            'email' => ['required', 'email', 'unique:members,email'],
+            'discord_id' => ['required', 'nullable', 'string', 'unique:members,discord_id'],
             'payed' => ['sometimes', 'required', 'boolean'],
-            'card' => ['required', 'string', 'unique:members,card']
         ]);
 
         return ['data' => Member::create($data)];
@@ -73,9 +72,8 @@ class MembersController extends Controller
         $data = $request->validate([
             'firstname' => ['sometimes', 'required', 'string'],
             'lastname' => ['sometimes', 'required', 'string'],
-            'email' => ['sometimes', 'required', 'email', 'unique:members,email'],
-            'payed' => ['sometimes', 'required', 'boolean'],
-            'card' => ['sometimes', 'required', 'string', 'unique:members,card']
+            'discord_id' => ['sometimes', 'required', 'nullable', 'string', 'unique:members,discord_id'],
+            'payed' => ['sometimes', 'required', 'boolean']
         ]);
 
         Member::findOrFail($id)->update($data);
@@ -114,9 +112,8 @@ class MembersController extends Controller
         $data = $request->validate([
             'firstname' => ['sometimes', 'required', 'string'],
             'lastname' => ['sometimes', 'required', 'string'],
-            'email' => ['sometimes', 'required', 'email', 'unique:members,email'],
-            'payed' => ['sometimes', 'required', 'boolean'],
-            'card' => ['sometimes', 'required', 'string', 'unique:members,card']
+            'discord_id' => ['sometimes', 'required', 'nullable', 'string', 'unique:members,discord_id'],
+            'payed' => ['sometimes', 'required', 'boolean']
         ]);
 
         if (is_array($request->ids)) {

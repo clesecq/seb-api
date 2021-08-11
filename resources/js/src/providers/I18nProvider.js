@@ -202,10 +202,9 @@ const messages = {
                     id: '#',
                     firstname: 'Prénom',
                     lastname: 'Nom',
-                    email: 'Adresse email',
                     payed: 'Payé',
                     transaction: 'Transaction',
-                    card: 'N° Carte',
+                    discord_id: 'ID Discord',
                     created_at: 'Créé le',
                     updated_at: 'Modifié le'
                 },

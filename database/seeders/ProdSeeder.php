@@ -19,7 +19,6 @@ class PRodSeeder extends Seeder
         $bid = ProductCategory::create(['name' => 'Boissons'])->id;
         $sid = ProductCategory::create(['name' => 'Snachs'])->id;
         $cid = ProductCategory::create(['name' => 'Boissons Chaudes'])->id;
-        $cid = ProductCategory::create(['name' => 'Boissons Chaudes'])->id;
 
         Product::create(['name' => 'Coca-Cola', 'price' => 0.7, 'category_id' => $bid, 'alert_level' => 4]);
         Product::create(['name' => 'Coca-Cola Cherry', 'price' => 0.7, 'category_id' => $bid, 'alert_level' => 8]);

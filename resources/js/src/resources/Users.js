@@ -7,7 +7,6 @@ const UsersFilters = [
     <TextInput label="First Name" source="firstname" />,
     <TextInput label="Last Name" source="lastname" />,
     <TextInput label="Email" source="email" />,
-    <TextInput label="Card" source="card" />,
     <BooleanInput label="Payed" source="payed" />
 ];
 

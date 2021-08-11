@@ -7,8 +7,7 @@ import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
 const MembersFilters = [
     <TextInput source="firstname" />,
     <TextInput source="lastname" />,
-    <TextInput source="email" />,
-    <TextInput source="card" />,
+    <TextInput source="discord_id" />,
     <BooleanInput source="payed" />
 ];
 
@@ -29,12 +28,11 @@ const Members = (props) => (
                 <TextField source="id" />
                 <TextField source="firstname" />
                 <TextField source="lastname" />
-                <TextField source="email" />
                 <BooleanField source="payed" />
                 <ReferenceField source="transaction_id" reference="transactions" link="show" >
                     <FunctionField render={r => "#" + r.id} />
                 </ReferenceField>
-                <TextField source="card" />
+                <TextField source="discord_id" />
                 <EditButton />
             </Datagrid>
         </List>
@@ -42,9 +40,8 @@ const Members = (props) => (
             <SimpleForm redirect="list">
                 <TextInput source="firstname" />
                 <TextInput source="lastname" />
-                <TextInput source="email" />
                 <BooleanInput source="payed" />
-                <TextInput source="card" />
+                <TextInput source="discord_id" />
             </SimpleForm>
         </CreateDialog>
         <EditDialog {...props}>
@@ -52,9 +49,8 @@ const Members = (props) => (
                 <TextInput disabled source="id" />
                 <TextInput source="firstname" />
                 <TextInput source="lastname" />
-                <TextInput source="email" />
                 <BooleanInput source="payed" />
-                <TextInput source="card" />
+                <TextInput source="discord_id" />
                 <DateInput disabled source="created_at" />
                 <DateInput disabled source="updated_at" />
             </SimpleForm>
@@ -64,9 +60,8 @@ const Members = (props) => (
                 <TextField source="id" />
                 <TextField source="firstname" />
                 <TextField source="lastname" />
-                <TextField source="email" />
                 <BooleanField source="payed" />
-                <TextField source="card" />
+                <TextField source="discord_id" />
                 <DateField source="created_at" />
                 <DateField source="updated_at" />
             </SimpleShowLayout>
