@@ -17,6 +17,7 @@ use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ProductCountsController;
 use App\Http\Controllers\PurchasesController;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\StatsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ use App\Http\Controllers\SalesController;
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get("permissions", [PermissionsController::class, 'index']);
+    Route::get("stats", [StatsController::class, 'stats']);
 
     // Editing a profile should be allowed only when logged in via session
     Route::group(['middleware' => ['guard:web']], function () {
