@@ -63,6 +63,10 @@ class StatsController extends Controller
         return User::find($user_id->user_id)->firstname;
     }
 
+    private function _price_coca() {
+        return Product::where('name', 'Coca-Cola')->first()->price;
+    }
+
     public function stats(Request $request) {
         return [
             'most_sold_product' => $this->_most_sold_product(),
@@ -73,7 +77,8 @@ class StatsController extends Controller
             'biggest_sale' => $this->_biggest_sale(),
             'latest_restock' => $this->_latest_restock(),
             'most_sales' => $this->_most_sales(),
-            'members' => Member::whereNotNull('transaction_id')->count()
+            'members' => Member::whereNotNull('transaction_id')->count(),
+            'price_coca' => $this->_price_coca()
         ];
     }
 }
