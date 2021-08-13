@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Config;
 use App\Models\Member;
 use Illuminate\Http\Request;
 
@@ -46,7 +47,7 @@ class MembersController extends Controller
             'payed' => ['sometimes', 'required', 'boolean'],
         ]);
 
-        return ['data' => Member::create($data)];
+        return ['data' => Member::create($data), 'contribution' => Config::number('members.contribution.amount')];
     }
 
     /**
