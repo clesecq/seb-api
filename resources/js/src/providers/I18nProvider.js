@@ -154,7 +154,7 @@ const messages = {
                     end: "."
                 }
             },
-            dependencies: "Dependencies",
+            dependencies: "Dependences",
             dependencies2: "Seb n'est pas construit à partir de zéro. Nos dépendances les plus notables sont : ",
             released: "Distribué sous",
             license: {
