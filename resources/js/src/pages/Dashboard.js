@@ -10,7 +10,6 @@ export default () => {
 
     React.useEffect(() => {
         axios.get('/api/dashboard').then((response) => {
-            console.log(response.data);
             setData(response.data);
         }).catch((error) => {
             notify(error?.response?.data?.message);

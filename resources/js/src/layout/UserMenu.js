@@ -1,15 +1,11 @@
 import CopyrightIcon from '@material-ui/icons/Copyright';
 import SettingsIcon from '@material-ui/icons/Settings';
-import React, { useEffect } from 'react';
-import { crudGetOne, MenuItemLink, UserMenu, useTranslate } from 'react-admin';
+import React from 'react';
+import { MenuItemLink, UserMenu, useTranslate } from 'react-admin';
 import { connect } from 'react-redux';
 
 const MyUserMenuView = (props) => {
-    useEffect(() => {
-        props.crudGetOne('profile', 'me', '/profile', false);
-    });
-
-    const { crudGetOne, profile, ...alt } = props;
+    const { profile, ...alt } = props;
     const translate = useTranslate();
 
     return (
@@ -39,8 +35,7 @@ const mapStateToProps = state => {
 };
 
 const MyUserMenu = connect(
-    mapStateToProps,
-    { crudGetOne }
+    mapStateToProps
 )(MyUserMenuView);
 
 export default MyUserMenu;
