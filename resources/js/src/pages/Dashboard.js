@@ -1,18 +1,24 @@
 import { Card, CardContent, CardHeader, Grid, Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import axios from 'axios';
 import * as React from "react";
-import { Title, useNotify, useTranslate } from 'react-admin';
+import { Title, useAuthProvider, useNotify, useRedirect, useTranslate } from 'react-admin';
 
 export default () => {
     const notify = useNotify();
     const [data, setData] = React.useState({});
     const translate = useTranslate();
+    const authProvider = useAuthProvider();
+    const redirect = useRedirect();
 
     React.useEffect(() => {
         axios.get('/api/dashboard').then((response) => {
             setData(response.data);
         }).catch((error) => {
-            notify(error?.response?.data?.message);
+            authProvider.checkError(error?.response).then(() => {
+                notify(error?.response?.data?.message);
+            }, () => {
+                redirect('/login');
+            });
         });
     }, []);
 

@@ -74,7 +74,7 @@ const CustomUserMenu = (props) => {
                     color="inherit"
                     startIcon={<AccountCircle />}
                     onClick={handleMenu}>
-                    {fullname === null ? identity.fullName : fullname}
+                    {fullname === null ? identity?.fullName : fullname}
                 </Button>
             ) : ""}
             <Menu

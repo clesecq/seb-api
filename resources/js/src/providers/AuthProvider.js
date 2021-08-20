@@ -41,7 +41,7 @@ class AuthProvider {
      * Check if the error is an authentication error
      */
     checkError(error) {
-        const status = error.status;
+        const status = error?.status;
         if (status === 401 || status === 403 || error.message === "Unauthenticated.") {
             localStorage.setItem('logged', "0");
             localStorage.removeItem('user');
