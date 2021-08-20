@@ -4,21 +4,17 @@ import { defaultTheme } from 'react-admin';
 export default merge(defaultTheme, {
     palette: {
         primary: {
-            main: '#c8faee',
-            light: '#dcfaee',
-            dark: "#303030"
-            // dark: '#94f7e5'
+            main: '#ade6fd',
+            light: '#',
+            dark: '#303030'
         },
         secondary: {
-            main: "#89c740",
-            dark: "#59a310",
-            light: "#b1e368",
-            darker: "#458c0a"
+            main: "#fb963a",
+            dark: "#f77c36",
+            light: "#ffc646"
         },
         error: {
-            main: "#ef947f",
-            dark: "#e06a5c",
-            light: "#f9c0ac"
+            main: "#ffadad"
         },
         type: 'dark',
     },
