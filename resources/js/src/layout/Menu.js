@@ -14,6 +14,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import GroupIcon from '@material-ui/icons/Group';
+import ImportExportIcon from '@material-ui/icons/ImportExport';
 import LocalCafeIcon from '@material-ui/icons/LocalCafe';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import MoneyIcon from '@material-ui/icons/Money';
@@ -92,7 +93,7 @@ const Menu = ({ onMenuClick, logout }) => {
     const isXSmall = useMediaQuery(theme => theme.breakpoints.down('xs'));
     const resources = useSelector(getResources);
     const translate = useTranslate();
-    
+
     return (
         <>
             <Item to="/" primaryText={translate('menu.left.dashboard')} leftIcon={<DashboardIcon />} />
@@ -101,19 +102,20 @@ const Menu = ({ onMenuClick, logout }) => {
             <Item to="/accounts_counts/create" permissions="accounts_counts.create" primaryText={translate('menu.left.count_money')} leftIcon={<MoneyIcon />} />
             <Item to="/products_counts/create" permissions="products_counts.create" primaryText={translate('menu.left.count_stocks')} leftIcon={<BarChartIcon />} />
             <Item to="/members" permissions="members.show" primaryText={translate('menu.left.members')} leftIcon={<GroupIcon />} />
-            <Accordeon open={false} title={translate('menu.left.stocks')}permissions={["products.show", "products_categories.show", "movements.show", "products_counts.show"]}>
+            <Accordeon open={false} title={translate('menu.left.stocks')} permissions={["products.show", "products_categories.show", "movements.show", "products_counts.show"]}>
                 <Item to="/products" permissions="products.show" primaryText={translate('menu.left.products')} leftIcon={<LocalCafeIcon />} />
                 <Item to="/products_categories" permissions="products_categories.show" primaryText={translate('menu.left.categories')} leftIcon={<CategoryIcon />} />
                 <Item to="/products_counts" permissions="products_counts.show" primaryText={translate('menu.left.products_counts')} leftIcon={<BarChartIcon />} />
                 <Item to="/movements" permissions="movements.show" primaryText={translate('menu.left.movements')} leftIcon={<SwapHorizIcon />} />
             </Accordeon>
-            <Accordeon open={false} title={translate('menu.left.accounting')}permissions={["accounts.show", "accounts_counts.show", "transactions.show", "transactions_categories.show", "sales.show", "purchases.show"]}>
+            <Accordeon open={false} title={translate('menu.left.accounting')} permissions={["accounts.show", "accounts_counts.show", "transactions.show", "transactions_categories.show", "sales.show", "purchases.show"]}>
                 <Item to="/accounts" permissions="accounts.show" primaryText={translate('menu.left.accounts')} leftIcon={<AccountBalanceIcon />} />
                 <Item to="/accounts_counts" permissions="accounts_counts.show" primaryText={translate('menu.left.accounts_counts')} leftIcon={<MoneyIcon />} />
                 <Item to="/transactions" permissions="transactions.show" primaryText={translate('menu.left.transactions')} leftIcon={<SwapHorizIcon />} />
                 <Item to="/transactions_categories" permissions="transactions_categories.show" primaryText={translate('menu.left.categories')} leftIcon={<CategoryIcon />} />
                 <Item to="/sales" permissions="sales.show" primaryText={translate('menu.left.sales')} leftIcon={<LocalOfferIcon />} />
                 <Item to="/purchases" permissions="purchases.show" primaryText={translate('menu.left.purchases')} leftIcon={<ShoppingCartIcon />} />
+                <Item to="/transferts" permissions="transferts.show" primaryText={translate('menu.left.transferts')} leftIcon={<ImportExportIcon />} />
             </Accordeon>
             <Item to="/users" permissions="users.show" primaryText={translate('menu.left.users')} leftIcon={<AccountBoxIcon />} />
             {isXSmall && <Item to="/profile" primaryText={translate('menu.left.logout')} leftIcon={<AccountCircleIcon />} />}

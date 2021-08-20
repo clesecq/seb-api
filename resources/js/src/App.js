@@ -21,6 +21,7 @@ import purchases from './resources/Purchases';
 import sales from "./resources/Sales";
 import transactions from "./resources/Transactions";
 import transactionscategories from "./resources/TransactionsCategories";
+import transferts from "./resources/Transferts";
 import users from "./resources/Users";
 
 const history = createBrowserHistory();
@@ -44,6 +45,7 @@ export default class App extends Component {
                 <Resource name="movements" {...movements} />
                 <Resource name="sales" {...sales} />
                 <Resource name="purchases" {...purchases} />
+                <Resource name="transferts" {...transferts} />
             </Admin>
         );
     }
