@@ -11,7 +11,7 @@ import SecurityIcon from '@material-ui/icons/Security';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { spacing } from "@material-ui/system";
 import React, { useState } from 'react';
-import { ArrayField, Button, ChipField, Datagrid, DateField, Edit, Labeled, ReferenceArrayField, SaveButton, SimpleForm, SingleFieldList, TextField, TextInput, Toolbar, useDeleteWithUndoController, useNotify, useRecordContext, useRedirect, useRefresh, useTranslate, useUpdateLoading } from 'react-admin';
+import { ArrayField, Button, ChipField, Datagrid, DateField, Edit, Labeled, ReferenceArrayField, SaveButton, SimpleForm, SingleFieldList, TextField, TextInput, Toolbar, useAuthProvider, useDeleteWithConfirmController, useNotify, useRecordContext, useRedirect, useRefresh, useTranslate, useUpdateLoading } from 'react-admin';
 const StyledButton = styled(Button)(spacing);
 const StyledGrid = styled(Grid)(spacing);
 
@@ -203,15 +203,17 @@ const TokenField = ({ onClick, ...props }) => {
     const record = useRecordContext(props);
     const translate = useTranslate();
 
-    const { loading, handleDelete } = useDeleteWithUndoController({
+    
+    const { loading, handleDelete } = useDeleteWithConfirmController({
         resource: "tokens",
         record: record,
-        basePath: "profile"
+        basePath: "profile",
+        mutationMode: "pessimistic"
     });
     return (
         <>
             <div style={{ width: '100%', display: 'flex', alignItems: 'end' }}>
-                <StyledButton size="medium" ml="auto" className={classes.deleteButton} label= {translate('ra.action.delete')} onClick={handleDelete} disabled={loading}>
+                <StyledButton size="medium" ml="auto" className={classes.deleteButton} label={translate('ra.action.delete')} onClick={handleDelete} disabled={loading}>
                     <ClearIcon />
                 </StyledButton>
             </div>
@@ -262,9 +264,19 @@ const ProfileEditToolbar = (props) => {
 
 const ProfileEdit = ({ staticContext, ...props }) => {
     const translate = useTranslate();
+    const notify = useNotify();
+    const authProvider = useAuthProvider();
+    const refresh = useRefresh();
+
+    const onSuccess = ({ data }) => {
+        notify('ra.notification.updated', 'info', { smart_count: 1 }, false);
+        document.dispatchEvent(new CustomEvent('profileUpdated', { detail: data }));
+        authProvider.updateEmail(data.email);
+        refresh();
+    };
 
     return (
-        <Edit height={1} id="me" resource="profile" basePath="/profile" redirect={false} title={translate('resources.profile.me')} {...props} >
+        <Edit onSuccess={onSuccess} mutationMode="pessimistic" height={1} id="me" resource="profile" basePath="/profile" redirect={false} title={translate('resources.profile.me')} {...props} >
             <SimpleForm redirect={false} toolbar={<ProfileEditToolbar />}>
                 <><Typography variant="h5" component="h2">{translate('resources.profile.name')}</Typography></>
                 <TextInput source="username" />
@@ -274,7 +286,7 @@ const ProfileEdit = ({ staticContext, ...props }) => {
                             <TextInput {...props} source="firstname" label={translate('resources.profile.fields.firstname')} />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <TextInput {...props} source="lastname" label={translate('resources.profile.fields.lastname')}/>
+                            <TextInput {...props} source="lastname" label={translate('resources.profile.fields.lastname')} />
                         </Grid>
                     </Grid>
                 ))()}</>

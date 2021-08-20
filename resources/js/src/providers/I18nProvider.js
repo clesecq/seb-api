@@ -91,6 +91,7 @@ const messages = {
                 accounts: "Accounts",
                 accounts_counts: "Accounts Counts",
                 transactions: "Transactions",
+                transferts: "Transferts",
                 sales: "Sales",
                 purchases: "Purchases",
                 users: "Users",
@@ -184,6 +185,7 @@ const messages = {
                 accounts: "Comptes",
                 accounts_counts: "Comptages de comptes",
                 transactions: "Transactions",
+                transferts: "Virements",
                 sales: "Ventes",
                 purchases: "Achats",
                 users: "Utilisateurs",
@@ -299,6 +301,22 @@ const messages = {
                     user_id: 'Créateur',
                     created_at: 'Créé le',
                     updated_at: 'Modifié le',
+                }
+            },
+            transferts: {
+                name: 'Virement |||| Virements',
+                fields: {
+                    id: '#',
+                    'sub_transaction.user_id': 'Créateur',
+                    'add_transaction.amount': 'Montant',
+                    'sub_transaction.account_id': 'Depuis',
+                    'add_transaction.account_id': 'Vers',
+                    sub_transaction_id: 'Transaction soustraction',
+                    add_transaction_id: 'Transaction addition',
+                    from_account_id: 'Depuis',
+                    to_account_id: 'Vers',
+                    created_at: 'Créé le',
+                    updated_at: 'Modifié le'
                 }
             },
             transactions_categories: {

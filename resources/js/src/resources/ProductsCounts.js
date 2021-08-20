@@ -12,7 +12,7 @@ const TransactionsFilters = [
 
 const ProductsCounts = (props) => (
     <>
-        <List {...props} filters={TransactionsFilters}>
+        <List {...props} filters={TransactionsFilters} bulkActionButtons={false}>
             <Datagrid>
                 <TextField source="id" />
                 <ReferenceField source="movement_id" reference="movements" link="show">

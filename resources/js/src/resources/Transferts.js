@@ -1,10 +1,10 @@
 import * as React from "react";
-import { BooleanField, BooleanInput, Datagrid, DateField, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { Datagrid, DateField, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
 import { CreateDialog, ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
 import MoneyInput from "../components/MoneyInput";
 
-const TransactionsFilters = [
+const TransfertsFilters = [
     <TextInput source="name" />,
     <ReferenceInput source="account_id" reference="accounts">
         <SelectInput optionText="name" />
@@ -14,21 +14,19 @@ const TransactionsFilters = [
     </ReferenceInput>
 ];
 
-const Transactions = (props) => (
+const Transferts = (props) => (
     <>
-        <List {...props} filters={TransactionsFilters} bulkActionButtons={false}>
+        <List {...props} filters={TransfertsFilters} bulkActionButtons={false}>
             <Datagrid>
                 <TextField source="id" />
-                <TextField source="name" />
-                <MoneyField noLabel={true} source="amount" />
-                <BooleanField source="rectification" />
-                <ReferenceField source="account_id" reference="accounts">
+                <ReferenceField source="sub_transaction.account_id" reference="accounts">
                     <TextField source="name" />
                 </ReferenceField>
-                <ReferenceField source="category_id" reference="transactions_categories">
+                <ReferenceField source="add_transaction.account_id" reference="accounts">
                     <TextField source="name" />
                 </ReferenceField>
-                <ReferenceField source="user_id" reference="users">
+                <MoneyField noLabel={true} source="add_transaction.amount" />
+                <ReferenceField source="sub_transaction.user_id" reference="users">
                     <TextField source="email" />
                 </ReferenceField>
                 <DateField source="created_at" />
@@ -37,13 +35,11 @@ const Transactions = (props) => (
         </List>
         <CreateDialog {...props}>
             <SimpleForm redirect="list">
-                <TextInput source="name" />
                 <MoneyInput source="amount" />
-                <BooleanInput source="rectification" />
-                <ReferenceInput source="account_id" reference="accounts">
+                <ReferenceInput source="from_account_id" reference="accounts">
                     <SelectInput optionText="name" />
                 </ReferenceInput>
-                <ReferenceInput source="category_id" reference="transactions_categories">
+                <ReferenceInput source="to_account_id" reference="accounts">
                     <SelectInput optionText="name" />
                 </ReferenceInput>
             </SimpleForm>
@@ -51,16 +47,20 @@ const Transactions = (props) => (
         <ShowDialog>
             <SimpleShowLayout>
                 <TextField source="id" />
-                <TextField source="name" />
-                <MoneyField source="amount" />
-                <BooleanField source="rectification" />
-                <ReferenceField source="account_id" reference="accounts">
+                <ReferenceField source="sub_transaction.account_id" reference="accounts">
                     <TextField source="name" />
                 </ReferenceField>
-                <ReferenceField source="category_id" reference="transactions_categories">
+                <ReferenceField source="sub_transaction_id" reference="transactions">
                     <TextField source="name" />
                 </ReferenceField>
-                <ReferenceField source="user_id" reference="users">
+                <ReferenceField source="add_transaction.account_id" reference="accounts">
+                    <TextField source="name" />
+                </ReferenceField>
+                <ReferenceField source="add_transaction_id" reference="transactions">
+                    <TextField source="name" />
+                </ReferenceField>
+                <MoneyField source="add_transaction.amount" />
+                <ReferenceField source="sub_transaction.user_id" reference="users">
                     <TextField source="email" />
                 </ReferenceField>
                 <DateField source="created_at" />
@@ -71,7 +71,7 @@ const Transactions = (props) => (
 );
 
 export default {
-    list: Transactions,
-    create: Transactions,
-    show: Transactions
+    list: Transferts,
+    create: Transferts,
+    show: Transferts
 };

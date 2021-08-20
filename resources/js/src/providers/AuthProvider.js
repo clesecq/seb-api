@@ -23,6 +23,21 @@ class AuthProvider {
     }
 
     /**
+     * Updates the email of the user in the localstorage
+     */
+    updateEmail(newEmail) {
+        if (localStorage.getItem('user')) {
+            const data = JSON.parse(localStorage.getItem('user'));
+            data.email = newEmail;
+            data.fullName = newEmail;
+            localStorage.setItem('user', JSON.stringify(data));
+            return Promise.resolve();
+        } else {
+            return Promise.reject();
+        }
+    }
+
+    /**
      * Check if the error is an authentication error
      */
     checkError(error) {
