@@ -20,7 +20,6 @@ class CreateTransactionCategoriesTable extends Migration
             $table->timestamps();
         });
 
-        TransactionCategory::create(['id' => 1, 'name' => 'Contributions']);
         TransactionCategory::create(['id' => 2, 'name' => 'Sales']);
         TransactionCategory::create(['id' => 3, 'name' => 'Count']);
 

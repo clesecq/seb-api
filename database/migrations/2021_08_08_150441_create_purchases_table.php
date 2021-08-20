@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Config;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +21,9 @@ class CreatePurchasesTable extends Migration
             $table->foreignId('movement_id')->nullable()->default(null);
             $table->timestamps();
         });
+        
+        Config::create(['name' => 'purchases.transaction', 'value' => 'Purchase #{purchase.id}']);
+        Config::create(['name' => 'purchases.movement', 'value' => 'Purchase #{purchase.id}']);
     }
 
     /**
@@ -30,5 +34,7 @@ class CreatePurchasesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('purchases');
+        Config::destroy('purchases.transaction');
+        Config::destroy('purchases.movement');
     }
 }
