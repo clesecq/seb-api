@@ -8,7 +8,7 @@ const MovementsFilters = [
 
 const Movements = (props) => (
     <>
-        <List {...props} filters={MovementsFilters} >
+        <List {...props} filters={MovementsFilters} bulkActionButtons={false} >
             <Datagrid>
                 <TextField source="id" />
                 <TextField source="name" />

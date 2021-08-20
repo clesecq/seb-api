@@ -7,7 +7,7 @@ import Buy from "../pages/Buy";
 const Purchases = (props) => {
     return (
         <>
-            <List {...props} >
+            <List {...props} bulkActionButtons={false} >
                 <Datagrid>
                     <TextField source="id" />
                     <TextField source="name" />

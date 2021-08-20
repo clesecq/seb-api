@@ -7,7 +7,7 @@ import Sell from "../pages/Sell";
 const Sales = (props) => {
     return (
         <>
-            <List {...props} >
+            <List {...props} bulkActionButtons={false} >
                 <Datagrid>
                     <TextField source="id" />
                     <DateField source="created_at" />

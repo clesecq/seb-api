@@ -57,7 +57,7 @@ const CountField = (props) => {
 
 const AccountsCounts = (props) => (
     <>
-        <List {...props} filters={TransactionsFilters}>
+        <List {...props} filters={TransactionsFilters} bulkActionButtons={false}>
             <Datagrid>
                 <TextField source="id" />
                 <TextField source="type" />

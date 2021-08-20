@@ -16,7 +16,7 @@ const TransfertsFilters = [
 
 const Transferts = (props) => (
     <>
-        <List {...props} filters={TransfertsFilters}>
+        <List {...props} filters={TransfertsFilters} bulkActionButtons={false}>
             <Datagrid>
                 <TextField source="id" />
                 <ReferenceField source="sub_transaction.account_id" reference="accounts">
