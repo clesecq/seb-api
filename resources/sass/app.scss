@@ -20,12 +20,17 @@ li.RaMenuItemLink-root-36 {
 }
 
 a:hover {
-    color: #74d6fc;
+    color: #94f7e5;
+}
+
+a.MuiButton-contained:hover {
+    color: #000;
+    background-color: #94f7e5;
 }
 
 .MuiDrawer-root {
-    a:hover {
-        color: #fb963a;
+    a:hover, li:hover {
+        color: #b1e368;
     }
 }
 

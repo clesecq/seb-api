@@ -25,6 +25,7 @@ import { useState } from 'react';
 import { getResources, MenuItemLink, usePermissions, useTranslate } from 'react-admin';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import theme from './Theme';
 
 function permMatch(userperms, elemperm) {
     const [resource, access] = elemperm.split(".");
@@ -84,7 +85,7 @@ const Item = (props) => {
     return (
         <>{
             (!('permissions' in props) || hasPerm(permissions, props.permissions)) &&
-            <MenuItemLink {...props} sidebarIsOpen={open} selected={regex.test(location.pathname)} />
+            <MenuItemLink theme={theme} {...props} sidebarIsOpen={open} selected={regex.test(location.pathname)} />
         }</>
     );
 }
