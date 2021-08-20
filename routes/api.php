@@ -18,6 +18,7 @@ use App\Http\Controllers\ProductCountsController;
 use App\Http\Controllers\PurchasesController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StatsController;
+use App\Http\Controllers\TransfertsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,5 +58,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::res("accounts_counts", AccountCountsController::class, ['final']);
     Route::res("transactions_categories", TransactionCategoriesController::class);
     Route::res("transactions", TransactionsController::class, ['final']);
+    Route::res("transferts", TransfertsController::class, ['final']);
     Route::res("sales", SalesController::class, ['final']);
 });
