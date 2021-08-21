@@ -12,7 +12,8 @@ class Transaction extends Model
     protected static function booted()
     {
         static::created(function ($transaction) {
-            $transaction->account->recalculate();
+            if (config('recalculate_for_all_transaction', true))
+                $transaction->account->recalculate();
         });
     }
 
@@ -30,11 +31,13 @@ class Transaction extends Model
         'category_id'
     ];
 
-    public function account() {
+    public function account()
+    {
         return $this->belongsTo(Account::class);
     }
 
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo(TransactionCategory::class);
     }
 }

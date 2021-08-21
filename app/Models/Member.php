@@ -44,7 +44,13 @@ class Member extends Model
         }
     }
 
-    public static function archive() {
+    public static function archive(...$params) {
+        if (count($params) >= 1) {
+            $year = $params[0];
+        } else {
+            $year = now()->year;
+        }
+
         // We archive everything and empty the table
         foreach(Member::all() as $member) {
             ArchivedMember::create([
@@ -54,7 +60,7 @@ class Member extends Model
                 'transaction_id' => $member->transaction_id,
                 'created_at' => $member->created_at,
                 'updated_at' => $member->updated_at,
-                'year' => now()->year
+                'year' => $year
             ]);
         }
         Member::truncate();

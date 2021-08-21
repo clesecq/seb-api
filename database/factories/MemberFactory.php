@@ -24,8 +24,7 @@ class MemberFactory extends Factory
         return [
             'firstname' => $this->faker->firstName(),
             'lastname' => $this->faker->lastName(),
-            'discord_id' => $this->faker->numerify('########################'),
-            'payed' => $this->faker->boolean(),
+            'discord_id' => $this->faker->numerify('########################')
         ];
     }
 }
