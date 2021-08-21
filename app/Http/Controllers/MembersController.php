@@ -151,4 +151,11 @@ class MembersController extends Controller
             return response([], 400);
         }
     }
+
+    /**
+     * Archive all the members.
+     */
+    public function archive(Request $request) {
+        Member::archive();
+    }
 }

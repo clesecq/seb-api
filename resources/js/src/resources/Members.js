@@ -1,7 +1,8 @@
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import * as React from "react";
 import { Fragment } from 'react';
-import { BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, Datagrid, DateField, DateInput, EditButton, FunctionField, List, ReferenceField, SimpleForm, SimpleShowLayout, TextField, TextInput, useTranslate } from 'react-admin';
+import { BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, CreateButton, Datagrid, DateField, DateInput, EditButton, ExportButton, FilterButton, FunctionField, List, ReferenceField, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar, useTranslate } from 'react-admin';
+import { ArchiveButton } from '../components/ArchiveButton';
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
 
 const MembersFilters = [
@@ -10,6 +11,15 @@ const MembersFilters = [
     <TextInput source="discord_id" />,
     <BooleanInput source="payed" />
 ];
+
+const MembersListActions = ({ basePath, ...props }) => (
+    <TopToolbar>
+        <FilterButton />
+        <ArchiveButton />
+        <CreateButton />
+        <ExportButton />
+    </TopToolbar>
+);
 
 const MembersBulkActionButtons = props => {
     const translate = useTranslate();
@@ -23,7 +33,7 @@ const MembersBulkActionButtons = props => {
 
 const Members = (props) => (
     <>
-        <List {...props} filters={MembersFilters} bulkActionButtons={<MembersBulkActionButtons />}>
+        <List {...props} filters={MembersFilters} bulkActionButtons={<MembersBulkActionButtons />} actions={<MembersListActions/>}>
             <Datagrid>
                 <TextField source="id" />
                 <TextField source="firstname" />

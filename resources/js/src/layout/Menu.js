@@ -118,6 +118,9 @@ const Menu = ({ onMenuClick, logout }) => {
                 <Item to="/purchases" permissions="purchases.show" primaryText={translate('menu.left.purchases')} leftIcon={<ShoppingCartIcon />} />
                 <Item to="/transferts" permissions="transferts.show" primaryText={translate('menu.left.transferts')} leftIcon={<ImportExportIcon />} />
             </Accordeon>
+            <Accordeon open={false} title={translate('menu.left.archives')} permissions={["archived_members.show"]}>
+                <Item to="/archived_members" permissions="archived_members.show" primaryText={translate('menu.left.archived_members')} leftIcon={<GroupIcon />} />
+            </Accordeon>
             <Item to="/users" permissions="users.show" primaryText={translate('menu.left.users')} leftIcon={<AccountBoxIcon />} />
             {isXSmall && <Item to="/profile" primaryText={translate('menu.left.logout')} leftIcon={<AccountCircleIcon />} />}
             {isXSmall && logout}

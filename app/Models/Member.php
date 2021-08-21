@@ -43,4 +43,20 @@ class Member extends Model
             $this->save();
         }
     }
+
+    public static function archive() {
+        // We archive everything and empty the table
+        foreach(Member::all() as $member) {
+            ArchivedMember::create([
+                'firstname' => $member->firstname,
+                'lastname' => $member->lastname,
+                'discord_id' => $member->discord_id,
+                'transaction_id' => $member->transaction_id,
+                'created_at' => $member->created_at,
+                'updated_at' => $member->updated_at,
+                'year' => now()->year
+            ]);
+        }
+        Member::truncate();
+    }
 }

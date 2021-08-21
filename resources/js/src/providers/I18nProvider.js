@@ -195,6 +195,8 @@ const messages = {
                 products_categories: "Catégories de Produits",
                 transactions_categories: "Catégories de Transactions",
                 profile: "Profil",
+                archives: "Archives",
+                archived_members: "Membres Archivés"
             }
         },
         resources: {
@@ -211,6 +213,20 @@ const messages = {
                     updated_at: 'Modifié le'
                 },
                 mark_payed: "Marqué comme payé"
+            },
+            archived_members: {
+                name: 'Membre Archivé |||| Membres Archivés',
+                fields: {
+                    id: '#',
+                    firstname: 'Prénom',
+                    lastname: 'Nom',
+                    payed: 'Payé',
+                    transaction: 'Transaction',
+                    discord_id: 'ID Discord',
+                    created_at: 'Créé le',
+                    updated_at: 'Modifié le',
+                    school_year: 'Année Scolaire'
+                }
             },
             products: {
                 name: 'Produit |||| Produits',
@@ -417,7 +433,8 @@ const messages = {
         },
         actions: {
             recalculate: "Recalculer",
-            clear: "Réinitialiser"
+            clear: "Réinitialiser",
+            archive: "Archiver"
         },
         dashboard: {
             welcome: "Bienvenue sur Seb™",

@@ -5,22 +5,13 @@ class DataProvider {
     reload(resource)  {
         return axios.get('/api/' + resource + '/reload').then(response => {
             return Promise.resolve({'data': {}});
-        }).catch(error => {
-            if (error?.response?.data?.message) {
-                let message = "";
-                if (error?.response?.data?.errors !== undefined) {
-                    for(let ms in error.response.data.errors) {
-                        for(let m of error.response.data.errors[ms]) {
-                            message += m + "\n";
-                        }
-                    }
-                } else {
-                    message = error?.response?.data?.message;
-                }
-                return Promise.reject(new Error(message));
-            }
-            return Promise.reject(new Error(error?.message));
-        });
+        }).catch(this.__handleError);
+    }
+
+    archive(resource)  {
+        return axios.get('/api/' + resource + '/archive').then(response => {
+            return Promise.resolve({'data': {}});
+        }).catch(this.__handleError);
     }
 
     getList(resource, params) {
@@ -39,43 +30,13 @@ class DataProvider {
                          '&order_sort=' + params.sort.order +
                          filter).then(response => {
             return response.data;
-        }).catch(error => {
-            if (error?.response?.data?.message) {
-                let message = "";
-                if (error?.response?.data?.errors !== undefined) {
-                    for(let ms in error.response.data.errors) {
-                        for(let m of error.response.data.errors[ms]) {
-                            message += m + "\n";
-                        }
-                    }
-                } else {
-                    message = error?.response?.data?.message;
-                }
-                return Promise.reject(new Error(message));
-            }
-            return Promise.reject(new Error(error?.message));
-        });
+        }).catch(this.__handleError);
     }
 
     getOne(resource, {id}) {
         return axios.get('/api/' + resource + '/' + id).then(response => {
             return response.data;
-        }).catch(error => {
-            if (error?.response?.data?.message) {
-                let message = "";
-                if (error?.response?.data?.errors !== undefined) {
-                    for(let ms in error.response.data.errors) {
-                        for(let m of error.response.data.errors[ms]) {
-                            message += m + "\n";
-                        }
-                    }
-                } else {
-                    message = error?.response?.data?.message;
-                }
-                return Promise.reject(new Error(message));
-            }
-            return Promise.reject(new Error(error?.message));
-        });
+        }).catch(this.__handleError);
     }
 
     getMany(resource, {ids}) {
@@ -90,22 +51,7 @@ class DataProvider {
 
         return axios.get('/api/' + resource + parameters).then(response => {
             return response.data;
-        }).catch(error => {
-            if (error?.response?.data?.message) {
-                let message = "";
-                if (error?.response?.data?.errors !== undefined) {
-                    for(let ms in error.response.data.errors) {
-                        for(let m of error.response.data.errors[ms]) {
-                            message += m + "\n";
-                        }
-                    }
-                } else {
-                    message = error?.response?.data?.message;
-                }
-                return Promise.reject(new Error(message));
-            }
-            return Promise.reject(new Error(error?.message));
-        });
+        }).catch(this.__handleError);
     }
 
     deleteMany(resource, {ids}) {
@@ -120,64 +66,19 @@ class DataProvider {
 
         return axios.delete('/api/' + resource + parameters).then(response => {
             return response.data;
-        }).catch(error => {
-            if (error?.response?.data?.message) {
-                let message = "";
-                if (error?.response?.data?.errors !== undefined) {
-                    for(let ms in error.response.data.errors) {
-                        for(let m of error.response.data.errors[ms]) {
-                            message += m + "\n";
-                        }
-                    }
-                } else {
-                    message = error?.response?.data?.message;
-                }
-                return Promise.reject(new Error(message));
-            }
-            return Promise.reject(new Error(error?.message));
-        });
+        }).catch(this.__handleError);
     }
 
     create(resource, {data}) {
         return axios.post('/api/' + resource, data).then(response => {
             return response.data;
-        }).catch(error => {
-            if (error?.response?.data?.message) {
-                let message = "";
-                if (error?.response?.data?.errors !== undefined) {
-                    for(let ms in error.response.data.errors) {
-                        for(let m of error.response.data.errors[ms]) {
-                            message += m + "\n";
-                        }
-                    }
-                } else {
-                    message = error?.response?.data?.message;
-                }
-                return Promise.reject(new Error(message));
-            }
-            return Promise.reject(new Error(error?.message));
-        });
+        }).catch(this.__handleError);
     }
 
     delete(resource, {id}) {
         return axios.delete('/api/' + resource + "/" + id).then(response => {
             return response.data;
-        }).catch(error => {
-            if (error?.response?.data?.message) {
-                let message = "";
-                if (error?.response?.data?.errors !== undefined) {
-                    for(let ms in error.response.data.errors) {
-                        for(let m of error.response.data.errors[ms]) {
-                            message += m + "\n";
-                        }
-                    }
-                } else {
-                    message = error?.response?.data?.message;
-                }
-                return Promise.reject(new Error(message));
-            }
-            return Promise.reject(new Error(error?.message));
-        });
+        }).catch(this.__handleError);
     }
 
     update(resource, {id, data, previousData}) {
@@ -185,22 +86,7 @@ class DataProvider {
         
         return axios.put('/api/' + resource + "/" + id, diff).then(response => {
             return response.data;
-        }).catch(error => {
-            if (error?.response?.data?.message) {
-                let message = "";
-                if (error?.response?.data?.errors !== undefined) {
-                    for(let ms in error.response.data.errors) {
-                        for(let m of error.response.data.errors[ms]) {
-                            message += m + "\n";
-                        }
-                    }
-                } else {
-                    message = error?.response?.data?.message;
-                }
-                return Promise.reject(new Error(message));
-            }
-            return Promise.reject(new Error(error?.message));
-        });
+        }).catch(this.__handleError);
     }
 
     updateMany(resource, {ids, data}) {
@@ -215,22 +101,24 @@ class DataProvider {
 
         return axios.put('/api/' + resource + parameters, data).then(response => {
             return response.data;
-        }).catch(error => {
-            if (error?.response?.data?.message) {
-                let message = "";
-                if (error?.response?.data?.errors !== undefined) {
-                    for(let ms in error.response.data.errors) {
-                        for(let m of error.response.data.errors[ms]) {
-                            message += m + "\n";
-                        }
+        }).catch(this.__handleError);
+    }
+
+    __handleError(error) {
+        if (error?.response?.data?.message) {
+            let message = "";
+            if (error?.response?.data?.errors !== undefined) {
+                for(let ms in error.response.data.errors) {
+                    for(let m of error.response.data.errors[ms]) {
+                        message += m + "\n";
                     }
-                } else {
-                    message = error?.response?.data?.message;
                 }
-                return Promise.reject(new Error(message));
+            } else {
+                message = error?.response?.data?.message;
             }
-            return Promise.reject(new Error(error?.message));
-        });
+            return Promise.reject(new Error(message));
+        }
+        return Promise.reject(new Error(error?.message));
     }
 }
 
