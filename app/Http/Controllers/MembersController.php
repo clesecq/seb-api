@@ -20,7 +20,7 @@ class MembersController extends Controller
         } else {
             $data = Member::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
-                foreach($request->filter as $k => $v) {
+                foreach ($request->filter as $k => $v) {
                     $data = $data->where($k, 'like', '%' . $v . '%');
                 }
             }
@@ -47,7 +47,13 @@ class MembersController extends Controller
             'payed' => ['sometimes', 'required', 'boolean'],
         ]);
 
-        return ['data' => Member::create($data), 'contribution' => Config::number('members.contribution.amount')];
+        $member = Member::create($data);
+
+        if (array_key_exists('payed', $data) && $data['payed']) {
+            $member->pay();
+        }
+
+        return ['data' => $member, 'contribution' => Config::number('members.contribution.amount')];
     }
 
     /**
@@ -77,8 +83,14 @@ class MembersController extends Controller
             'payed' => ['sometimes', 'required', 'boolean']
         ]);
 
-        Member::findOrFail($id)->update($data);
-        return ['data' => Member::findOrFail($id)];
+        $member = Member::findOrFail($id);
+        $member->update($data);
+
+        if ($data['payed']) {
+            $member->pay();
+        }
+
+        return ['data' => $member];
     }
 
     /**
@@ -97,7 +109,8 @@ class MembersController extends Controller
     /**
      * Destroy many of the specified resource
      */
-    public function destroyMany(Request $request) {
+    public function destroyMany(Request $request)
+    {
         if (is_array($request->ids)) {
             Member::whereIn('id', $request->ids)->delete();
             return response(["data" => $request->ids], 200);
@@ -109,7 +122,8 @@ class MembersController extends Controller
     /**
      * Update many of the specified resource
      */
-    public function updateMany(Request $request) {
+    public function updateMany(Request $request)
+    {
         $data = $request->validate([
             'firstname' => ['sometimes', 'required', 'string'],
             'lastname' => ['sometimes', 'required', 'string'],
@@ -118,8 +132,12 @@ class MembersController extends Controller
         ]);
 
         if (is_array($request->ids)) {
-            Member::whereIn('id', $request->ids)->get()->each(function($member) use ($data) {
+            Member::whereIn('id', $request->ids)->get()->each(function ($member) use ($data) {
                 $member->update($data);
+
+                if ($data['payed']) {
+                    $member->pay();
+                }
             });
             return response(["data" => $request->ids], 200);
         } else {

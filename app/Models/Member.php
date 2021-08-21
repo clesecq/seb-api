@@ -17,15 +17,22 @@ class Member extends Model
     protected $fillable = [
         'firstname',
         'lastname',
-        'discord_id',
-        'payed'
+        'discord_id'
     ];
 
-    private static function pay($member) {
-        if ($member->payed == true && $member->transaction_id == null) {
-            $message = Config::format("members.contribution.transaction", ["member" => $member->attributesToArray()]);
+    protected $appends = ['payed'];
 
-            $member->transaction_id = Transaction::create([
+    public function getPayedAttribute()
+    {
+        return $this->transaction_id != null;
+    }
+
+    function pay()
+    {
+        if ($this->transaction_id == null) {
+            $message = Config::format("members.contribution.transaction", ["member" => $this->attributesToArray()]);
+
+            $this->transaction_id = Transaction::create([
                 'name' => $message,
                 'amount' => Config::number('members.contribution.amount'),
                 'rectification' => false,
@@ -33,18 +40,7 @@ class Member extends Model
                 'account_id' => Config::integer('members.contribution.account'),
                 'category_id' => Config::integer('members.contribution.category')
             ])->id;
-            $member->save();
+            $this->save();
         }
-    }
-
-    protected static function booted()
-    {
-        static::updated(function ($member) {
-            static::pay($member);
-        });
-
-        static::created(function ($member) {
-            static::pay($member);
-        });
     }
 }
