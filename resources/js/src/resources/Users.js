@@ -1,6 +1,8 @@
 import Grid from '@material-ui/core/Grid';
 import * as React from "react";
-import { AutocompleteArrayInput, BooleanInput, ChipField, Datagrid, DateField, DateInput, EditButton, Labeled, List, PasswordInput, ReferenceArrayField, ReferenceArrayInput, SimpleForm, SimpleShowLayout, SingleFieldList, TextField, TextInput } from 'react-admin';
+import { AutocompleteArrayInput, BooleanInput, ChipField, Datagrid, EditButton, Labeled, List, PasswordInput, ReferenceArrayField, ReferenceArrayInput, SimpleForm, SimpleShowLayout, SingleFieldList, TextField, TextInput } from 'react-admin';
+import DateField from '../components/DateField';
+import DateInput from '../components/DateInput';
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
 
 const UsersFilters = [

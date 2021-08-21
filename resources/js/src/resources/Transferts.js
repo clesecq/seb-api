@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Datagrid, DateField, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { Datagrid, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import DateField from '../components/DateField';
 import { CreateDialog, ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
 import MoneyInput from "../components/MoneyInput";

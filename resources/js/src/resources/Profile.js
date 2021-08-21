@@ -11,7 +11,8 @@ import SecurityIcon from '@material-ui/icons/Security';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { spacing } from "@material-ui/system";
 import React, { useState } from 'react';
-import { ArrayField, Button, ChipField, Datagrid, DateField, Edit, Labeled, ReferenceArrayField, SaveButton, SimpleForm, SingleFieldList, TextField, TextInput, Toolbar, useAuthProvider, useDeleteWithConfirmController, useNotify, useRecordContext, useRedirect, useRefresh, useTranslate, useUpdateLoading } from 'react-admin';
+import { ArrayField, Button, ChipField, Edit, Labeled, ReferenceArrayField, SaveButton, SimpleForm, SingleFieldList, TextField, TextInput, Toolbar, useAuthProvider, useDeleteWithConfirmController, useNotify, useRecordContext, useRedirect, useRefresh, useTranslate, useUpdateLoading } from 'react-admin';
+import DateField from '../components/DateField';
 const StyledButton = styled(Button)(spacing);
 const StyledGrid = styled(Grid)(spacing);
 

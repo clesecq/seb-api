@@ -1,6 +1,7 @@
 import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import * as React from "react";
-import { Datagrid, DateField, Labeled, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleShowLayout, TextField, TextInput, useRecordContext, useTranslate } from 'react-admin';
+import { Datagrid, Labeled, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleShowLayout, TextField, TextInput, useRecordContext, useTranslate } from 'react-admin';
+import DateField from '../components/DateField';
 import { ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
 import Count from '../pages/Count';

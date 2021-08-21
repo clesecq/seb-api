@@ -27,6 +27,9 @@
     "sass-loader": "^11.0.1"
   },
   "dependencies": {
+    "@date-io/date-fns": "1.x",
+    "@material-ui/pickers": "^3.3.10",
+    "date-fns": "^2.23.0",
     "prop-types": "^15.7.2",
     "ra-data-json-server": "^3.17.0",
     "ra-data-simple-rest": "^3.16.0",

@@ -1,5 +1,6 @@
 import React from "react";
-import { ArrayField, ArrayInput, BooleanField, BooleanInput, Datagrid, DateField, List, NumberInput, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleFormIterator, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { ArrayField, ArrayInput, BooleanField, BooleanInput, Datagrid, List, NumberInput, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleFormIterator, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import DateField from '../components/DateField';
 import { CreateDialog, ShowDialog } from '../components/DialogForm';
 
 const MovementsFilters = [

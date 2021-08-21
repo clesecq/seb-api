@@ -1,5 +1,6 @@
 import * as React from "react";
-import { BooleanField, BooleanInput, Datagrid, DateField, ExportButton, FilterButton, FunctionField, List, ReferenceField, ShowButton, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
+import { BooleanField, BooleanInput, Datagrid, ExportButton, FilterButton, FunctionField, List, ReferenceField, ShowButton, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
+import DateField from '../components/DateField';
 import { ShowDialog } from '../components/DialogForm';
 
 

@@ -1,5 +1,7 @@
 import * as React from "react";
-import { Datagrid, DateField, DateInput, EditButton, List, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { Datagrid, EditButton, List, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import DateField from '../components/DateField';
+import DateInput from '../components/DateInput';
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
 
 const ProductsCategoriesFilters = [
