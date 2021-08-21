@@ -4,9 +4,8 @@ import { styled, withStyles } from "@material-ui/core/styles";
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import { spacing } from "@material-ui/system";
-import inflection from 'inflection';
 import * as React from "react";
-import { Create, DeleteButton, Edit, SaveButton, Show, Toolbar, useGetResourceLabel, useRedirect, useResourceContext, useResourceDefinition } from 'react-admin';
+import { Create, DeleteButton, Edit, SaveButton, Show, Toolbar, useGetResourceLabel, useRedirect, useResourceContext, useResourceDefinition, useTranslate } from 'react-admin';
 import { Route, withRouter } from 'react-router-dom';
 
 const StyledDeleteButton = styled(DeleteButton)(spacing);
@@ -51,6 +50,7 @@ const CreateDialog = withRouter(({ history, handleClose, staticContext, syncWith
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const redirect = useRedirect();
+    const translate = useTranslate();
 
     return (
         <Route path={`/${name}/create`} exact render={() => {
@@ -65,7 +65,7 @@ const CreateDialog = withRouter(({ history, handleClose, staticContext, syncWith
                 <Dialog fullScreen={fullScreen} open maxWidth="md" onClose={handleClose} fullWidth={true} scroll="body" fullScreen={fullScreen}>
                     {resource.hasCreate === undefined ? handleClose() : <>
                         <DialogContent>
-                            <MyDialogTitle onClose={handleClose}>Create {inflection.humanize(label(name, 1), true)}</MyDialogTitle>
+                            <MyDialogTitle onClose={handleClose}>{translate('ra.page.create', {name: label(name, 1)})}</MyDialogTitle>
                             <Create title=" " {...props}>
                                 {React.cloneElement(children, { toolbar: (<CustomToolbar />) })}
                             </Create>
@@ -84,6 +84,7 @@ const EditDialog = withRouter(({ history, handleClose, staticContext, syncWithLo
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const redirect = useRedirect();
+    const translate = useTranslate();
 
     return (
         <Route path={`/${name}/:id`} render={({ match }) => {
@@ -100,7 +101,7 @@ const EditDialog = withRouter(({ history, handleClose, staticContext, syncWithLo
                     {isMatch ? (
                         (resource.hasEdit === undefined ? handleClose() : <>
                             <DialogContent>
-                                <MyDialogTitle onClose={handleClose}>Edit {inflection.humanize(label(name, 1), true)} #{isMatch ? match.params.id : null}</MyDialogTitle>
+                                <MyDialogTitle onClose={handleClose}>{translate('ra.page.edit', {name: label(name, 1), id: isMatch ? match.params.id : null})}</MyDialogTitle>
                                 <Edit actions={null} id={isMatch ? match.params.id : null} title=" " {...props}>
                                     {React.cloneElement(children, { toolbar: (<CustomToolbar />) })}
                                 </Edit>
@@ -120,6 +121,7 @@ const ShowDialog = withRouter(({ history, handleClose, staticContext, syncWithLo
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const redirect = useRedirect();
+    const translate = useTranslate();
 
     return (
         <Route path={`/${name}/:id/show`} render={({ match }) => {
@@ -136,7 +138,7 @@ const ShowDialog = withRouter(({ history, handleClose, staticContext, syncWithLo
                     {isMatch ? (
                         (resource.hasShow ? <>
                             <DialogContent>
-                                <MyDialogTitle onClose={handleClose}>{label(name, 1)} #{isMatch ? match.params.id : null}</MyDialogTitle>
+                                <MyDialogTitle onClose={handleClose}>{translate('ra.page.show', {name: label(name, 1), id: isMatch ? match.params.id : null})}</MyDialogTitle>
                                 <Show actions={null} id={isMatch ? match.params.id : null} basePath={props.basePath} resource={name} title=" " {...props} >
                                     {children}
                                 </Show>

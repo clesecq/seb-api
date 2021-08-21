@@ -273,7 +273,8 @@ const messages = {
                     product_id: '#',
                     'product.name': 'Nom',
                     count: 'Différence',
-                    products: 'Produits'
+                    products: 'Produits',
+                    diff: 'Différence'
                 }
             },
             accounts: {
@@ -323,6 +324,7 @@ const messages = {
                 name: 'Virement |||| Virements',
                 fields: {
                     id: '#',
+                    amount: 'Montant',
                     'sub_transaction.user_id': 'Créateur',
                     'add_transaction.amount': 'Montant',
                     'sub_transaction.account_id': 'Depuis',
