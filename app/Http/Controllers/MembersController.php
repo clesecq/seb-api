@@ -21,7 +21,14 @@ class MembersController extends Controller
             $data = Member::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
                 foreach ($request->filter as $k => $v) {
-                    $data = $data->where($k, 'like', '%' . $v . '%');
+                    if ($k == 'payed') {
+                        if ($v) {
+                            $data = $data->whereNotNull('transaction_id');
+                        } else {
+                            $data = $data->whereNull('transaction_id');
+                        }
+                    } else
+                        $data = $data->where($k, 'like', '%' . $v . '%');
                 }
             }
             if (!is_null($request->per_page))
