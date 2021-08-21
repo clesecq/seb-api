@@ -22,9 +22,9 @@ class ProductsController extends Controller
                 foreach($request->filter as $k => $v) {
                     if ($k == "alerts") {
                         if ($v) {
-                            $data = $data->whereColumn('count', '<=', 'alert_level');
+                            $data = $data->whereColumn('count', '<', 'alert_level');
                         } else {
-                            $data = $data->whereColumn('count', '>', 'alert_level');
+                            $data = $data->whereColumn('count', '>=', 'alert_level');
                         }
                     } else {
                         $data = $data->where($k, 'like', '%' . $v . '%');

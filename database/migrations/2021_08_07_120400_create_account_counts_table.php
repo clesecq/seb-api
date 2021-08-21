@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Config;
+use App\Models\TransactionCategory;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,6 +24,7 @@ class CreateAccountCountsTable extends Migration
             $table->timestamps();
         });
 
+        TransactionCategory::create(['id' => 3, 'name' => 'Count']);
         Config::create(['name' => 'counts.category', 'value' => '3']);
         Config::create(['name' => 'counts.transaction', 'value' => 'Count #{count.id}']);
         Config::create(['name' => 'counts.movement', 'value' => 'Count #{count.id}']);
@@ -39,5 +41,6 @@ class CreateAccountCountsTable extends Migration
         Config::destroy('counts.category');
         Config::destroy('counts.transaction');
         Config::destroy('counts.movement');
+        TransactionCategory::destroy(3);
     }
 }

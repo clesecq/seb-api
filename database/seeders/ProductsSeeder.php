@@ -7,7 +7,7 @@ use App\Models\ProductCategory;
 use App\Models\Product;
 use App\Models\Account;
 
-class PRodSeeder extends Seeder
+class ProductsSeeder extends Seeder
 {
     /**
      * Run the database seeds.

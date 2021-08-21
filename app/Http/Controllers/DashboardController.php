@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $data = [];
 
         if ($request->user()->hasPermission('products.show')) {
-            $products = Product::whereColumn('count', '<=', 'alert_level')->get();
+            $products = Product::whereColumn('count', '<', 'alert_level')->get();
             $data["products_alerts"] = $products;
         }
 

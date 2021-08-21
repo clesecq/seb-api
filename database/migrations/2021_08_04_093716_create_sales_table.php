@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Config;
+use App\Models\TransactionCategory;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +22,8 @@ class CreateSalesTable extends Migration
             $table->timestamps();
         });
 
+        TransactionCategory::create(['id' => 2, 'name' => 'Sales']);
+
         Config::create(['name' => 'sales.account', 'value' => '1']);
         Config::create(['name' => 'sales.category', 'value' => '2']);
         Config::create(['name' => 'sales.transaction', 'value' => 'Sale #{sale.id}']);
@@ -39,5 +42,6 @@ class CreateSalesTable extends Migration
         Config::destroy('sales.category');
         Config::destroy('sales.transaction');
         Config::destroy('sales.movement');
+        TransactionCategory::destroy(2);
     }
 }
