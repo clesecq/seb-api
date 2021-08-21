@@ -14,7 +14,7 @@ const Movements = (props) => (
                 <TextField source="name" />
                 <BooleanField source="rectification" />
                 <ReferenceField source="user_id" reference="users">
-                    <TextField source="name" />
+                    <TextField source="username" />
                 </ReferenceField>
                 <DateField source="created_at" />
                 <ShowButton />
@@ -48,7 +48,7 @@ const Movements = (props) => (
                 </ArrayField>
                 <BooleanField source="rectification" />
                 <ReferenceField source="user_id" reference="users">
-                    <TextField source="name" />
+                    <TextField source="username" />
                 </ReferenceField>
                 <DateField source="created_at" />
             </SimpleShowLayout>

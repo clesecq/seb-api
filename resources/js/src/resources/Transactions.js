@@ -10,7 +10,7 @@ const TransactionsFilters = [
         <SelectInput optionText="name" />
     </ReferenceInput>,
     <ReferenceInput source="user_id" reference="users">
-        <SelectInput optionText="email" />
+        <SelectInput optionText="username" />
     </ReferenceInput>
 ];
 
@@ -29,7 +29,7 @@ const Transactions = (props) => (
                     <TextField source="name" />
                 </ReferenceField>
                 <ReferenceField source="user_id" reference="users">
-                    <TextField source="email" />
+                    <TextField source="username" />
                 </ReferenceField>
                 <DateField source="created_at" />
                 <ShowButton />
@@ -61,7 +61,7 @@ const Transactions = (props) => (
                     <TextField source="name" />
                 </ReferenceField>
                 <ReferenceField source="user_id" reference="users">
-                    <TextField source="email" />
+                    <TextField source="username" />
                 </ReferenceField>
                 <DateField source="created_at" />
                 <DateField source="updated_at" />

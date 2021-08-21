@@ -11,7 +11,7 @@ const TransactionsFilters = [
         <SelectInput optionText="name" />
     </ReferenceInput>,
     <ReferenceInput source="user_id" reference="users">
-        <SelectInput optionText="email" />
+        <SelectInput optionText="username" />
     </ReferenceInput>
 ];
 

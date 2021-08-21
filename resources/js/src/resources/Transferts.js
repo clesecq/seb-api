@@ -10,7 +10,7 @@ const TransfertsFilters = [
         <SelectInput optionText="name" />
     </ReferenceInput>,
     <ReferenceInput source="user_id" reference="users">
-        <SelectInput optionText="email" />
+        <SelectInput optionText="username" />
     </ReferenceInput>
 ];
 
@@ -27,7 +27,7 @@ const Transferts = (props) => (
                 </ReferenceField>
                 <MoneyField noLabel={true} source="add_transaction.amount" />
                 <ReferenceField source="sub_transaction.user_id" reference="users">
-                    <TextField source="email" />
+                    <TextField source="username" />
                 </ReferenceField>
                 <DateField source="created_at" />
                 <ShowButton />
@@ -61,7 +61,7 @@ const Transferts = (props) => (
                 </ReferenceField>
                 <MoneyField source="add_transaction.amount" />
                 <ReferenceField source="sub_transaction.user_id" reference="users">
-                    <TextField source="email" />
+                    <TextField source="username" />
                 </ReferenceField>
                 <DateField source="created_at" />
                 <DateField source="updated_at" />
