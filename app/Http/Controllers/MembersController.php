@@ -50,7 +50,7 @@ class MembersController extends Controller
         $data = $request->validate([
             'firstname' => ['required', 'string'],
             'lastname' => ['required', 'string'],
-            'discord_id' => ['required', 'nullable', 'string', 'unique:members,discord_id'],
+            'discord_id' => ['sometimes', 'required', 'string', 'unique:members,discord_id'],
             'payed' => ['sometimes', 'required', 'boolean'],
         ]);
 
