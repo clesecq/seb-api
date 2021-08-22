@@ -6,10 +6,10 @@ import { FunctionField, Labeled } from 'react-admin';
 const MoneyField = ({ source, noLabel, currency, digits, ...props }) => {
     return (
         noLabel ?
-            <FunctionField {...props} style={{width: '100%', whiteSpace: 'nowrap', textAlign: 'right', display: 'inline-block'}} render={record => (Number(get(record, source)).toFixed(digits) + " " + currency)} />
+            <FunctionField {...props} style={{width: '100%', whiteSpace: 'nowrap', textAlign: 'right', display: 'inline-block'}} render={record => (Number(get(record, source)).toLocaleString('fr-FR', {currency: currency, currencyDisplay: 'symbol', style: 'currency'}))} />
             :
             <Labeled source={source} {...props}>
-                <FunctionField {...props} render={record => (Number(get(record, source)).toFixed(digits) + " " + currency)} />
+                <FunctionField {...props} render={record => (Number(get(record, source)).toLocaleString('fr-FR', {currency: currency, currencyDisplay: 'symbol', style: 'currency'}))} />
             </Labeled>
     );
 }
@@ -24,7 +24,7 @@ MoneyField.propTypes = {
 };
 
 MoneyField.defaultProps = {
-    currency: "€",
+    currency: "EUR",
     noLabel: false,
     digits: 2
 }

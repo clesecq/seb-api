@@ -447,7 +447,12 @@ const messages = {
                 name: "Nom",
                 count: "Nombre",
                 treshold: "Seuil d'alerte"
-            }
+            },
+            accounts: {
+                none: "Pas de comptes",
+                title: 'Comptes',
+                stocks_value: 'Valeur Stocks'
+            },
         },
         sell: {
             name: "Nom",

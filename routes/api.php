@@ -47,7 +47,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
     Route::get("profile/me", [ProfileController::class, 'show']);
-    Route::get("dashboard", [DashboardController::class, 'dashboard']);
+    Route::get("dashboard/me", [DashboardController::class, 'dashboard']);
     Route::res("users", UsersController::class);
     Route::res("members", MembersController::class, ['archive']);
     Route::res("archived_members", ArchivedMembersController::class, ['readonly']);
