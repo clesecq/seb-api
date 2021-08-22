@@ -396,8 +396,23 @@ class DatabaseSeeder extends Seeder
             ]);
             $member->created_at = $date;
             $member->updated_at = $date;
-            // pay does save
-            $member->pay();
+            // Pay
+            $message = Config::format("members.contribution.transaction", ["member" => $member->attributesToArray()]);
+
+            $transaction = Transaction::create([
+                'name' => $message,
+                'amount' => Config::number('members.contribution.amount'),
+                'rectification' => false,
+                'user_id' => 1,
+                'account_id' => Config::integer('members.contribution.account'),
+                'category_id' => Config::integer('members.contribution.category')
+            ]);
+
+            $transaction->created_at = $date;
+            $transaction->updated_at = $date;
+            $transaction->save();
+            $member->transaction_id = $transaction->id;
+            $member->save();
         }
     }
 
@@ -412,8 +427,8 @@ class DatabaseSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        $start = new DateTime('2010-07-01');
-        $end = new DateTime('2020-07-01');
+        $start = new DateTime('2020-08-01');
+        $end = new DateTime('2021-08-01');
 
         // Set the accounts up
         $this->initAccounts($faker, $start);

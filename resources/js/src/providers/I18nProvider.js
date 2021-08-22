@@ -453,6 +453,9 @@ const messages = {
                 title: 'Comptes',
                 stocks_value: 'Valeur Stocks'
             },
+            transactions: {
+                title: "Graphe des comptes"
+            }
         },
         sell: {
             name: "Nom",
