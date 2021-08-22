@@ -3,7 +3,6 @@ import amber from '@material-ui/core/colors/amber';
 import blue from '@material-ui/core/colors/blue';
 // import blueGrey from '@material-ui/core/colors/blueGrey';
 // import brown from '@material-ui/core/colors/brown';
-import common from '@material-ui/core/colors/common';
 import cyan from '@material-ui/core/colors/cyan';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import deepPurple from '@material-ui/core/colors/deepPurple';
@@ -19,13 +18,13 @@ import purple from '@material-ui/core/colors/purple';
 import red from '@material-ui/core/colors/red';
 import teal from '@material-ui/core/colors/teal';
 import yellow from '@material-ui/core/colors/yellow';
+import _ from 'lodash';
 
 const colors = {
     'amber': amber,
     'blue': blue,
 //    'blueGrey': blueGrey,
 //    'brown': brown,
-    'common': common,
     'cyan': cyan,
     'deepOrange': deepOrange,
     'deepPurple': deepPurple,
@@ -49,8 +48,31 @@ const randomProperty = (obj) => {
 };
 
 class ColorProvider {
+    constructor() {
+        this.shuffled_colors = ['#FF0000'];
+        this.counter = 0;
+    }
+
     randomColor(shade) {
         return randomProperty(colors)[shade];
+    }
+
+    randomSColor() {
+        this.counter = (this.counter+1) % this.shuffled_colors.length;
+        return this.shuffled_colors[this.counter];
+    }
+
+    shuffledColors(shade) {
+        let color_arr = [];
+        for(let key in colors) {
+            color_arr.push(colors[key][shade]);
+        }
+        return _.shuffle(color_arr);
+    }
+
+    shuffle(shade) {
+        this.shuffled_colors = this.shuffledColors(shade);
+        this.counter = 0;
     }
 }
 

@@ -455,6 +455,15 @@ const messages = {
             },
             transactions: {
                 title: "Graphe des comptes"
+            },
+            categories_positive: {
+                title: "Répartitions des bénéfices"
+            },
+            categories_negative: {
+                title: "Répartitions des dépenses"
+            },
+            categories: {
+                title: "Répartition de la valeur"
             }
         },
         sell: {
