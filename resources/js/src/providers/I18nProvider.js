@@ -440,6 +440,12 @@ const messages = {
         },
         dashboard: {
             welcome: "Bienvenue sur Seb™",
+            statistics: {
+                title: "Statistiques"
+            },
+            products: {
+                title: "Classement des produits"
+            },
             alerts: {
                 none: "Pas d'alertes",
                 title: "Alertes de stocks",

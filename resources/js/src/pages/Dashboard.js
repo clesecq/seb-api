@@ -1,9 +1,9 @@
-import { Card, CardContent, CardHeader, Grid, makeStyles, Table, TableBody, TableCell, TableRow, Typography } from '@material-ui/core';
-import { format } from 'date-fns';
+import { Card, CardContent, CardHeader, Grid, makeStyles, Tab, Table, TableBody, TableCell, TableRow, Tabs, Typography } from '@material-ui/core';
 import React from "react";
 import { Error, Loading, Title, useQuery, useTranslate } from 'react-admin';
-import { CartesianGrid, Cell, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import ColorProvider from '../providers/ColorProvider';
+import AccountsStatistics from './statistics/AccountsStatistics';
+import ProductsStatistics from './statistics/ProductsStatistics';
 
 const useStyles = makeStyles({
     good: {
@@ -19,7 +19,7 @@ const AccountsPanel = ({ data }) => {
     const styles = useStyles();
 
     return ('accounts' in data || 'stocks_value' in data ? (
-        <Grid item xs={12} xl={3}>
+        <Grid item xs={12} lg={4} xl={3}>
             <Card style={{ height: '100%' }}>
                 <CardContent>
                     {data['accounts'].length == 0 && !('stocks_value' in data) ? translate('dashboard.alerts.none') : (
@@ -27,7 +27,7 @@ const AccountsPanel = ({ data }) => {
                             {data['accounts'].length != 0 ? (
                                 data['accounts'].map((value, i) => {
                                     return (
-                                        <Grid item xs={12} sm={6} md={4} lg={3} xl={12} key={i}>
+                                        <Grid item xs={12} sm={6} md={4} lg={12} key={i}>
                                             <Typography variant="h6">{value.name}</Typography>
                                             <Typography variant="h4" classes={{ root: value.balance > 0 ? styles.good : styles.bad }}>{value.balance > 0 ? '+' : ''}{Number(value.balance).toLocaleString('fr-FR', { currency: 'EUR', currencyDisplay: 'symbol', style: 'currency' })}</Typography>
                                         </Grid>
@@ -35,7 +35,7 @@ const AccountsPanel = ({ data }) => {
                                 })
                             ) : ''}
                             {('stocks_value' in data) ? (
-                                <Grid item xs={12} sm={6} md={4} lg={3} xl={12}>
+                                <Grid item xs={12} sm={6} md={4} lg={12}>
                                     <Typography variant="h6">{translate('dashboard.accounts.stocks_value')}</Typography>
                                     <Typography variant="h4" classes={{ root: data.stocks_value > 0 ? styles.good : styles.bad }}>{data.stocks_value > 0 ? '+' : ''}{Number(data.stocks_value).toLocaleString('fr-FR', { currency: 'EUR', currencyDisplay: 'symbol', style: 'currency' })}</Typography>
                                 </Grid>
@@ -52,7 +52,7 @@ const ProductsAlertsPanel = ({ data }) => {
     const translate = useTranslate();
 
     return ('products_alerts' in data ? (
-        <Grid item xs={12} xl>
+        <Grid item xs={12} lg xl>
             <Card style={{ height: '100%' }}>
                 <CardHeader title={translate('dashboard.alerts.title')} />
                 <CardContent>
@@ -89,106 +89,56 @@ const ProductsAlertsPanel = ({ data }) => {
     ) : '');
 };
 
-const dateFormatter = date => {
-    return format(new Date(date), "dd/MM/yyyy");
-};
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
 
-const formatter = (value, name, props) => {
-    return (value >= 0 ? '+' : '') + Number(value).toLocaleString('fr-FR', { currency: 'EUR', currencyDisplay: 'symbol', style: 'currency' });
-};
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <>{children}</>
+            )}
+        </div>
+    );
+}
 
-const CategoriesPiePanel = ({ data }) => {
-    const translate = useTranslate();
+const StatisticsPanel = (props) => {
+    const [value, setValue] = React.useState(0);
 
-    return ('categories' in data !== null ? (
-        <>
-            <Grid item xs={12} md={6} lg={4}>
-                <Card style={{ height: '100%' }}>
-                    <CardHeader title={translate('dashboard.categories_positive.title')} />
-                    <CardContent>
-                        <ResponsiveContainer width="100%" height={200}>
-                            <PieChart width={400} height={200}>
-                                <Tooltip itemStyle={{ color: 'white !important' }} />
-                                <Pie dataKey={'value'} label={(d) => (d.name)} data={data.categories_positive} cx="50%" cy="50%" innerRadius={30} outerRadius={50}>
-                                    {data.categories_positive.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={ColorProvider.randomSColor()} />
-                                    ))}
-                                </Pie>
-                            </PieChart>
-                        </ResponsiveContainer>
-                    </CardContent>
-                </Card>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-                <Card style={{ height: '100%' }}>
-                    <CardHeader title={translate('dashboard.categories_negative.title')} />
-                    <CardContent>
-                        <ResponsiveContainer width="100%" height={200}>
-                            <PieChart width={400} height={200}>
-                                <Tooltip itemStyle={{ color: 'white !important' }} />
-                                <Pie dataKey={'value'} label={(d) => (d.name)} data={data.categories_negative} cx="50%" cy="50%" innerRadius={30} outerRadius={50}>
-                                    {data.categories_negative.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={ColorProvider.randomSColor()} />
-                                    ))}
-                                </Pie>
-                            </PieChart>
-                        </ResponsiveContainer>
-                    </CardContent>
-                </Card>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-                <Card style={{ height: '100%' }}>
-                    <CardHeader title={translate('dashboard.categories.title')} />
-                    <CardContent>
-                        <ResponsiveContainer width="100%" height={200}>
-                            <PieChart width={400} height={200}>
-                                <Tooltip itemStyle={{ color: 'white !important' }} />
-                                <Pie dataKey={'value'} label={(d) => (d.name)} data={data.categories} cx="50%" cy="50%" innerRadius={30} outerRadius={50}>
-                                    {data.categories.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={ColorProvider.randomSColor()} />
-                                    ))}
-                                </Pie>
-                            </PieChart>
-                        </ResponsiveContainer>
-                    </CardContent>
-                </Card>
-            </Grid>
-        </>
-    ) : '');
-};
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
-const TransactionsGraphPanel = ({ data }) => {
-    const translate = useTranslate();
+    const handleChangeIndex = (index) => {
+        setValue(index);
+    };
 
-    return ('transactions' in data !== null ? (
+    return (
         <Grid item xs={12}>
             <Card style={{ height: '100%' }}>
-                <CardHeader title={translate('dashboard.transactions.title')} />
-                <CardContent>
-                    <ResponsiveContainer width="100%" height={400}>
-                        <LineChart data={data.transactions.data} width={600} height={300}
-                            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                            <defs>
-                                <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                                    <stop offset="95%" stopColor="#82ca9d" stopOpacity={0.2} />
-                                </linearGradient>
-                            </defs>
-                            <XAxis dataKey={data.transactions.date_field} tickFormatter={dateFormatter} />
-                            <Tooltip labelFormatter={dateFormatter} formatter={formatter} />
-                            <Legend verticalAlign="top" />
-                            <YAxis />
-                            {Object.keys(data.transactions.accounts).map((key) => {
-                                return <Line stroke={ColorProvider.randomSColor()} connectNulls type="monotone" dataKey={key} name={data.transactions.accounts[key]} key={key} strokeWidth={2} dot={false} />;
-                            })}
-                            <CartesianGrid stroke="#505050" strokeDasharray="5 5" />
-                        </LineChart>
-                    </ResponsiveContainer>
-                </CardContent>
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="primary"
+                    textColor="primary">
+                    <Tab label="Comptes" />
+                    <Tab label="Stocks" />
+                </Tabs>
+                <TabPanel value={value} index={0}>
+                    <AccountsStatistics />
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <ProductsStatistics />
+                </TabPanel>
             </Card>
         </Grid>
-    ) : '');
-}
+    );
+};
 
 export default () => {
     const translate = useTranslate();
@@ -197,7 +147,7 @@ export default () => {
     const { data, loading, error } = useQuery({
         type: 'getOne',
         resource: 'dashboard',
-        payload: { id: 'me' }
+        payload: { id: 'home' }
     });
 
     if (loading) return <Loading />;
@@ -209,8 +159,7 @@ export default () => {
             <Title title={translate('dashboard.welcome')} />
             <AccountsPanel data={data} />
             <ProductsAlertsPanel data={data} />
-            <TransactionsGraphPanel data={data} />
-            <CategoriesPiePanel data={data} />
+            <StatisticsPanel />
         </Grid >
     );
 };
