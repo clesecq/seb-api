@@ -346,7 +346,7 @@ class DatabaseSeeder extends Seeder
             'amount' => -$price,
             'rectification' => false,
             'account_id' => 2, // Pay with Bank account
-            'category_id' => 1,
+            'category_id' => 2,
             'user_id' => 1 // By ROOT
         ]);
         $transaction->created_at = $date;
