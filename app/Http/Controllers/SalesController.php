@@ -24,14 +24,14 @@ class SalesController extends Controller
         } else {
             $data = Sale::with('transaction')->orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
-                foreach($request->filter as $k => $v) {
+                foreach ($request->filter as $k => $v) {
                     $data = $data->where($k, 'like', '%' . $v . '%');
                 }
             }
             if (!is_null($request->per_page))
                 $data = $data->paginate((int) $request->per_page);
             else
-                $data = $data->get();
+                $data = ["data" => $data->get(), "total" => $data->count()];
             return $data;
         }
     }
@@ -63,7 +63,7 @@ class SalesController extends Controller
         ]);
 
         // We fill the movement with the products
-        foreach($products_data["products"] as $product) {
+        foreach ($products_data["products"] as $product) {
             $data = [
                 "movement_id" => $movement->id,
                 "product_id" => $product["id"],

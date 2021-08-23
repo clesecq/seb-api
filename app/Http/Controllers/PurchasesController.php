@@ -30,7 +30,7 @@ class PurchasesController extends Controller
             if (!is_null($request->per_page))
                 $data = $data->paginate((int) $request->per_page);
             else
-                $data = $data->get();
+                $data = ["data" => $data->get(), "total" => $data->count()];
             return $data;
         }
     }
