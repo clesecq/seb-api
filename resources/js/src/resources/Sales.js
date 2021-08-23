@@ -3,7 +3,7 @@ import { ArrayField, Datagrid, List, ReferenceField, ShowButton, SimpleShowLayou
 import DateField from '../components/DateField';
 import { ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
-import Sell from "../pages/Sell";
+import TempSell from "../pages/TempSell";
 
 const Sales = (props) => {
     return (
@@ -48,6 +48,6 @@ const Sales = (props) => {
 
 export default {
     list: Sales,
-    create: Sell,
+    create: TempSell,
     show: Sales
 };

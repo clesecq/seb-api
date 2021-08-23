@@ -485,6 +485,16 @@ const messages = {
             cash: 'Liquide',
             value: 'Valeur absolue',
             balance: 'Solde'
+        },
+        inputs: {
+            multiproductcount: {
+                filters: {
+                    name: 'Nom',
+                    category: 'Catégorie',
+                    none: 'Aucun'
+                },
+                price: 'Totale'
+            }
         }
     }),
 };
