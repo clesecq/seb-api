@@ -8,6 +8,7 @@ use App\Models\Movement;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionCategory;
+use DateTimeImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -133,7 +134,7 @@ class DashboardController extends Controller
         $date_field = Str::random(40);
 
         $the_data = $collection->map(function ($item, $key) use ($date_field, $accounts, &$account_last_values) {
-            $item[$date_field] = $key;
+            $item[$date_field] = (new DateTimeImmutable($key))->getTimestamp();
             $sum = 0;
 
             foreach ($accounts as $k => $v) {
