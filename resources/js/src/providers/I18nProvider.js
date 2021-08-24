@@ -1,104 +1,8 @@
 import merge from 'lodash/merge';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
-import englishMessages from 'ra-language-english';
 import frenchMessages from 'ra-language-french';
 
 const messages = {
-    'en': merge(englishMessages, {
-        ra: {
-            auth: {
-                email: "Email",
-                forgot: "Forgot your password?",
-                back: "Go back",
-                cancel: "Cancel",
-                reset_password: "Reset password",
-                password_confirmation: "Password confirmation",
-                new_password: "New password",
-                current_password: "Current password",
-                change_password: "Change password",
-                password_changed: "Password changed!",
-                "2fa": {
-                    ask: "Do you really want to enable Two Factor Authentication?",
-                    enable: "Enable 2FA",
-                    scan: "Please scan the following QR code in your 2FA app",
-                    verify: "Enter a 2FA code to validate",
-                    verification_code: "2FA Code",
-                    success: "Two Factor Authentication is now enabled",
-                    validate: "Done!",
-                    disabled: "Two Factor Authentication has been disabled",
-                    disable: "Disable 2FA",
-                    askdisable: "Do you really want to disable Two Factor Authentication?",
-                    login: "Continue"
-                },
-                token: {
-                    new: {
-                        ask: "Do you really want to create a new API token?",
-                        create: "Create",
-                        name: "Token name",
-                        scan: "Here is your new token. You can now scan it in the App or save it. Keep it preciously: you'll never see it again.",
-                        validate: "Done!"
-                    },
-                    clear: {
-                        ask: "Do you really want to clear all tokens? Warning: You'll have to generate new tokens to log in the App.",
-                        clear: "Clear",
-                        cleared: "Your tokens have been cleared"
-                    }
-                }
-            }
-        },
-        copying: {
-            menu: "Copying",
-            title: "License and attributions",
-            notice: "Copyright notice",
-            agpl: {
-                line1: "Copyright © 2021 - Association Amicale des Étudiants et Anciens Étudiants du Département Informatique de l'IUT Robert Schuman et al.",
-                line2: "Seb is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License Affero as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
-                line3: {
-                    start: "This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. As per required by the aforementioned license, you may obtain a copy of the source code of Seb",
-                    here: "here",
-                    continue: "and read the whole license",
-                    there: "there",
-                    end: "."
-                }
-            },
-            dependencies: "Dependencies",
-            dependencies2: "Seb isn't built from the ground up. Our most notable dependencies are:",
-            released: "Released under the",
-            license: {
-                mit: "MIT License"
-            },
-            contributors: "Contributors",
-            bottommessage: "Copyright © 2021 Amicale CORE - Released under the"
-        },
-        menu: {
-            user: {
-                copying: "Copying",
-                profile: "Profile"
-            },
-            left: {
-                dashboard: "Dashboard",
-                sell: "Sell",
-                buy: "Buy",
-                count_money: "Count Money",
-                count_stocks: "Count Stocks",
-                members: "Members",
-                stocks: "Stocks",
-                products: "Products",
-                categories: "Categories",
-                products_counts: "Stocks Counts",
-                movements: "Stocks Movements",
-                accounting: "Accounting",
-                accounts: "Accounts",
-                accounts_counts: "Accounts Counts",
-                transactions: "Transactions",
-                transferts: "Transferts",
-                sales: "Sales",
-                purchases: "Purchases",
-                users: "Users",
-                logout: "Log out"
-            }
-        }
-    }),
     'fr': merge(frenchMessages, {
         ra: {
             auth: {
@@ -234,7 +138,7 @@ const messages = {
                     id: '#',
                     name: 'Nom',
                     category_id: 'Catégorie',
-                    price: 'Price',
+                    price: 'Prix',
                     count: 'Nombre',
                     alert_level: 'Niveau d\'alerte',
                     created_at: 'Créé le',
@@ -359,6 +263,7 @@ const messages = {
                     'movement.products': 'Produits',
                     product_id: '#',
                     'product_id.name': 'Nom',
+                    'product.name': 'Nom',
                     count: 'Nombre'
                 }
             },
@@ -374,9 +279,15 @@ const messages = {
                     movement_id: 'Mouvement',
                     transaction_id: 'Transaction',
                     'movement_id.products': 'Produits',
+                    'movement.products': 'Produits',
                     product_id: '#',
                     'product.name': 'Nom',
-                    count: 'Nombre'
+                    count: 'Nombre',
+                    account_id: 'Compte',
+                    category_id: 'Catégorie',
+                    amount: 'Montant',
+                    has_products: '',
+                    has_products: 'L\'achat concerne des produits'
                 }
             },
             users: {
@@ -384,6 +295,7 @@ const messages = {
                 fields: {
                     id: '#',
                     username: 'Login',
+                    password: 'Mot de passe',
                     firstname: 'Prénom',
                     lastname: 'Nom',
                     email: 'Adresse email',
@@ -473,14 +385,7 @@ const messages = {
             }
         },
         sell: {
-            name: "Nom",
-            category: "Catégorie",
-            price: "Prix",
             account: "Compte",
-            transaction_category: "Catégorie de Transaction",
-            has_products: "L'achat concerne des produits",
-            none: 'Aucun',
-            add_products: 'Ajouter des Produits',
             type: 'Type',
             cash: 'Liquide',
             value: 'Valeur absolue',

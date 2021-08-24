@@ -4,6 +4,7 @@ import DateField from '../components/DateField';
 import DateInput from '../components/DateInput';
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
+import MoneyInput from "../components/MoneyInput";
 import { RecalculateButton } from '../components/RecalculateButton';
 
 const AccountsFilters = [
@@ -46,6 +47,7 @@ const Accounts = (props) => (
                 <TextInput source="name" />
                 <TextInput source="iban" />
                 <TextInput source="bic" />
+                <MoneyInput disabled source="balance" />
                 <DateInput disabled source="created_at" />
                 <DateInput disabled source="updated_at" />
             </SimpleForm>

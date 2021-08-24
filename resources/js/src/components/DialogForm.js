@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import { spacing } from "@material-ui/system";
 import * as React from "react";
-import { Create, DeleteButton, Edit, SaveButton, Show, Toolbar, useGetResourceLabel, useRedirect, useResourceContext, useResourceDefinition, useTranslate } from 'react-admin';
+import { Create, DeleteButton, Edit, SaveButton, Show, Toolbar, useGetResourceLabel, useNotify, useRedirect, useRefresh, useResourceContext, useResourceDefinition, useTranslate } from 'react-admin';
 import { Route, withRouter } from 'react-router-dom';
 
 const StyledDeleteButton = styled(DeleteButton)(spacing);
@@ -51,6 +51,8 @@ const CreateDialog = withRouter(({ history, handleClose, staticContext, syncWith
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const redirect = useRedirect();
     const translate = useTranslate();
+    const notify = useNotify();
+    const refresh = useRefresh();
 
     return (
         <Route path={`/${name}/create`} exact render={() => {
@@ -65,8 +67,12 @@ const CreateDialog = withRouter(({ history, handleClose, staticContext, syncWith
                 <Dialog fullScreen={fullScreen} open maxWidth="md" onClose={handleClose} fullWidth={true} scroll="body" fullScreen={fullScreen}>
                     {resource.hasCreate === undefined ? handleClose() : <>
                         <DialogContent>
-                            <MyDialogTitle onClose={handleClose}>{translate('ra.page.create', {name: label(name, 1)})}</MyDialogTitle>
-                            <Create title=" " {...props}>
+                            <MyDialogTitle onClose={handleClose}>{translate('ra.page.create', { name: label(name, 1) })}</MyDialogTitle>
+                            <Create title=" " {...props} onSuccess={() => {
+                                notify('ra.notification.created', 'info', { smart_count: 1 });
+                                redirect(`/${name}`);
+                                refresh();
+                            }}>
                                 {React.cloneElement(children, { toolbar: (<CustomToolbar />) })}
                             </Create>
                         </DialogContent>
@@ -101,7 +107,7 @@ const EditDialog = withRouter(({ history, handleClose, staticContext, syncWithLo
                     {isMatch ? (
                         (resource.hasEdit === undefined ? handleClose() : <>
                             <DialogContent>
-                                <MyDialogTitle onClose={handleClose}>{translate('ra.page.edit', {name: label(name, 1), id: isMatch ? match.params.id : null})}</MyDialogTitle>
+                                <MyDialogTitle onClose={handleClose}>{translate('ra.page.edit', { name: label(name, 1), id: isMatch ? match.params.id : null })}</MyDialogTitle>
                                 <Edit actions={null} id={isMatch ? match.params.id : null} title=" " {...props}>
                                     {React.cloneElement(children, { toolbar: (<CustomToolbar />) })}
                                 </Edit>
@@ -138,7 +144,7 @@ const ShowDialog = withRouter(({ history, handleClose, staticContext, syncWithLo
                     {isMatch ? (
                         (resource.hasShow ? <>
                             <DialogContent>
-                                <MyDialogTitle onClose={handleClose}>{translate('ra.page.show', {name: label(name, 1), id: isMatch ? match.params.id : null})}</MyDialogTitle>
+                                <MyDialogTitle onClose={handleClose}>{translate('ra.page.show', { name: label(name, 1), id: isMatch ? match.params.id : null })}</MyDialogTitle>
                                 <Show actions={null} id={isMatch ? match.params.id : null} basePath={props.basePath} resource={name} title=" " {...props} >
                                     {children}
                                 </Show>

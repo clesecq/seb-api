@@ -34,10 +34,10 @@ const CountField = (props) => {
                         <TableRow key={key}>
                             <TableCell>{record[source][key]}</TableCell>
                             <TableCell align="right" component="th" scope="row">
-                                {Number(key).toFixed(2)} €
+                                {Number(key).toLocaleString('fr-FR', { currency: 'EUR', currencyDisplay: 'symbol', style: 'currency' })}
                             </TableCell>
                             <TableCell align="right" component="th" scope="row">
-                                {Number(parseFloat(key) * parseInt(record[source][key])).toFixed(2)} €
+                                {Number(parseFloat(key) * parseInt(record[source][key])).toLocaleString('fr-FR', { currency: 'EUR', currencyDisplay: 'symbol', style: 'currency' })}
                             </TableCell>
                         </TableRow>
                     ))}
@@ -45,7 +45,7 @@ const CountField = (props) => {
                         <TableCell></TableCell>
                         <TableCell align="right" component="th" scope="row"></TableCell>
                         <TableCell align="right" component="th" scope="row">
-                            {Number(record['balance']).toFixed(2)} €
+                            {Number(record['balance']).toLocaleString('fr-FR', { currency: 'EUR', currencyDisplay: 'symbol', style: 'currency' })}
                         </TableCell>
                     </TableRow>
                 </TableBody>
