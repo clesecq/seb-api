@@ -60,7 +60,7 @@ const Products = (props) => (
                     <SelectInput optionText="name" />
                 </ReferenceInput>
                 <MoneyInput source="price" />
-                <NumberField disabled source="count" />
+                <NumberInput disabled source="count" />
                 <NumberInput source="alert_level" />
                 <DateInput disabled source="created_at" />
                 <DateInput disabled source="updated_at" />

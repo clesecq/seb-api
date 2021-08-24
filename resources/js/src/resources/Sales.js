@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrayField, Create, Datagrid, List, ReferenceField, ShowButton, SimpleForm, SimpleShowLayout, TextField } from 'react-admin';
+import { ArrayField, Create, Datagrid, List, ReferenceField, ShowButton, SimpleForm, SimpleShowLayout, TextField, useNotify, useRefresh } from 'react-admin';
 import DateField from '../components/DateField';
 import { ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
@@ -47,8 +47,14 @@ const Sales = (props) => {
 };
 
 const Sell = props => {
+    const refresh = useRefresh();
+    const notify = useNotify();
+
     return <>
-        <Create {...props}>
+        <Create {...props} onSuccess={() => {
+            notify('ra.notification.created', 'info', { smart_count: 1 });
+            refresh();
+        }}>
             <SimpleForm>
                 <MultiProductCountInput source="products" total>
                     <MultiProductCountItem price />
