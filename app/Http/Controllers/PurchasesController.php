@@ -49,8 +49,11 @@ class PurchasesController extends Controller
             'amount' => ['required', 'numeric', 'min:0'],
             'account_id' => ['required', 'exists:accounts,id'],
             'category_id' => ['required', 'exists:transaction_categories,id'],
-            'has_products' => ['required', 'boolean']
+            'has_products' => ['sometimes', 'required', 'boolean']
         ]);
+
+        if (!array_key_exists('has_products', $data))
+        $data['has_products'] = false;
 
         if ($data['has_products']) {
             $products_data = $request->validate([

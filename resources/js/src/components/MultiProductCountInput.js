@@ -19,25 +19,32 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const MultiProductCountItem = ({ product, filterCategory, filterName, updatePrice, price, ...props }) => {
+const MultiProductCountItem = ({ product, filterCategory, filterName, countZero, updatePrice, price, ...props }) => {
     const classes = useStyles();
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(countZero ? "" : 0);
 
     const addCount = ((x) => {
+        let c = count;
 
-        if (count + x < 0) {
-            setCount(0);
-            updatePrice(product, 0);
+        if (countZero) {
+            if (c === "") {
+                c = 0;
+            }
+        }
+
+        if (c + x < 0) {
+            setCount(countZero ? "" : 0);
+            updatePrice(product, countZero ? "" : 0);
             return;
         }
 
-        setCount(count + x);
-        updatePrice(product, count + x);
+        setCount(c + x);
+        updatePrice(product, c + x);
     });
 
     useEffect(() => {
-        setCount(0);
-        updatePrice(product, 0);
+        setCount(countZero ? "" : 0);
+        updatePrice(product, countZero ? "" : 0);
     }, [props.refresh]);
 
     return (
@@ -55,17 +62,19 @@ const MultiProductCountItem = ({ product, filterCategory, filterName, updatePric
                         <Grid item container alignItems="center" className={classes.rows} xs={4}>
                             <Grid item>
                                 <TextField
-                                    id="standard-number"
                                     type="text"
-                                    inputProps={{ min: 0, style: { textAlign: 'center' } }}
+                                    inputProps={{ style: { textAlign: 'center' } }}
                                     value={count}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
                                     onChange={(e) => {
                                         let val = e.target.value;
-                                        if (val === "")
-                                            val = "0";
+                                        if (val === "") {
+                                            setCount(countZero ? "" : 0);
+                                            updatePrice(product, countZero ? "" : 0);
+                                            return;
+                                        }
                                         val = parseInt(val);
                                         if (val !== NaN && val >= 0) {
                                             setCount(val);
@@ -88,7 +97,7 @@ const MultiProductCountItem = ({ product, filterCategory, filterName, updatePric
 };
 
 
-const MultiProductCountInput = ({ total, children, ...props }) => {
+const MultiProductCountInput = ({ total, children, countZero, ...props }) => {
     const { data: products_data, loading: products_loading, error: products_error } = useQuery({
         type: 'getAll',
         resource: 'products',
@@ -116,12 +125,18 @@ const MultiProductCountInput = ({ total, children, ...props }) => {
     const [refresh, doRefresh] = useState(0);
     const updatePrice = (product, count) => {
         let c = counts;
-        c[product.id] = { count: count, price: product.price };
+
+        if (count === "" && countZero) {
+            delete c[product.id];
+        } else {
+            c[product.id] = { count: count, price: product.price };
+        }
+
         setCounts(c);
 
         let p = [];
         for (let id in c) {
-            if (c[id].count > 0) {
+            if (c[id].count > 0 || countZero) {
                 p.push({ 'id': parseInt(id), 'count': counts[id].count });
             }
         }
@@ -179,7 +194,7 @@ const MultiProductCountInput = ({ total, children, ...props }) => {
                 </Grid>
                 <Grid container item xs={12} spacing={2} style={{ height: 'calc(100vh - 368px)', overflowY: 'scroll', width: 'auto', margin: '0' }}>
                     {products_data.map((val, key) => {
-                        return React.cloneElement(React.Children.only(children), { key: key, product: val, refresh: refresh, filterCategory: filterCategory, filterName: filterName, updatePrice: updatePrice });
+                        return React.cloneElement(React.Children.only(children), { key: key, product: val, refresh: refresh, filterCategory: filterCategory, filterName: filterName, updatePrice: updatePrice, countZero: countZero });
                     })}
                 </Grid>
                 {total ? (
