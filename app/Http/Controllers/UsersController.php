@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -20,14 +21,14 @@ class UsersController extends Controller
         } else {
             $data = User::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
-                foreach($request->filter as $k => $v) {
+                foreach ($request->filter as $k => $v) {
                     $data = $data->where($k, 'like', '%' . $v . '%');
                 }
             }
             if (!is_null($request->per_page))
                 $data = $data->paginate((int) $request->per_page);
             else
-                $data = $data->get();
+                $data = ["data" => $data->get(), "total" => $data->count()];
             return $data;
         }
     }
@@ -121,7 +122,8 @@ class UsersController extends Controller
     /**
      * Destroy many of the specified resource
      */
-    public function destroyMany(Request $request) {
+    public function destroyMany(Request $request)
+    {
         if (is_array($request->ids)) {
             if (in_array($request->user()->id, $request->ids)) {
                 return response([
@@ -139,7 +141,8 @@ class UsersController extends Controller
     /**
      * Update many of the specified resource
      */
-    public function updateMany(Request $request) {
+    public function updateMany(Request $request)
+    {
         $data = $request->validate([
             'name' => ['sometimes', 'required', 'string'],
             'email' => ['sometimes', 'required', 'email', 'unique:users,email'],

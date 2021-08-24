@@ -1,9 +1,10 @@
 import React from "react";
-import { ArrayField, Datagrid, List, ReferenceField, ShowButton, SimpleShowLayout, TextField } from 'react-admin';
+import { ArrayField, BooleanInput, Create, Datagrid, FormDataConsumer, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
 import DateField from '../components/DateField';
 import { ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
-import Buy from "../pages/Buy";
+import MoneyInput from '../components/MoneyInput';
+import { MultiProductCountInput, MultiProductCountItem } from "../components/MultiProductCountInput";
 
 const Purchases = (props) => {
     return (
@@ -46,6 +47,31 @@ const Purchases = (props) => {
             </ShowDialog>
         </>
     );
+};
+
+const Buy = (props) => {
+    return <>
+        <Create {...props}>
+            <SimpleForm>
+                <TextInput source="name" />
+                <ReferenceInput source="account_id" reference="accounts">
+                    <SelectInput optionText="name" />
+                </ReferenceInput>
+                <ReferenceInput source="category_id" reference="transactions_categories">
+                    <SelectInput optionText="name" />
+                </ReferenceInput>
+                <MoneyInput source="amount" />
+                <BooleanInput source="has_products" />
+                <FormDataConsumer>
+                    {({ formData, ...rest }) => formData.has_products &&
+                        <MultiProductCountInput source="products" {...rest}>
+                            <MultiProductCountItem />
+                        </MultiProductCountInput>
+                    }
+                </FormDataConsumer>
+            </SimpleForm>
+        </Create>
+    </>;
 };
 
 export default {

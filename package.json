@@ -37,6 +37,7 @@
     "react-admin": "^3.17.0",
     "react-router-dom": "^5.2.0",
     "recharts": "^2.1.1",
+    "sass-reset": "^1.0.3",
     "underscore": "^1.13.1"
   },
   "resolutions": {
@@ -44,7 +45,7 @@
   },
   "name": "seb",
   "description": "Management of stocks, member, accounting, sales, ...",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "webpack.mix.js",
   "directories": {
     "test": "tests"

@@ -85,7 +85,7 @@ class PermissionsController extends Controller
                     if ($k == 'q') {
                         $k = 'name';
                     }
-                    $data = $data->values()->filter(function($item) use ($k, $v) {
+                    $data = $data->values()->filter(function ($item) use ($k, $v) {
                         return stristr($item[$k], $v) !== false;
                     });
                 }

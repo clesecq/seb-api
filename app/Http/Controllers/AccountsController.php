@@ -19,14 +19,14 @@ class AccountsController extends Controller
         } else {
             $data = Account::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
-                foreach($request->filter as $k => $v) {
+                foreach ($request->filter as $k => $v) {
                     $data = $data->where($k, 'like', '%' . $v . '%');
                 }
             }
             if (!is_null($request->per_page))
                 $data = $data->paginate((int) $request->per_page);
             else
-                $data = $data->get();
+                $data = ["data" => $data->get(), "total" => $data->count()];
             return $data;
         }
     }
@@ -94,7 +94,8 @@ class AccountsController extends Controller
     /**
      * Destroy many of the specified resource
      */
-    public function destroyMany(Request $request) {
+    public function destroyMany(Request $request)
+    {
         if (is_array($request->ids)) {
             Account::whereIn('id', $request->ids)->delete();
             return response(["data" => $request->ids], 200);
@@ -106,7 +107,8 @@ class AccountsController extends Controller
     /**
      * Update many of the specified resource
      */
-    public function updateMany(Request $request) {
+    public function updateMany(Request $request)
+    {
         $data = $request->validate([
             'name' => ['sometimes', 'required', 'string'],
             'iban' => ['sometimes', 'required', 'string', 'nullable'],
@@ -124,7 +126,8 @@ class AccountsController extends Controller
     /**
      * Recalculates the amount stored in the accounts
      */
-    public function reload(Request $request) {
+    public function reload(Request $request)
+    {
         Account::recalculateAll();
     }
 }

@@ -1,8 +1,8 @@
 import * as React from "react";
-import { ArrayField, Datagrid, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { ArrayField, Create, Datagrid, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
 import DateField from '../components/DateField';
 import { ShowDialog } from '../components/DialogForm';
-import CountProducts from "../pages/CountProducts";
+import { MultiProductCountInput, MultiProductCountItem } from "../components/MultiProductCountInput";
 
 const TransactionsFilters = [
     <TextInput source="name" />,
@@ -49,6 +49,18 @@ const ProductsCounts = (props) => (
         </ShowDialog>
     </>
 );
+
+const CountProducts = (props) => {
+    return <>
+        <Create {...props}>
+            <SimpleForm>
+                <MultiProductCountInput countZero source="data">
+                    <MultiProductCountItem />
+                </MultiProductCountInput>
+            </SimpleForm>
+        </Create>
+    </>;
+};
 
 export default {
     list: ProductsCounts,

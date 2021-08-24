@@ -33,6 +33,21 @@ class DataProvider {
         }).catch(this.__handleError);
     }
 
+    getAll(resource, params) {
+        let filter = "";
+        for(let key in params.filter) {
+            if (params.filter[key] === true) params.filter[key] = 1;
+            if (params.filter[key] === false) params.filter[key] = 0;
+
+            filter += "?filter[" + encodeURIComponent(key) + "]=" + encodeURIComponent(params.filter[key]);
+        }
+
+        return axios.get('/api/' + resource +
+                         filter).then(response => {
+            return response.data;
+        }).catch(this.__handleError);
+    }
+
     getOne(resource, {id}) {
         return axios.get('/api/' + resource + '/' + id).then(response => {
             return response.data;

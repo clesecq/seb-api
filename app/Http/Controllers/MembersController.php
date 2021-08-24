@@ -34,7 +34,7 @@ class MembersController extends Controller
             if (!is_null($request->per_page))
                 $data = $data->paginate((int) $request->per_page);
             else
-                $data = $data->get();
+                $data = ["data" => $data->get(), "total" => $data->count()];
             return $data;
         }
     }
@@ -155,7 +155,8 @@ class MembersController extends Controller
     /**
      * Archive all the members.
      */
-    public function archive(Request $request) {
+    public function archive(Request $request)
+    {
         Member::archive();
     }
 }

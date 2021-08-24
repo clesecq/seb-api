@@ -30,7 +30,7 @@ class AccountCountsController extends Controller
             if (!is_null($request->per_page))
                 $data = $data->paginate((int) $request->per_page);
             else
-                $data = $data->get();
+                $data = ["data" => $data->get(), "total" => $data->count()];
             return $data;
         }
     }
@@ -52,7 +52,7 @@ class AccountCountsController extends Controller
         $account = Account::findOrFail($data["account_id"]);
         $amount = 0;
 
-        if ($data["type"] == 'cash')  {
+        if ($data["type"] == 'cash') {
             $cash_rule = ['required', 'sometimes', 'numeric', 'integer', 'min:0'];
             $cash = $request->validate([
                 'data.500' => $cash_rule,
@@ -72,7 +72,7 @@ class AccountCountsController extends Controller
                 'data.0\\.01' => $cash_rule
             ]);
 
-            foreach($cash["data"] as $value => $count) {
+            foreach ($cash["data"] as $value => $count) {
                 $amount += doubleval($value) * $count;
             }
 

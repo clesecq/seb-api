@@ -19,7 +19,7 @@ class ProductsController extends Controller
         } else {
             $data = Product::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
-                foreach($request->filter as $k => $v) {
+                foreach ($request->filter as $k => $v) {
                     if ($k == "alerts") {
                         if ($v) {
                             $data = $data->whereColumn('count', '<', 'alert_level');
@@ -34,7 +34,7 @@ class ProductsController extends Controller
             if (!is_null($request->per_page))
                 $data = $data->paginate((int) $request->per_page);
             else
-                $data = $data->get();
+                $data = ["data" => $data->get(), "total" => $data->count()];
             return $data;
         }
     }
@@ -104,7 +104,8 @@ class ProductsController extends Controller
     /**
      * Destroy many of the specified resource
      */
-    public function destroyMany(Request $request) {
+    public function destroyMany(Request $request)
+    {
         if (is_array($request->ids)) {
             Product::whereIn('id', $request->ids)->delete();
             return response(["data" => $request->ids], 200);
@@ -116,7 +117,8 @@ class ProductsController extends Controller
     /**
      * Update many of the specified resource
      */
-    public function updateMany(Request $request) {
+    public function updateMany(Request $request)
+    {
         $data = $request->validate([
             'name' => ['sometimes', 'required', 'string'],
             'price' => ['sometimes', 'required', 'numeric'],
@@ -135,7 +137,8 @@ class ProductsController extends Controller
     /**
      * Recalculates the amount stored in the products
      */
-    public function reload(Request $request) {
+    public function reload(Request $request)
+    {
         Product::recalculateAll();
     }
 }

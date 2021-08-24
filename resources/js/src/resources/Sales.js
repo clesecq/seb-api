@@ -1,9 +1,9 @@
 import React from "react";
-import { ArrayField, Datagrid, List, ReferenceField, ShowButton, SimpleShowLayout, TextField } from 'react-admin';
+import { ArrayField, Create, Datagrid, List, ReferenceField, ShowButton, SimpleForm, SimpleShowLayout, TextField } from 'react-admin';
 import DateField from '../components/DateField';
 import { ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
-import Sell from "../pages/Sell";
+import { MultiProductCountInput, MultiProductCountItem } from "../components/MultiProductCountInput";
 
 const Sales = (props) => {
     return (
@@ -44,6 +44,18 @@ const Sales = (props) => {
             </ShowDialog>
         </>
     );
+};
+
+const Sell = props => {
+    return <>
+        <Create {...props}>
+            <SimpleForm>
+                <MultiProductCountInput source="products" total>
+                    <MultiProductCountItem price />
+                </MultiProductCountInput>
+            </SimpleForm>
+        </Create>
+    </>
 };
 
 export default {

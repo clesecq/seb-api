@@ -30,7 +30,7 @@ class ProductCountsController extends Controller
             if (!is_null($request->per_page))
                 $data = $data->paginate((int) $request->per_page);
             else
-                $data = $data->get();
+                $data = ["data" => $data->get(), "total" => $data->count()];
             return $data;
         }
     }
@@ -57,7 +57,7 @@ class ProductCountsController extends Controller
             'rectification' => true
         ]);
 
-        foreach($products_data["data"] as $product) {
+        foreach ($products_data["data"] as $product) {
             $p = Product::findOrFail($product["id"]);
             $p->recalculate();
 
