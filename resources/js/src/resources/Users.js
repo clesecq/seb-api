@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AutocompleteArrayInput, BooleanInput, ChipField, Datagrid, EditButton, List, PasswordInput, ReferenceArrayField, ReferenceArrayInput, SimpleForm, SingleFieldList, TextField, TextInput } from 'react-admin';
+import { AutocompleteArrayInput, BooleanInput, ChipField, Datagrid, EditButton, List, ReferenceArrayField, ReferenceArrayInput, SimpleForm, SingleFieldList, TextField, TextInput } from 'react-admin';
 import DateField from '../components/DateField';
 import DateInput from '../components/DateInput';
 import { CreateDialog, EditDialog } from '../components/DialogForm';
@@ -34,7 +34,6 @@ const Users = (props) => (
         <CreateDialog {...props}>
             <SimpleForm redirect="list">
                 <TextInput  source="username" />
-                <PasswordInput  source="password" />
                 <TextInput  source="firstname" />
                 <TextInput  source="lastname" />
                 <TextInput  source="email" />
@@ -46,7 +45,6 @@ const Users = (props) => (
         <EditDialog {...props}>
             <SimpleForm redirect="list">
                 <TextInput source="username" />
-                <PasswordInput source="password" />
                 <TextInput source="firstname" />
                 <TextInput source="lastname" />
                 <TextInput source="email" />
