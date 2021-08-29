@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Notifications\UserCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class UsersController extends Controller
 {
@@ -46,14 +48,17 @@ class UsersController extends Controller
             'firstname' => ['required', 'string'],
             'lastname' => ['required', 'string'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'string'],
             'permissions' => ['required', 'array'],
             'permissions.*' => ['string', "distinct"]
         ]);
+        $data['password'] = "";
+        $user = User::create($data);
 
-        $data['password'] = Hash::make($data['password']);
+        $token = Password::broker(config('fortify.passwords'))->createToken($user);
 
-        return ['data' => User::create($data)];
+        $user->notify(new UserCreated($user, $token));
+
+        return ['data' => $user];
     }
 
     /**
@@ -87,7 +92,6 @@ class UsersController extends Controller
             'firstname' => ['sometimes', 'required', 'string'],
             'lastname' => ['sometimes', 'required', 'string'],
             'email' => ['sometimes', 'required', 'email', 'unique:users,email'],
-            'password' => ['sometimes', 'required', 'string'],
             'permissions' => ['required', 'array'],
             'permissions.*' => ['string', "distinct"]
         ]);
@@ -146,7 +150,6 @@ class UsersController extends Controller
         $data = $request->validate([
             'name' => ['sometimes', 'required', 'string'],
             'email' => ['sometimes', 'required', 'email', 'unique:users,email'],
-            'password' => ['sometimes', 'required', 'string'],
             'permissions' => ['required', 'array'],
             'permissions.*' => ['string', 'exists:permissions,id', "distinct"]
         ]);
