@@ -45,7 +45,7 @@
   },
   "name": "seb",
   "description": "Management of stocks, member, accounting, sales, ...",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "main": "webpack.mix.js",
   "directories": {
     "test": "tests"

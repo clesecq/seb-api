@@ -44,7 +44,22 @@ const ForgotPassword = (props) => {
                 notify(response.data.message)
             }).catch(error => {
                 setLoading(false);
-                notify(error?.response?.data?.message);
+
+                if (error?.response?.data?.message) {
+                    let message = "";
+                    if (error?.response?.data?.errors !== undefined) {
+                        for (let ms in error.response.data.errors) {
+                            for (let m of error.response.data.errors[ms]) {
+                                message += m + "\n";
+                            }
+                        }
+                    } else {
+                        message = error?.response?.data?.message;
+                    }
+                    notify(message, "warning");
+                } else {
+                    notify(error?.message, "warning");
+                }
             });
         });
     };

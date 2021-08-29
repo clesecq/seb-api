@@ -10,12 +10,14 @@ import TokenClear from "./forms/TokenClear";
 import TokenNew from './forms/TokenNew';
 import TwoFactorDisable from "./forms/TwoFactorDisable";
 import TwoFactorEnable from './forms/TwoFactorEnable';
+import ActivateAccount from './forms/ActivateAccount';
 
 export const customRoutes = [
     <Route exact path="/profile" component={Profile} />,
     <RouteWithoutLayout exact path="/change-password" component={ChangePassword} />,
     <RouteWithoutLayout exact path="/forgot-password" component={ForgotPassword} />,
     <RouteWithoutLayout exact path="/reset-password/:token" component={ResetPassword} />,
+    <RouteWithoutLayout exact path="/enable-account/:token" component={ActivateAccount} />,
     <RouteWithoutLayout exact path="/two-factor/enable" component={TwoFactorEnable} />,
     <RouteWithoutLayout exact path="/two-factor/disable" component={TwoFactorDisable} />,
     <RouteWithoutLayout exact path="/tokens/create" component={TokenNew}/>,

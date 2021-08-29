@@ -57,8 +57,23 @@ const TokenClear = (props) => {
             setLoading(false);
             redirect("/profile");
         }).catch(error => {
-            console.log(error);
-            notify(error?.response?.data?.message);
+            setLoading(false);
+            
+            if (error?.response?.data?.message) {
+                let message = "";
+                if (error?.response?.data?.errors !== undefined) {
+                    for (let ms in error.response.data.errors) {
+                        for (let m of error.response.data.errors[ms]) {
+                            message += m + "\n";
+                        }
+                    }
+                } else {
+                    message = error?.response?.data?.message;
+                }
+                notify(message, "warning");
+            } else {
+                notify(error?.message, "warning");
+            }
         });
     };
 

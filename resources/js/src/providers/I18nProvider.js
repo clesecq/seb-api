@@ -11,6 +11,7 @@ const messages = {
                 back: "Retour",
                 cancel: "Annuler",
                 reset_password: "Réinitaliser le mot de passe",
+                set_password: "Définir le mot de passe",
                 password_confirmation: "Confirmation",
                 new_password: "Nouveau mot de passe",
                 current_password: "Mot de passe actuel",
@@ -88,6 +89,7 @@ const messages = {
                 accounting: "Comptabilité",
                 accounts: "Comptes",
                 accounts_counts: "Comptages de comptes",
+                automated_transactions: "Transactions Automatiques",
                 transactions: "Transactions",
                 transferts: "Virements",
                 sales: "Ventes",
@@ -222,6 +224,28 @@ const messages = {
                     user_id: 'Créateur',
                     created_at: 'Créé le',
                     updated_at: 'Modifié le',
+                }
+            },
+            automated_transactions: {
+                name: 'Transaction Automatique |||| Transactions Automatiques',
+                fields: {
+                    id: '#',
+                    name: 'Nom',
+                    amount: 'Montant',
+                    rectification: 'Réctification',
+                    account_id: 'Compte',
+                    category_id: 'Catégorie',
+                    user_id: 'Créateur',
+                    created_at: 'Créé le',
+                    updated_at: 'Modifié le',
+                    frequency: 'Fréquence',
+                    day: 'Jour'
+                },
+                frequencies: {
+                    yearly: 'Annuelle',
+                    monthly: 'Mensuelle',
+                    weekly: 'Hébdomadaire',
+                    dayly: 'Journalière'
                 }
             },
             transferts: {

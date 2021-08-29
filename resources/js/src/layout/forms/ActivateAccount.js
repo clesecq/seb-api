@@ -1,17 +1,15 @@
 import { Button, CardActions, CircularProgress, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useNotify, useRedirect, useSafeSetState, useTranslate } from 'ra-core';
+import { useNotify, useSafeSetState, useTranslate } from 'ra-core';
 import React from 'react';
-import { useAuthenticated } from 'react-admin';
-import { Form } from 'react-final-form';
-import BaseForm from './Form';
+import { Login, useRedirect } from 'react-admin';
+import { Field, Form } from 'react-final-form';
+import { useLocation, useParams } from 'react-router-dom';
 
 const useStyles = makeStyles(
     (theme) => ({
         form: {
             padding: '0 1em 1em 1em',
-            textAlign: 'center',
-            width: '420px'
         },
         input: {
             marginTop: '1em',
@@ -26,39 +24,38 @@ const useStyles = makeStyles(
     { name: 'RaLoginForm' }
 );
 
-const Input = ({
-    meta: { touched, error }, // eslint-disable-line react/prop-types
-    input: inputProps, // eslint-disable-line react/prop-types
-    ...props
-}) => (
-    <TextField
-        error={!!(touched && error)}
-        helperText={touched && error}
-        {...inputProps}
-        {...props}
-        fullWidth
-    />
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
+
+const Input = ({ meta: { touched, error }, input: inputProps, ...props }) => (
+    <TextField error={!!(touched && error)} helperText={touched && error} {...inputProps} {...props} fullWidth />
 );
 
-const TwoFactorDisable = (props) => {
-    useAuthenticated();
+const ActivateAccount = (props) => {
     const [loading, setLoading] = useSafeSetState(false);
-    const [step, setStep] = useSafeSetState(0);
-    const [qrcode, setQrcode] = useSafeSetState("");
     const translate = useTranslate();
     const notify = useNotify();
     const redirect = useRedirect();
     const classes = useStyles(props);
+    let query = useQuery();
+    let { token } = useParams();
+    let email = query.get("email");
 
-    const submit = (values) => {
+    const submit = ({ password, password_confirmation }) => {
         setLoading(true);
-        return axios.delete('/user/two-factor-authentication').then(response => {
-            notify("ra.auth.2fa.disabled");
+        return axios.post('/reset-password', {
+            'token': token,
+            'email': email,
+            'password': password,
+            'password_confirmation': password_confirmation
+        }).then(response => {
             setLoading(false);
-            redirect("/profile");
+            notify(response.data.message)
+            redirect("/login");
         }).catch(error => {
             setLoading(false);
-            
+
             if (error?.response?.data?.message) {
                 let message = "";
                 if (error?.response?.data?.errors !== undefined) {
@@ -78,27 +75,29 @@ const TwoFactorDisable = (props) => {
     };
 
     return (
-        <BaseForm>
+        <Login>
             <Form onSubmit={submit} render={({ handleSubmit }) => (
                 <form onSubmit={handleSubmit} noValidate>
                     <div className={classes.form}>
-                        {translate('ra.auth.2fa.askdisable')}
+                        <div className={classes.input}>
+                            <Field id="password" name="password" component={Input} label={translate('ra.auth.password')} type="password" disabled={loading} />
+                        </div>
+                        <div className={classes.input}>
+                            <Field id="password_confirmation" name="password_confirmation" component={Input} label={translate('ra.auth.password_confirmation')} type="password" disabled={loading} />
+                        </div>
                     </div>
                     <CardActions>
                         <Button variant="contained" type="submit" color="secondary" disabled={loading} className={classes.button} >
                             {loading && (
                                 <CircularProgress className={classes.icon} size={18} thickness={2} />
                             )}
-                            {translate('ra.auth.2fa.disable')}
-                        </Button>
-                        <Button variant="contained" onClick={() => { redirect('/profile') }} color="secondary" disabled={loading} className={classes.button} >
-                            {translate('ra.auth.cancel')}
+                            {translate('ra.auth.set_password')}
                         </Button>
                     </CardActions>
                 </form>
             )} />
-        </BaseForm>
+        </Login>
     );
 };
 
-export default TwoFactorDisable;
+export default ActivateAccount;

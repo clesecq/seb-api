@@ -13,6 +13,7 @@ import I18nProvider from "./providers/I18nProvider";
 import accounts from "./resources/Accounts";
 import accountscounts from './resources/AccountsCounts';
 import archived_members from "./resources/ArchivedMembers";
+import automated_transactions from "./resources/AutomatedTransactions";
 import members from './resources/Members';
 import movements from "./resources/Movements";
 import products from './resources/Products';
@@ -48,6 +49,7 @@ export default class App extends Component {
                 <Resource name="purchases" {...purchases} />
                 <Resource name="transferts" {...transferts} />
                 <Resource name="archived_members" {...archived_members} />
+                <Resource name="automated_transactions" {...automated_transactions} />
             </Admin>
         );
     }

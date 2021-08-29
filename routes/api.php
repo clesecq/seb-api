@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProductCategoriesController;
 use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\ArchivedMembersController;
+use App\Http\Controllers\AutomatedTransactionsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\TransactionCategoriesController;
@@ -61,6 +62,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::res("accounts", AccountsController::class, ['reload']);
     Route::res("accounts_counts", AccountCountsController::class, ['final']);
     Route::res("transactions_categories", TransactionCategoriesController::class);
+    Route::res("automated_transactions", AutomatedTransactionsController::class);
     Route::res("transactions", TransactionsController::class, ['final']);
     Route::res("transferts", TransfertsController::class, ['final']);
     Route::res("sales", SalesController::class, ['final']);
