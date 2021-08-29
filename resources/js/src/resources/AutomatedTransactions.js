@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BooleanField, BooleanInput, Datagrid, DateInput, DeleteButton, EditButton, List, NumberField, NumberInput, ReferenceField, ReferenceInput, SelectField, SelectInput, SimpleForm, SimpleShowLayout, TextField, TextInput, useTranslate } from 'react-admin';
+import { BooleanField, BooleanInput, Datagrid, DateInput, EditButton, List, NumberField, NumberInput, ReferenceField, ReferenceInput, SelectField, SelectInput, SimpleForm, SimpleShowLayout, TextField, TextInput, useTranslate } from 'react-admin';
 import DateField from '../components/DateField';
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
@@ -44,7 +44,6 @@ const AutomatedTransactions = (props) => {
                     <NumberField source="day" />
                     <DateField source="created_at" />
                     <EditButton />
-                    <DeleteButton />
                 </Datagrid>
             </List>
             <CreateDialog {...props}>
