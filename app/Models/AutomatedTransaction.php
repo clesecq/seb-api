@@ -21,7 +21,7 @@ class AutomatedTransaction extends Model
         'user_id',
         'account_id',
         'category_id',
-        'frenquency',
+        'frequency',
         'day'
     ];
 }

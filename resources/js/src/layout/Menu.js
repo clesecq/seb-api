@@ -8,6 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AutorenewIcon from '@material-ui/icons/Autorenew';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import CategoryIcon from '@material-ui/icons/Category';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -113,6 +114,7 @@ const Menu = ({ onMenuClick, logout }) => {
                 <Item to="/accounts" permissions="accounts.show" primaryText={translate('menu.left.accounts')} leftIcon={<AccountBalanceIcon />} />
                 <Item to="/accounts_counts" permissions="accounts_counts.show" primaryText={translate('menu.left.accounts_counts')} leftIcon={<MoneyIcon />} />
                 <Item to="/transactions" permissions="transactions.show" primaryText={translate('menu.left.transactions')} leftIcon={<SwapHorizIcon />} />
+                <Item to="/automated_transactions" permissions="automated_transactions.show" primaryText={translate('menu.left.automated_transactions')} leftIcon={<AutorenewIcon />} />
                 <Item to="/transactions_categories" permissions="transactions_categories.show" primaryText={translate('menu.left.categories')} leftIcon={<CategoryIcon />} />
                 <Item to="/sales" permissions="sales.show" primaryText={translate('menu.left.sales')} leftIcon={<LocalOfferIcon />} />
                 <Item to="/purchases" permissions="purchases.show" primaryText={translate('menu.left.purchases')} leftIcon={<ShoppingCartIcon />} />
