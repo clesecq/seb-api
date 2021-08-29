@@ -75,20 +75,21 @@ const MyLoginPage = (props) => {
                 }
             }).catch(error => {
                 setLoading(false);
+
                 if (error?.response?.data?.message) {
                     let message = "";
                     if (error?.response?.data?.errors !== undefined) {
-                        for(let ms in error.response.data.errors) {
-                            for(let m of error.response.data.errors[ms]) {
+                        for (let ms in error.response.data.errors) {
+                            for (let m of error.response.data.errors[ms]) {
                                 message += m + "\n";
                             }
                         }
                     } else {
                         message = error?.response?.data?.message;
                     }
-                    notify(message, 'warning');
+                    notify(message, "warning");
                 } else {
-                    notify('Error', 'warning');
+                    notify(error?.message, "warning");
                 }
             });
         } else {

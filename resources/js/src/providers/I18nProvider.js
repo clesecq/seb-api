@@ -11,6 +11,7 @@ const messages = {
                 back: "Retour",
                 cancel: "Annuler",
                 reset_password: "Réinitaliser le mot de passe",
+                set_password: "Définir le mot de passe",
                 password_confirmation: "Confirmation",
                 new_password: "Nouveau mot de passe",
                 current_password: "Mot de passe actuel",
