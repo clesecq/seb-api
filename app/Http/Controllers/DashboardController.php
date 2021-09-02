@@ -65,7 +65,7 @@ class DashboardController extends Controller
 
         foreach (Account::all() as $account) {
             $transactions_start = doubleval(Transaction::where('created_at', '<', DB::raw('CURRENT_DATE() - INTERVAL 1 YEAR'))->where('account_id', $account->id)->sum('amount'));
-            $transactions_data = DB::table('transactions')->select(DB::raw('DATE(created_at) as date, sum(amount) as amount'))->where('created_at', '>=', DB::raw('CURRENT_DATE() - INTERVAL 1 YEAR'))->where('account_id', $account->id)->groupBy('created_at')->orderBy('created_at')->get();
+            $transactions_data = DB::table('transactions')->select(DB::raw('DATE(created_at) as date, sum(amount) as amount'))->where('created_at', '>=', DB::raw('CURRENT_DATE() - INTERVAL 1 YEAR'))->where('account_id', $account->id)->groupBy('date')->get();
             $account_last_values[$account->id] = $transactions_start;
             foreach ($transactions_data as $transaction) {
                 if (!array_key_exists($transaction->date, $temp_data)) {
@@ -77,6 +77,7 @@ class DashboardController extends Controller
             $accounts[$account->id] = $account->name;
         }
 
+        ksort($temp_data);
         $collection = collect($temp_data);
 
         $date_field = Str::random(40);
@@ -100,10 +101,10 @@ class DashboardController extends Controller
             $item['total'] = $sum;
 
             return $item;
-        })->values()->toArray();
+        })->values();
 
         $data['transactions'] = [
-            'data' => $the_data,
+            'data' => $the_data->toArray(),
             'date_field' => $date_field,
             'accounts' => $accounts
         ];
