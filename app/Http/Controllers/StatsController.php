@@ -6,6 +6,7 @@ use App\Models\Member;
 use App\Models\Movement;
 use App\Models\Product;
 use App\Models\ProductMovement;
+use App\Models\Sale;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,9 +14,11 @@ use Illuminate\Support\Facades\DB;
 class StatsController extends Controller
 {
     private function _most_sold_product()
-    {
+    {        
+        $sales_movement_id = Sale::all()->pluck('movement_id')->toArray();
+
         $most_sold = 'N/A';
-        $most_sold_id = DB::table('product_movement')->groupBy('product_id')->select('product_id')->orderByRaw('sum(count)')->first();
+        $most_sold_id = DB::table('product_movement')->whereIn('movement_id', $sales_movement_id)->groupBy('product_id')->select('product_id')->orderByRaw('sum(count)')->first();
         if ($most_sold_id !== null) {
             $most_sold = Product::findOrFail($most_sold_id->product_id)->name;
         }
@@ -61,7 +64,7 @@ class StatsController extends Controller
         $sale = DB::table('transactions')->whereIn('id', $transactions)->orderBy('amount', 'desc')->first();
         if ($sale == null)
             return 0;
-        return $sale->amount;
+        return doubleval($sale->amount);
     }
 
     private function _latest_restock()

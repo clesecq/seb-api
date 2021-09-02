@@ -6,6 +6,7 @@ use App\Models\Account;
 use App\Models\Config;
 use App\Models\Movement;
 use App\Models\Product;
+use App\Models\Sale;
 use App\Models\Transaction;
 use App\Models\TransactionCategory;
 use DateTimeImmutable;
@@ -42,11 +43,13 @@ class DashboardController extends Controller
 
         // Product sales
         $data['products'] = [];
+        
+        $sales_movement_id = Sale::all()->pluck('movement_id')->toArray();
 
         foreach(Product::all() as $product) {
             $data['products'][] = [
                 'name' => $product->name,
-                'value' => -doubleval(Movement::where('created_at', '>', DB::raw('CURRENT_DATE() - INTERVAL 1 YEAR'))->join('product_movement', 'movements.id', '=', 'product_movement.movement_id')->where('product_id', $product->id)->where('count', '<', '0')->sum('count'))
+                'value' => -doubleval(Movement::where('created_at', '>', DB::raw('CURRENT_DATE() - INTERVAL 1 YEAR'))->whereIn('id', $sales_movement_id)->join('product_movement', 'movements.id', '=', 'product_movement.movement_id')->where('product_id', $product->id)->where('count', '<', '0')->sum('count'))
             ];
         }
 
