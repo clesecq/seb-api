@@ -103,7 +103,7 @@ const MultiProductCountItem = ({ product, filterCategory, filterName, countZero,
 };
 
 
-const MultiProductCountInput = ({ total, children, countZero, ...props }) => {
+const MultiProductCountInput = ({ total, children, countZero, onlysalable, ...props }) => {
     const { data: products_data, loading: products_loading, error: products_error } = useQuery({
         type: 'getAll',
         resource: 'products',
@@ -200,7 +200,8 @@ const MultiProductCountInput = ({ total, children, countZero, ...props }) => {
                 </Grid>
                 <Grid container item xs={12} spacing={2} style={{ height: 'calc(100vh - 368px)', overflowY: 'scroll', width: 'auto', margin: '0' }}>
                     {products_data.map((val, key) => {
-                        return React.cloneElement(React.Children.only(children), { key: key, product: val, refresh: refresh, filterCategory: filterCategory, filterName: filterName, updatePrice: updatePrice, countZero: countZero });
+                        if (!onlysalable || onlysalable && val.salable)
+                            return React.cloneElement(React.Children.only(children), { key: key, product: val, refresh: refresh, filterCategory: filterCategory, filterName: filterName, updatePrice: updatePrice, countZero: countZero });
                     })}
                 </Grid>
                 {total ? (

@@ -56,7 +56,7 @@ const Sell = props => {
             refresh();
         }}>
             <SimpleForm>
-                <MultiProductCountInput source="products" total>
+                <MultiProductCountInput source="products" total onlysalable>
                     <MultiProductCountItem price showcount />
                 </MultiProductCountInput>
             </SimpleForm>
