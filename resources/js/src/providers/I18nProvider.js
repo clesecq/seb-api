@@ -144,8 +144,11 @@ const messages = {
                     count: 'Nombre',
                     alert_level: 'Niveau d\'alerte',
                     created_at: 'Créé le',
-                    updated_at: 'Modifié le'
-                }
+                    updated_at: 'Modifié le',
+                    salable: 'Vendable'
+                },
+                mark_salabe: 'Marquer comme Vendable',
+                mark_unsalable: 'Marquer comme Invendable'
             },
             products_categories: {
                 name: 'Catégorie de Produits |||| Catégories de Produits',
