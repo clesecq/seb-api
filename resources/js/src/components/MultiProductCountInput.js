@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const MultiProductCountItem = ({ product, filterCategory, filterName, countZero, updatePrice, price, ...props }) => {
+const MultiProductCountItem = ({ product, filterCategory, filterName, countZero, updatePrice, price, showcount, ...props }) => {
     const classes = useStyles();
     const [count, setCount] = useState(countZero ? "" : 0);
 
@@ -52,7 +52,13 @@ const MultiProductCountItem = ({ product, filterCategory, filterName, countZero,
             <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
                 <Paper className={classes.paper}>
                     <Typography variant="h6" gutterBottom>{product.name}</Typography>
-                    {price ? <Typography gutterBottom>{Number(product.price).toLocaleString('fr-FR', { currency: 'EUR', currencyDisplay: 'symbol', style: 'currency' })}</Typography> : ''}
+                    {price || showcount ?
+                        <Typography gutterBottom>
+                            {Number(product.price).toLocaleString('fr-FR', { currency: 'EUR', currencyDisplay: 'symbol', style: 'currency' })}
+                            {price && showcount ? " | " : ''}
+                            {Number(product.count).toLocaleString('fr-FR', { style: 'decimal' })}
+                        </Typography>
+                    : ''}
                     <Grid container style={{ justifyContent: "center" }}>
                         <Grid item className={classes.rows}>
                             <IconButton aria-label="sub" onClick={(e) => { addCount(e.shiftKey ? -10 : -1) }}>
