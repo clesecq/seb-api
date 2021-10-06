@@ -24,24 +24,24 @@ const renderCustomizedLabel = (props) => {
     );
 };
 
-const BestProductsBarPanel = ({ data }) => {
+const BestSellersBarPanel = ({ data }) => {
     const translate = useTranslate();
-    let products = [];
+    let sellers = [];
 
-    if ('products' in data)
-        products = _.orderBy(data.products, 'value', 'desc');
+    if ('sellers' in data)
+        sellers = _.orderBy(data.sellers, 'value', 'desc');
 
-    return ('products' in data ? (
+    return ('sellers' in data ? (
         <>
             <Grid item xs={12}>
-                <CardHeader title={translate('dashboard.products.title')} />
-                <ResponsiveContainer width="100%" height={products.length * 20 + 40}>
-                    <BarChart width={100} height={800} data={products} layout="vertical">
+                <CardHeader title={translate('dashboard.sellers.title')} />
+                <ResponsiveContainer width="100%" height={sellers.length * 20 + 40}>
+                    <BarChart width={100} height={800} data={sellers} layout="vertical">
                         <XAxis type="number" />
                         <YAxis type="category" dataKey="name" tick={false} />
                         <Tooltip itemStyle={{ color: 'white !important' }} />
                         <Bar dataKey="value" barSize={{ height: 26 }} label={(d) => (d.name)} barSize={16}>
-                            {products.map((entry, index) => (
+                            {sellers.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={ColorProvider.randomSColor()} />
                             ))}
                             <LabelList dataKey="name" content={renderCustomizedLabel} position="insideRight" style={{ fill: "white" }}/>
@@ -53,11 +53,11 @@ const BestProductsBarPanel = ({ data }) => {
     ) : '');
 };
 
-const ProductsStatistics = (props) => {
+const SellersStatistics = (props) => {
     const { data, loading, error } = useQuery({
         type: 'getOne',
         resource: 'dashboard',
-        payload: { id: 'products' }
+        payload: { id: 'sellers' }
     });
 
     if (loading) return <Loading />;
@@ -66,9 +66,9 @@ const ProductsStatistics = (props) => {
 
     return (
         <Grid container>
-            <BestProductsBarPanel data={data} />
+            <BestSellersBarPanel data={data} />
         </Grid>
     );
 }
 
-export default ProductsStatistics;
+export default SellersStatistics;

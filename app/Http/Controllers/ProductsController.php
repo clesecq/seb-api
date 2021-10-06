@@ -51,7 +51,8 @@ class ProductsController extends Controller
             'name' => ['required', 'string'],
             'price' => ['required', 'numeric'],
             'alert_level' => ['required', 'numeric', 'integer', 'min:0'],
-            'category_id' => ['required', 'exists:product_categories,id']
+            'category_id' => ['required', 'exists:product_categories,id'],
+            'salable' => ['required', 'boolean']
         ]);
 
         return ['data' => Product::create($data)];
@@ -81,7 +82,8 @@ class ProductsController extends Controller
             'name' => ['sometimes', 'required', 'string'],
             'price' => ['sometimes', 'required', 'numeric'],
             'alert_level' => ['sometimes', 'required', 'numeric', 'integer'],
-            'category_id' => ['sometimes', 'required', 'exists:product_categories,id']
+            'category_id' => ['sometimes', 'required', 'exists:product_categories,id'],
+            'salable' => ['sometimes', 'required', 'boolean']
         ]);
 
         Product::findOrFail($id)->update($data);
@@ -123,7 +125,8 @@ class ProductsController extends Controller
             'name' => ['sometimes', 'required', 'string'],
             'price' => ['sometimes', 'required', 'numeric'],
             'alert_level' => ['sometimes', 'required', 'numeric', 'integer'],
-            'category_id' => ['sometimes', 'required', 'exists:product_categories,id']
+            'category_id' => ['sometimes', 'required', 'exists:product_categories,id'],
+            'salable' => ['sometimes', 'required', 'boolean']
         ]);
 
         if (is_array($request->ids)) {

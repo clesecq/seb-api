@@ -1,19 +1,12 @@
 import * as React from "react";
-import { ArrayField, Create, Datagrid, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { ArrayField, Create, Datagrid, List, ReferenceField, ShowButton, SimpleForm, SimpleShowLayout, TextField } from 'react-admin';
 import DateField from '../components/DateField';
 import { ShowDialog } from '../components/DialogForm';
 import { MultiProductCountInput, MultiProductCountItem } from "../components/MultiProductCountInput";
 
-const TransactionsFilters = [
-    <TextInput source="name" />,
-    <ReferenceInput source="user_id" reference="users">
-        <SelectInput optionText="username" />
-    </ReferenceInput>
-];
-
 const ProductsCounts = (props) => (
     <>
-        <List {...props} filters={TransactionsFilters} bulkActionButtons={false}>
+        <List {...props} bulkActionButtons={false}>
             <Datagrid>
                 <TextField source="id" />
                 <ReferenceField source="movement_id" reference="movements" link="show">

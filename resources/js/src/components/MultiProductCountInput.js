@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const MultiProductCountItem = ({ product, filterCategory, filterName, countZero, updatePrice, price, ...props }) => {
+const MultiProductCountItem = ({ product, filterCategory, filterName, countZero, updatePrice, price, showcount, ...props }) => {
     const classes = useStyles();
     const [count, setCount] = useState(countZero ? "" : 0);
 
@@ -52,7 +52,13 @@ const MultiProductCountItem = ({ product, filterCategory, filterName, countZero,
             <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
                 <Paper className={classes.paper}>
                     <Typography variant="h6" gutterBottom>{product.name}</Typography>
-                    {price ? <Typography gutterBottom>{Number(product.price).toLocaleString('fr-FR', { currency: 'EUR', currencyDisplay: 'symbol', style: 'currency' })}</Typography> : ''}
+                    {price || showcount ?
+                        <Typography gutterBottom>
+                            {Number(product.price).toLocaleString('fr-FR', { currency: 'EUR', currencyDisplay: 'symbol', style: 'currency' })}
+                            {price && showcount ? " | " : ''}
+                            {Number(product.count).toLocaleString('fr-FR', { style: 'decimal' })}
+                        </Typography>
+                    : ''}
                     <Grid container style={{ justifyContent: "center" }}>
                         <Grid item className={classes.rows}>
                             <IconButton aria-label="sub" onClick={(e) => { addCount(e.shiftKey ? -10 : -1) }}>
@@ -97,7 +103,7 @@ const MultiProductCountItem = ({ product, filterCategory, filterName, countZero,
 };
 
 
-const MultiProductCountInput = ({ total, children, countZero, ...props }) => {
+const MultiProductCountInput = ({ total, children, countZero, onlysalable, ...props }) => {
     const { data: products_data, loading: products_loading, error: products_error } = useQuery({
         type: 'getAll',
         resource: 'products',
@@ -194,7 +200,8 @@ const MultiProductCountInput = ({ total, children, countZero, ...props }) => {
                 </Grid>
                 <Grid container item xs={12} spacing={2} style={{ height: 'calc(100vh - 368px)', overflowY: 'scroll', width: 'auto', margin: '0' }}>
                     {products_data.map((val, key) => {
-                        return React.cloneElement(React.Children.only(children), { key: key, product: val, refresh: refresh, filterCategory: filterCategory, filterName: filterName, updatePrice: updatePrice, countZero: countZero });
+                        if (!onlysalable || onlysalable && val.salable)
+                            return React.cloneElement(React.Children.only(children), { key: key, product: val, refresh: refresh, filterCategory: filterCategory, filterName: filterName, updatePrice: updatePrice, countZero: countZero });
                     })}
                 </Grid>
                 {total ? (

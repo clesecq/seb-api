@@ -1,23 +1,13 @@
 import * as React from "react";
-import { Datagrid, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { Datagrid, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleShowLayout, TextField } from 'react-admin';
 import DateField from '../components/DateField';
 import { CreateDialog, ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
 import MoneyInput from "../components/MoneyInput";
 
-const TransfertsFilters = [
-    <TextInput source="name" />,
-    <ReferenceInput source="account_id" reference="accounts">
-        <SelectInput optionText="name" />
-    </ReferenceInput>,
-    <ReferenceInput source="user_id" reference="users">
-        <SelectInput optionText="username" />
-    </ReferenceInput>
-];
-
 const Transferts = (props) => (
     <>
-        <List {...props} filters={TransfertsFilters} bulkActionButtons={false}>
+        <List {...props} bulkActionButtons={false}>
             <Datagrid>
                 <TextField source="id" />
                 <ReferenceField source="sub_transaction.account_id" reference="accounts">

@@ -1,5 +1,7 @@
+import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import * as React from "react";
-import { CreateButton, Datagrid, EditButton, ExportButton, FilterButton, List, NullableBooleanInput, NumberField, NumberInput, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar } from 'react-admin';
+import { BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, CreateButton, Datagrid, EditButton, ExportButton, FilterButton, List, NullableBooleanInput, NumberField, NumberInput, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar, useTranslate } from 'react-admin';
 import DateField from '../components/DateField';
 import DateInput from '../components/DateInput';
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
@@ -12,7 +14,8 @@ const ProductsFilters = [
     <ReferenceInput source="category_id" reference="products_categories">
         <SelectInput optionText="name" />
     </ReferenceInput>,
-    <NullableBooleanInput source="alerts" />
+    <NullableBooleanInput source="alerts" />,
+    <NullableBooleanInput source="salable" />
 ];
 
 const ProductsListActions = ({ basePath, ...props }) => (
@@ -24,10 +27,20 @@ const ProductsListActions = ({ basePath, ...props }) => (
     </TopToolbar>
 );
 
+const ProductsBulkActionButtons = props => {
+    const translate = useTranslate();
+    return (
+        <React.Fragment>
+            <BulkUpdateButton {...props} label={translate('resources.products.mark_salabe')} data={{ "salable": true }} icon={<ShoppingCartIcon />} />
+            <BulkUpdateButton {...props} label={translate('resources.products.mark_unsalable')} data={{ "salable": false }} icon={<RemoveShoppingCartIcon />} />
+            <BulkDeleteButton {...props} />
+        </React.Fragment>
+    );
+};
 
 const Products = (props) => (
     <>
-        <List {...props} filters={ProductsFilters} actions={<ProductsListActions />}>
+        <List {...props} filters={ProductsFilters} bulkActionButtons={<ProductsBulkActionButtons />} actions={<ProductsListActions />}>
             <Datagrid>
                 <TextField source="id" />
                 <TextField source="name" />
@@ -37,6 +50,7 @@ const Products = (props) => (
                 <MoneyField noLabel={true} source="price" />
                 <NumberField source="count" />
                 <NumberField source="alert_level" />
+                <BooleanField source="salable" />
                 <DateField source="created_at" />
                 <DateField source="updated_at" />
                 <EditButton />
@@ -50,6 +64,7 @@ const Products = (props) => (
                 </ReferenceInput>
                 <MoneyInput source="price" />
                 <NumberInput source="alert_level" />
+                <BooleanInput source="salable" defaultValue={true} />
             </SimpleForm>
         </CreateDialog>
         <EditDialog {...props}>
@@ -62,6 +77,7 @@ const Products = (props) => (
                 <MoneyInput source="price" />
                 <NumberInput disabled source="count" />
                 <NumberInput source="alert_level" />
+                <BooleanInput source="salable" />
                 <DateInput disabled source="created_at" />
                 <DateInput disabled source="updated_at" />
             </SimpleForm>
@@ -76,6 +92,7 @@ const Products = (props) => (
                 <MoneyField source="price" />
                 <NumberField source="count" />
                 <NumberField source="alert_level" />
+                <BooleanField source="salable" />
                 <DateField source="created_at" />
                 <DateField source="updated_at" />
             </SimpleShowLayout>

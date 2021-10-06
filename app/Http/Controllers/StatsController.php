@@ -78,13 +78,19 @@ class StatsController extends Controller
 
     private function _most_sales()
     {
-        $transactions = DB::table('sales')->select('transaction_id')->pluck('transaction_id')->toArray();
-        $user_id = DB::table('transactions')->groupBy('user_id')->select('user_id')->whereIn('id', $transactions)->orderByRaw('sum(amount)')->first();
-        
-        if ($user_id == null)
+        $req = DB::table("movements")
+            ->join("product_movement", "movements.id", "=", "product_movement.movement_id")
+            ->whereIn('product_movement.movement_id', function($q) {
+                $q->select('movement_id')->from('sales');
+            })
+            ->groupBy('movements.user_id')
+            ->select(DB::Raw('-SUM(product_movement.count) AS count'), 'movements.user_id')
+            ->orderByDesc('count');
+
+        if ($req->first()->user_id == null)
             return "N/A";
         
-        return User::find($user_id->user_id)->firstname;
+        return User::find($req->first()->user_id)->firstname;
     }
 
     private function _price_coca()

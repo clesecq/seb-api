@@ -1,20 +1,10 @@
 import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import * as React from "react";
-import { Datagrid, Labeled, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleShowLayout, TextField, TextInput, useRecordContext, useTranslate } from 'react-admin';
+import { Datagrid, Labeled, List, ReferenceField, ShowButton, SimpleShowLayout, TextField, useRecordContext, useTranslate } from 'react-admin';
 import DateField from '../components/DateField';
 import { ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
 import Count from '../pages/Count';
-
-const TransactionsFilters = [
-    <TextInput source="name" />,
-    <ReferenceInput source="account_id" reference="accounts">
-        <SelectInput optionText="name" />
-    </ReferenceInput>,
-    <ReferenceInput source="user_id" reference="users">
-        <SelectInput optionText="username" />
-    </ReferenceInput>
-];
 
 const CountField = (props) => {
     const record = useRecordContext(props);
@@ -58,7 +48,7 @@ const CountField = (props) => {
 
 const AccountsCounts = (props) => (
     <>
-        <List {...props} filters={TransactionsFilters} bulkActionButtons={false}>
+        <List {...props} bulkActionButtons={false}>
             <Datagrid>
                 <TextField source="id" />
                 <TextField source="type" />
