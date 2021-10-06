@@ -385,6 +385,9 @@ const messages = {
             products: {
                 title: "Classement des produits"
             },
+            sellers: {
+                title: "Classement des vendeurs"
+            },
             alerts: {
                 none: "Pas d'alertes",
                 title: "Alertes de stocks",

@@ -4,6 +4,7 @@ import { Error, Loading, Title, useQuery, useTranslate } from 'react-admin';
 import ColorProvider from '../providers/ColorProvider';
 import AccountsStatistics from './statistics/AccountsStatistics';
 import ProductsStatistics from './statistics/ProductsStatistics';
+import SellersStatistics from './statistics/SellersStatistics';
 
 const useStyles = makeStyles({
     good: {
@@ -128,12 +129,16 @@ const StatisticsPanel = (props) => {
                     textColor="primary">
                     <Tab label="Comptes" />
                     <Tab label="Stocks" />
+                    <Tab label="Vendeurs" />
                 </Tabs>
                 <TabPanel value={value} index={0}>
                     <AccountsStatistics />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <ProductsStatistics />
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                    <SellersStatistics />
                 </TabPanel>
             </Card>
         </Grid>

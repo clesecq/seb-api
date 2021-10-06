@@ -82,7 +82,7 @@ class DashboardController extends Controller
 
 
 
-        return ["id" => "sellers", "sellers" => $data];
+        return ["data" => ["id" => "sellers", "sellers" => $data]];
     }
 
     public function accounts(Request $request)
