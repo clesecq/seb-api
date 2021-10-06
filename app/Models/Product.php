@@ -13,11 +13,13 @@ class Product extends Model
         'name',
         'price',
         'category_id',
-        'alert_level'
+        'alert_level',
+        'salable'
     ];
 
     protected $casts = [
-        'price' => 'double'
+        'price' => 'double',
+        'salable' => 'boolean'
     ];
 
     public function category() {
