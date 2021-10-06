@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Sale;
 use App\Models\Transaction;
 use App\Models\TransactionCategory;
+use App\Models\User;
 use DateTimeImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -55,6 +56,33 @@ class DashboardController extends Controller
 
     
         return ['data' => $data];
+    }
+
+    public function sellers(Request $request)
+    {
+        $req = DB::table("movements")
+            ->join("product_movement", "movements.id", "=", "product_movement.movement_id")
+            ->whereIn('product_movement.movement_id', function($q) {
+                $q->select('movement_id')->from('sales');
+            })
+            ->groupBy('movements.user_id')
+            ->select(DB::Raw('-SUM(product_movement.count) AS count'), 'movements.user_id')
+            ->orderByDesc('count');
+        $raw = $req->get();
+
+        $data = [];
+
+        foreach($raw as $line) {
+            $users = User::findOrFail($line->user_id);
+            $data[] = [
+                "name" => $users->firstname . " " . $users->lastname,
+                "value" => intval($line->count)
+            ];
+        }
+
+
+
+        return ["id" => "sellers", "sellers" => $data];
     }
 
     public function accounts(Request $request)
