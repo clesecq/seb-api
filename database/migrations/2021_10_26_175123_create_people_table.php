@@ -45,6 +45,14 @@ class CreatePeopleTable extends Migration
             $table->dropColumn('discord_id');
             $table->foreignId('person_id')->change();
         });
+
+        // Warning: We assume we don't have any archived membre when running the query (true at the moment of writing this)
+        Schema::table('archived_members', function(Blueprint $table) {
+            $table->dropColumn('firstname');
+            $table->dropColumn('lastname');
+            $table->dropColumn('discord_id');
+            $table->foreignId('person_id');
+        });
     }
 
     /**
@@ -72,6 +80,13 @@ class CreatePeopleTable extends Migration
         }
 
         Schema::table('members', function (Blueprint $table) {
+            $table->dropColumn('person_id');
+        });
+
+        Schema::table('archived_members', function (Blueprint $table) {
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->string('discord_id')->unique()->nullable()->default(null);
             $table->dropColumn('person_id');
         });
 
