@@ -7,6 +7,7 @@ use App\Models\AccountCount;
 use App\Models\Config;
 use App\Models\Member;
 use App\Models\Movement;
+use App\Models\Person;
 use App\Models\Product;
 use App\Models\ProductCount;
 use App\Models\ProductMovement;
@@ -388,16 +389,22 @@ class DatabaseSeeder extends Seeder
         $number = $faker->numberBetween(50, 100);
 
         for ($i = 0; $i < $number; $i++) {
-
-            $member = Member::create([
+            $person = Person::create([
                 'firstname' => $faker->firstName(),
                 'lastname' => $faker->lastName(),
                 'discord_id' => $faker->numerify('########################')
             ]);
+            $person->created_at = $date;
+            $person->updated_at = $date;
+            $person->save();
+
+            $member = Member::create([
+                'person_id' => $person->id
+            ]);
             $member->created_at = $date;
             $member->updated_at = $date;
             // Pay
-            $message = Config::format("members.contribution.transaction", ["member" => $member->attributesToArray()]);
+            $message = Config::format("members.contribution.transaction", ["member" => $person->attributesToArray()]);
 
             $transaction = Transaction::create([
                 'name' => $message,
@@ -427,8 +434,8 @@ class DatabaseSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        $start = new DateTime('2020-08-01');
-        $end = new DateTime('2021-08-01');
+        $start = new DateTime('2017-08-01');
+        $end = new DateTime('2021-10-27');
 
         // Set the accounts up
         $this->initAccounts($faker, $start);
