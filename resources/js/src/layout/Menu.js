@@ -12,6 +12,7 @@ import AutorenewIcon from '@material-ui/icons/Autorenew';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import CategoryIcon from '@material-ui/icons/Category';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import GroupIcon from '@material-ui/icons/Group';
@@ -103,7 +104,11 @@ const Menu = ({ onMenuClick, logout }) => {
             <Item to="/purchases/create" permissions="purchases.create" primaryText={translate('menu.left.buy')} leftIcon={<ShoppingCartIcon />} />
             <Item to="/accounts_counts/create" permissions="accounts_counts.create" primaryText={translate('menu.left.count_money')} leftIcon={<MoneyIcon />} />
             <Item to="/products_counts/create" permissions="products_counts.create" primaryText={translate('menu.left.count_stocks')} leftIcon={<BarChartIcon />} />
+            <Accordeon open={false} title={translate('menu.left.humans')} permissions={["people.show", "members.show", "users.show"]}>
+                <Item to="/people" permissions="people.show" primaryText={translate('menu.left.people')} leftIcon={<EmojiPeopleIcon />} />
             <Item to="/members" permissions="members.show" primaryText={translate('menu.left.members')} leftIcon={<GroupIcon />} />
+                <Item to="/users" permissions="users.show" primaryText={translate('menu.left.users')} leftIcon={<AccountBoxIcon />} />
+            </Accordeon>
             <Accordeon open={false} title={translate('menu.left.stocks')} permissions={["products.show", "products_categories.show", "movements.show", "products_counts.show"]}>
                 <Item to="/products" permissions="products.show" primaryText={translate('menu.left.products')} leftIcon={<LocalCafeIcon />} />
                 <Item to="/products_categories" permissions="products_categories.show" primaryText={translate('menu.left.categories')} leftIcon={<CategoryIcon />} />
@@ -123,7 +128,6 @@ const Menu = ({ onMenuClick, logout }) => {
             <Accordeon open={false} title={translate('menu.left.archives')} permissions={["archived_members.show"]}>
                 <Item to="/archived_members" permissions="archived_members.show" primaryText={translate('menu.left.archived_members')} leftIcon={<GroupIcon />} />
             </Accordeon>
-            <Item to="/users" permissions="users.show" primaryText={translate('menu.left.users')} leftIcon={<AccountBoxIcon />} />
             {isXSmall && <Item to="/profile" primaryText={translate('menu.left.logout')} leftIcon={<AccountCircleIcon />} />}
             {isXSmall && logout}
         </>

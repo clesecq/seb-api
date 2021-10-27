@@ -102,7 +102,9 @@ const messages = {
                 transactions_categories: "Catégories de Transactions",
                 profile: "Profil",
                 archives: "Archives",
-                archived_members: "Membres Archivés"
+                archived_members: "Membres Archivés",
+                humans: "Gens",
+                people: "Personnes"
             }
         },
         resources: {
@@ -110,25 +112,31 @@ const messages = {
                 name: 'Membre |||| Membres',
                 fields: {
                     id: '#',
-                    firstname: 'Prénom',
-                    lastname: 'Nom',
                     payed: 'Payé',
+                    person_id: 'Personne',
                     transaction: 'Transaction',
-                    discord_id: 'ID Discord',
                     created_at: 'Créé le',
                     updated_at: 'Modifié le'
                 },
                 mark_payed: "Marqué comme payé"
             },
+            people: {
+                name: 'Personne |||| Personnes',
+                fields: {
+                    firstname: 'Prénom',
+                    lastname: 'Nom',
+                    discord_id: 'ID Discord',
+                    created_at: 'Créé le',
+                    updated_at: 'Modifié le'
+                }
+            },
             archived_members: {
                 name: 'Membre Archivé |||| Membres Archivés',
                 fields: {
                     id: '#',
-                    firstname: 'Prénom',
-                    lastname: 'Nom',
+                    person_id: 'Personne',
                     payed: 'Payé',
                     transaction: 'Transaction',
-                    discord_id: 'ID Discord',
                     created_at: 'Créé le',
                     updated_at: 'Modifié le',
                     school_year: 'Année Scolaire'
