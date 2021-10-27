@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Config;
 use App\Models\Member;
+use App\Models\Person;
 use Illuminate\Http\Request;
 
 class MembersController extends Controller
@@ -48,9 +49,7 @@ class MembersController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'firstname' => ['required', 'string'],
-            'lastname' => ['required', 'string'],
-            'discord_id' => ['sometimes', 'required', 'string', 'unique:members,discord_id'],
+            'person_id' => ['required', 'exists:people,id', 'unique:members,person_id'],
             'payed' => ['sometimes', 'required', 'boolean'],
         ]);
 
@@ -84,14 +83,10 @@ class MembersController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'firstname' => ['sometimes', 'required', 'string'],
-            'lastname' => ['sometimes', 'required', 'string'],
-            'discord_id' => ['sometimes', 'required', 'nullable', 'string', 'unique:members,discord_id'],
             'payed' => ['sometimes', 'required', 'boolean']
         ]);
 
         $member = Member::findOrFail($id);
-        $member->update($data);
 
         if ($data['payed']) {
             $member->pay();
@@ -132,9 +127,6 @@ class MembersController extends Controller
     public function updateMany(Request $request)
     {
         $data = $request->validate([
-            'firstname' => ['sometimes', 'required', 'string'],
-            'lastname' => ['sometimes', 'required', 'string'],
-            'discord_id' => ['sometimes', 'required', 'nullable', 'string', 'unique:members,discord_id'],
             'payed' => ['sometimes', 'required', 'boolean']
         ]);
 

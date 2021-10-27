@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Member;
 use App\Models\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PeopleController extends Controller
 {
@@ -20,7 +22,17 @@ class PeopleController extends Controller
             $data = Person::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
                 foreach ($request->filter as $k => $v) {
-                    $data = $data->where($k, 'like', '%' . $v . '%');
+                    if ($k == 'fullname') {
+                        $data = $data->where(DB::raw("CONCAT(`firstname`, ' ', `lastname`)"), 'like', '%' . $v . '%');
+                    }else if ($k == 'is_member') {
+                        if ($v) {
+                            $data = $data->has('member');
+                        } else {
+                            $data = $data->doesntHave('member');
+                        }
+                    } else {
+                        $data = $data->where($k, 'like', '%' . $v . '%');
+                    }
                 }
             }
             if (!is_null($request->per_page))
