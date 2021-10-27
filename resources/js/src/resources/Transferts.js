@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Datagrid, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleShowLayout, TextField } from 'react-admin';
+import { AutocompleteInput, Datagrid, List, ReferenceField, ReferenceInput, ShowButton, SimpleForm, SimpleShowLayout, TextField } from 'react-admin';
 import DateField from '../components/DateField';
 import { CreateDialog, ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
@@ -27,11 +27,11 @@ const Transferts = (props) => (
         <CreateDialog {...props}>
             <SimpleForm redirect="list">
                 <MoneyInput source="amount" />
-                <ReferenceInput source="from_account_id" reference="accounts">
-                    <SelectInput optionText="name" />
+                <ReferenceInput source="from_account_id" reference="accounts" filterToQuery={searchText => ({ name: searchText })}>
+                    <AutocompleteInput optionText="name" />
                 </ReferenceInput>
-                <ReferenceInput source="to_account_id" reference="accounts">
-                    <SelectInput optionText="name" />
+                <ReferenceInput source="to_account_id" reference="accounts" filterToQuery={searchText => ({ name: searchText })}>
+                    <AutocompleteInput optionText="name" />
                 </ReferenceInput>
             </SimpleForm>
         </CreateDialog>

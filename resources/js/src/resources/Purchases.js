@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrayField, BooleanInput, Create, Datagrid, FormDataConsumer, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { ArrayField, AutocompleteInput, BooleanInput, Create, Datagrid, FormDataConsumer, List, ReferenceField, ReferenceInput, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
 import DateField from '../components/DateField';
 import { ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
@@ -54,11 +54,11 @@ const Buy = (props) => {
         <Create {...props}>
             <SimpleForm>
                 <TextInput source="name" />
-                <ReferenceInput source="account_id" reference="accounts">
-                    <SelectInput optionText="name" />
+                <ReferenceInput source="account_id" reference="accounts" filterToQuery={searchText => ({ name: searchText })}>
+                    <AutocompleteInput optionText="name" />
                 </ReferenceInput>
-                <ReferenceInput source="category_id" reference="transactions_categories">
-                    <SelectInput optionText="name" />
+                <ReferenceInput source="category_id" reference="transactions_categories" filterToQuery={searchText => ({ name: searchText })}>
+                    <AutocompleteInput optionText="name" />
                 </ReferenceInput>
                 <MoneyInput source="amount" />
                 <BooleanInput source="has_products" />

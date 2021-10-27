@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BooleanField, BooleanInput, Datagrid, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { AutocompleteInput, BooleanField, BooleanInput, Datagrid, List, ReferenceField, ReferenceInput, ShowButton, SimpleForm, SimpleShowLayout, TextField, TextInput } from 'react-admin';
 import DateField from '../components/DateField';
 import { CreateDialog, ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
@@ -7,11 +7,14 @@ import MoneyInput from "../components/MoneyInput";
 
 const TransactionsFilters = [
     <TextInput source="name" />,
-    <ReferenceInput source="account_id" reference="accounts">
-        <SelectInput optionText="name" />
+    <ReferenceInput source="account_id" reference="accounts" filterToQuery={searchText => ({ name: searchText })}>
+        <AutocompleteInput optionText="name" />
     </ReferenceInput>,
-    <ReferenceInput source="user_id" reference="users">
-        <SelectInput optionText="username" />
+    <ReferenceInput source="category_id" reference="transactions_categories" filterToQuery={searchText => ({ name: searchText })}>
+        <AutocompleteInput optionText="name" />
+    </ReferenceInput>,
+    <ReferenceInput source="user_id" reference="users" filterToQuery={searchText => ({ name: searchText })}>
+        <AutocompleteInput optionText="username" />
     </ReferenceInput>
 ];
 
@@ -41,11 +44,11 @@ const Transactions = (props) => (
                 <TextInput source="name" />
                 <MoneyInput source="amount" />
                 <BooleanInput source="rectification" />
-                <ReferenceInput source="account_id" reference="accounts">
-                    <SelectInput optionText="name" />
+                <ReferenceInput source="account_id" reference="accounts" filterToQuery={searchText => ({ name: searchText })}>
+                    <AutocompleteInput optionText="name" />
                 </ReferenceInput>
-                <ReferenceInput source="category_id" reference="transactions_categories">
-                    <SelectInput optionText="name" />
+                <ReferenceInput source="category_id" reference="transactions_categories" filterToQuery={searchText => ({ name: searchText })}>
+                    <AutocompleteInput optionText="name" />
                 </ReferenceInput>
             </SimpleForm>
         </CreateDialog>
