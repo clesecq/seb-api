@@ -15,9 +15,7 @@ class Member extends Model
     ];
 
     protected $fillable = [
-        'firstname',
-        'lastname',
-        'discord_id'
+        'person_id'
     ];
 
     protected $appends = ['payed'];
@@ -27,10 +25,15 @@ class Member extends Model
         return $this->transaction_id != null;
     }
 
+    public function person()
+    {
+        return $this->belongsTo(Person::class);
+    }
+
     function pay()
     {
         if ($this->transaction_id == null) {
-            $message = Config::format("members.contribution.transaction", ["member" => $this->attributesToArray()]);
+            $message = Config::format("members.contribution.transaction", ["member" => $this->person->attributesToArray()]);
 
             $this->transaction_id = Transaction::create([
                 'name' => $message,
@@ -44,7 +47,8 @@ class Member extends Model
         }
     }
 
-    public static function archive(...$params) {
+    public static function archive(...$params)
+    {
         if (count($params) >= 1) {
             $year = $params[0];
         } else {
@@ -52,11 +56,9 @@ class Member extends Model
         }
 
         // We archive everything and empty the table
-        foreach(Member::all() as $member) {
+        foreach (Member::all() as $member) {
             ArchivedMember::create([
-                'firstname' => $member->firstname,
-                'lastname' => $member->lastname,
-                'discord_id' => $member->discord_id,
+                'person_id' => $member->person_id,
                 'transaction_id' => $member->transaction_id,
                 'created_at' => $member->created_at,
                 'updated_at' => $member->updated_at,

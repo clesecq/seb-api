@@ -1,16 +1,16 @@
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import * as React from "react";
 import { Fragment } from 'react';
-import { BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, CreateButton, Datagrid, EditButton, ExportButton, FilterButton, FunctionField, List, ReferenceField, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar, useTranslate } from 'react-admin';
+import { AutocompleteInput, BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, CreateButton, Datagrid, EditButton, ExportButton, FilterButton, FunctionField, List, ReferenceField, ReferenceInput, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar, useTranslate } from 'react-admin';
 import { ArchiveButton } from '../components/ArchiveButton';
 import DateField from '../components/DateField';
 import DateInput from '../components/DateInput';
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
 
 const MembersFilters = [
-    <TextInput source="firstname" />,
-    <TextInput source="lastname" />,
-    <TextInput source="discord_id" />,
+    <ReferenceInput source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText, is_member: true })}>
+        <AutocompleteInput optionText="fullname" />
+    </ReferenceInput>,
     <BooleanInput source="payed" />
 ];
 
@@ -35,34 +35,34 @@ const MembersBulkActionButtons = props => {
 
 const Members = (props) => (
     <>
-        <List {...props} filters={MembersFilters} bulkActionButtons={<MembersBulkActionButtons />} actions={<MembersListActions/>}>
+        <List {...props} filters={MembersFilters} bulkActionButtons={<MembersBulkActionButtons />} actions={<MembersListActions />}>
             <Datagrid>
                 <TextField source="id" />
-                <TextField source="firstname" />
-                <TextField source="lastname" />
+                <ReferenceField source="person_id" reference="people" link="show" >
+                    <FunctionField render={r => r.firstname + " " + r.lastname} />
+                </ReferenceField>
                 <BooleanField source="payed" />
                 <ReferenceField source="transaction_id" reference="transactions" link="show" >
                     <FunctionField render={r => "#" + r.id} />
                 </ReferenceField>
-                <TextField source="discord_id" />
                 <EditButton />
             </Datagrid>
         </List>
         <CreateDialog {...props}>
             <SimpleForm redirect="list">
-                <TextInput source="firstname" />
-                <TextInput source="lastname" />
+                <ReferenceInput source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText, is_member: false })}>
+                    <AutocompleteInput optionText="fullname" />
+                </ReferenceInput>
                 <BooleanInput source="payed" />
-                <TextInput source="discord_id" />
             </SimpleForm>
         </CreateDialog>
         <EditDialog {...props}>
             <SimpleForm redirect="list">
                 <TextInput disabled source="id" />
-                <TextInput source="firstname" />
-                <TextInput source="lastname" />
+                <ReferenceField source="person_id" reference="people" >
+                    <FunctionField render={r => r.firstname + " " + r.lastname} />
+                </ReferenceField>
                 <BooleanInput source="payed" />
-                <TextInput source="discord_id" />
                 <DateInput disabled source="created_at" />
                 <DateInput disabled source="updated_at" />
             </SimpleForm>
@@ -70,10 +70,10 @@ const Members = (props) => (
         <ShowDialog>
             <SimpleShowLayout>
                 <TextField source="id" />
-                <TextField source="firstname" />
-                <TextField source="lastname" />
+                <ReferenceField source="person_id" reference="people" link="show" >
+                    <FunctionField render={r => r.firstname + " " + r.lastname} />
+                </ReferenceField>
                 <BooleanField source="payed" />
-                <TextField source="discord_id" />
                 <DateField source="created_at" />
                 <DateField source="updated_at" />
             </SimpleShowLayout>

@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrayField, ArrayInput, BooleanField, BooleanInput, Datagrid, List, NumberInput, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleForm, SimpleFormIterator, SimpleShowLayout, TextField, TextInput } from 'react-admin';
+import { ArrayField, ArrayInput, AutocompleteInput, BooleanField, BooleanInput, Datagrid, List, NumberInput, ReferenceField, ReferenceInput, ShowButton, SimpleForm, SimpleFormIterator, SimpleShowLayout, TextField, TextInput } from 'react-admin';
 import DateField from '../components/DateField';
 import { CreateDialog, ShowDialog } from '../components/DialogForm';
 
@@ -27,10 +27,9 @@ const Movements = (props) => (
                 <BooleanInput source="rectification" />
                 <ArrayInput source="products">
                     <SimpleFormIterator>
-                        <ReferenceInput source="id" reference="products">
-                            <SelectInput optionText="name" />
+                        <ReferenceInput source="id" reference="products" filterToQuery={searchText => ({ name: searchText })}>
+                            <AutocompleteInput optionText="name" />
                         </ReferenceInput>
-
                         <NumberInput source="diff" />
                     </SimpleFormIterator>
                 </ArrayInput>

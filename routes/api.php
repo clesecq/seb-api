@@ -15,6 +15,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\TransactionCategoriesController;
 use App\Http\Controllers\MovementsController;
+use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ProductCountsController;
 use App\Http\Controllers\PurchasesController;
@@ -53,6 +54,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get("dashboard/products", [DashboardController::class, 'products']);
     Route::get("dashboard/sellers", [DashboardController::class, 'sellers']);
     Route::res("users", UsersController::class);
+    Route::res("people", PeopleController::class);
     Route::res("members", MembersController::class, ['archive']);
     Route::res("archived_members", ArchivedMembersController::class, ['readonly']);
     Route::res("purchases", PurchasesController::class, ['final']);

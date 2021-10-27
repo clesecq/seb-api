@@ -1,7 +1,7 @@
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import * as React from "react";
-import { BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, CreateButton, Datagrid, EditButton, ExportButton, FilterButton, List, NullableBooleanInput, NumberField, NumberInput, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar, useTranslate } from 'react-admin';
+import { AutocompleteInput, BooleanField, BooleanInput, BulkDeleteButton, BulkUpdateButton, CreateButton, Datagrid, EditButton, ExportButton, FilterButton, List, NullableBooleanInput, NumberField, NumberInput, ReferenceField, ReferenceInput, SimpleForm, SimpleShowLayout, TextField, TextInput, TopToolbar, useTranslate } from 'react-admin';
 import DateField from '../components/DateField';
 import DateInput from '../components/DateInput';
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
@@ -11,8 +11,8 @@ import { RecalculateButton } from '../components/RecalculateButton';
 
 const ProductsFilters = [
     <TextInput source="name" />,
-    <ReferenceInput source="category_id" reference="products_categories">
-        <SelectInput optionText="name" />
+    <ReferenceInput source="category_id" reference="products_categories" filterToQuery={searchText => ({ name: searchText })}>
+        <AutocompleteInput optionText="name" />
     </ReferenceInput>,
     <NullableBooleanInput source="alerts" />,
     <NullableBooleanInput source="salable" />
@@ -59,8 +59,8 @@ const Products = (props) => (
         <CreateDialog {...props}>
             <SimpleForm redirect="list">
                 <TextInput source="name" />
-                <ReferenceInput source="category_id" reference="products_categories">
-                    <SelectInput optionText="name" />
+                <ReferenceInput source="category_id" reference="products_categories" filterToQuery={searchText => ({ name: searchText })}>
+                    <AutocompleteInput optionText="name" />
                 </ReferenceInput>
                 <MoneyInput source="price" />
                 <NumberInput source="alert_level" />
@@ -71,8 +71,8 @@ const Products = (props) => (
             <SimpleForm redirect="list">
                 <TextInput disabled source="id" />
                 <TextInput source="name" />
-                <ReferenceInput source="category_id" reference="products_categories">
-                    <SelectInput optionText="name" />
+                <ReferenceInput source="category_id" reference="products_categories" filterToQuery={searchText => ({ name: searchText })}>
+                    <AutocompleteInput optionText="name" />
                 </ReferenceInput>
                 <MoneyInput source="price" />
                 <NumberInput disabled source="count" />

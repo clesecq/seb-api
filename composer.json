@@ -3,9 +3,10 @@
     "type": "project",
     "description": "Management of stocks, member, accounting, sales, ...",
     "license": "AGPL-3.0-or-later",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "require": {
         "php": "^7.3|^8.0",
+        "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",

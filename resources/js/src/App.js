@@ -16,6 +16,7 @@ import archived_members from "./resources/ArchivedMembers";
 import automated_transactions from "./resources/AutomatedTransactions";
 import members from './resources/Members';
 import movements from "./resources/Movements";
+import people from './resources/People';
 import products from './resources/Products';
 import productscategories from "./resources/ProductsCategories";
 import productscounts from './resources/ProductsCounts';
@@ -37,6 +38,7 @@ export default class App extends Component {
                 <Resource name="tokens" />
                 <Resource name="accounts" {...accounts} />
                 <Resource name="accounts_counts" {...accountscounts} />
+                <Resource name="people" {...people} />
                 <Resource name="members" {...members} />
                 <Resource name="transactions" {...transactions} />
                 <Resource name="users" {...users} />

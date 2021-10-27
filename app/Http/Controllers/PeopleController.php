@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Config;
 use App\Models\Member;
 use App\Models\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class MembersController extends Controller
+class PeopleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,19 +17,22 @@ class MembersController extends Controller
     public function index(Request $request)
     {
         if (is_array($request->ids)) {
-            return ["data" => Member::whereIn('id', $request->ids)->get()];
+            return ["data" => Person::whereIn('id', $request->ids)->get()];
         } else {
-            $data = Member::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
+            $data = Person::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
                 foreach ($request->filter as $k => $v) {
-                    if ($k == 'payed') {
+                    if ($k == 'fullname') {
+                        $data = $data->where(DB::raw("CONCAT(`firstname`, ' ', `lastname`)"), 'like', '%' . $v . '%');
+                    }else if ($k == 'is_member') {
                         if ($v) {
-                            $data = $data->whereNotNull('transaction_id');
+                            $data = $data->has('member');
                         } else {
-                            $data = $data->whereNull('transaction_id');
+                            $data = $data->doesntHave('member');
                         }
-                    } else
+                    } else {
                         $data = $data->where($k, 'like', '%' . $v . '%');
+                    }
                 }
             }
             if (!is_null($request->per_page))
@@ -49,17 +52,14 @@ class MembersController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'person_id' => ['required', 'exists:people,id', 'unique:members,person_id'],
-            'payed' => ['sometimes', 'required', 'boolean'],
+            'firstname' => ['required', 'string'],
+            'lastname' => ['required', 'string'],
+            'discord_id' => ['sometimes', 'required', 'string', 'unique:people,discord_id']
         ]);
 
-        $member = Member::create($data);
+        $person = Person::create($data);
 
-        if (array_key_exists('payed', $data) && $data['payed']) {
-            $member->pay();
-        }
-
-        return ['data' => $member, 'contribution' => Config::number('members.contribution.amount')];
+        return ['data' => $person];
     }
 
     /**
@@ -70,7 +70,7 @@ class MembersController extends Controller
      */
     public function show($id)
     {
-        return ['data' => Member::findOrFail($id)];
+        return ['data' => Person::findOrFail($id)];
     }
 
     /**
@@ -83,16 +83,15 @@ class MembersController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'payed' => ['sometimes', 'required', 'boolean']
+            'firstname' => ['sometimes', 'required', 'string'],
+            'lastname' => ['sometimes', 'required', 'string'],
+            'discord_id' => ['sometimes', 'required', 'nullable', 'string', 'unique:people,discord_id']
         ]);
 
-        $member = Member::findOrFail($id);
+        $person = Person::findOrFail($id);
+        $person->update($data);
 
-        if ($data['payed']) {
-            $member->pay();
-        }
-
-        return ['data' => $member];
+        return ['data' => $person];
     }
 
     /**
@@ -103,9 +102,9 @@ class MembersController extends Controller
      */
     public function destroy($id)
     {
-        $member = Member::findOrFail($id);
-        $member->delete();
-        return ['data' => $member];
+        $person = Person::findOrFail($id);
+        $person->delete();
+        return ['data' => $person];
     }
 
     /**
@@ -114,7 +113,7 @@ class MembersController extends Controller
     public function destroyMany(Request $request)
     {
         if (is_array($request->ids)) {
-            Member::whereIn('id', $request->ids)->delete();
+            Person::whereIn('id', $request->ids)->delete();
             return response(["data" => $request->ids], 200);
         } else {
             return response([], 400);
@@ -127,28 +126,18 @@ class MembersController extends Controller
     public function updateMany(Request $request)
     {
         $data = $request->validate([
-            'payed' => ['sometimes', 'required', 'boolean']
+            'firstname' => ['sometimes', 'required', 'string'],
+            'lastname' => ['sometimes', 'required', 'string'],
+            'discord_id' => ['sometimes', 'required', 'nullable', 'string', 'unique:people,discord_id'],
         ]);
 
         if (is_array($request->ids)) {
-            Member::whereIn('id', $request->ids)->get()->each(function ($member) use ($data) {
-                $member->update($data);
-
-                if ($data['payed']) {
-                    $member->pay();
-                }
+            Person::whereIn('id', $request->ids)->get()->each(function ($person) use ($data) {
+                $person->update($data);
             });
             return response(["data" => $request->ids], 200);
         } else {
             return response([], 400);
         }
-    }
-
-    /**
-     * Archive all the members.
-     */
-    public function archive(Request $request)
-    {
-        Member::archive();
     }
 }
