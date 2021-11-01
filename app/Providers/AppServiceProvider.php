@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Observers\GatewayObserver;
+use App\Services\Gateway;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
@@ -29,7 +32,9 @@ class AppServiceProvider extends ServiceProvider
             return view('app');
         });
 
-        Route::macro('res', function ($name, $controller, $options = []) {
+        Route::macro('res', function ($name, $model, $controller, $options = []) {
+            App::make(Gateway::class)->regsiter_model($model, $name);
+
             if (in_array('reload', $options)) {
                 Route::get($name . "/reload", [$controller, "reload"])->middleware('permission:' . $name . '.reload');
             }
