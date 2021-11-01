@@ -93,7 +93,9 @@ class TransactionCategoriesController extends Controller
     public function destroyMany(Request $request)
     {
         if (is_array($request->ids)) {
-            TransactionCategory::whereIn('id', $request->ids)->delete();
+            TransactionCategory::whereIn('id', $request->ids)->get()->each(function ($tc) {
+                $tc->delete();
+            });
             return response(["data" => $request->ids], 200);
         } else {
             return response([], 400);

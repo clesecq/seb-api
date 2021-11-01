@@ -97,7 +97,9 @@ class AccountsController extends Controller
     public function destroyMany(Request $request)
     {
         if (is_array($request->ids)) {
-            Account::whereIn('id', $request->ids)->delete();
+            Account::whereIn('id', $request->ids)->get()->each(function ($account) {
+                $account->delete();
+            });
             return response(["data" => $request->ids], 200);
         } else {
             return response([], 400);

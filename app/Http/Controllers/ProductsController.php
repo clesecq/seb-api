@@ -109,7 +109,9 @@ class ProductsController extends Controller
     public function destroyMany(Request $request)
     {
         if (is_array($request->ids)) {
-            Product::whereIn('id', $request->ids)->delete();
+            Product::whereIn('id', $request->ids)->get()->each(function ($product) {
+                $product->delete();
+            });
             return response(["data" => $request->ids], 200);
         } else {
             return response([], 400);
