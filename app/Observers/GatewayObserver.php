@@ -16,7 +16,7 @@ class GatewayObserver
      */
     public function created(Model $model)
     {
-        App::make(Gateway::class)->event("update", $model::class, $model->attributesToArray());
+        App::make(Gateway::class)->event("create", $model::class, $model->attributesToArray());
     }
 
     /**
