@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Person;
 use App\Models\PersonalAccount;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PersonalAccountsController extends Controller
 {
@@ -16,12 +17,19 @@ class PersonalAccountsController extends Controller
     public function index(Request $request)
     {
         if (is_array($request->ids)) {
-            return ["data" => PersonalAccount::whereIn('id', $request->ids)->get()];
+            return ["data" => PersonalAccount::with('person')->whereIn('id', $request->ids)->get()];
         } else {
-            $data = PersonalAccount::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
+            $data = PersonalAccount::with('person')->orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
                 foreach ($request->filter as $k => $v) {
-                    $data = $data->where($k, 'like', '%' . $v . '%');
+                    if ($k == 'fullname') {
+                        $data->whereHas('person', function($query) use ($v) {
+                            // Todo: create a view ?
+                            $query->where(DB::raw('CONCAT(firstname, " ", lastname)'), 'like', '%' . $v . '%');
+                        });
+                    } else {
+                        $data = $data->where($k, 'like', '%' . $v . '%');
+                    }
                 }
             }
             if (!is_null($request->per_page))
