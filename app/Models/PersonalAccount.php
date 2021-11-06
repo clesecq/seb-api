@@ -17,6 +17,10 @@ class PersonalAccount extends Model
         'balance' => 'double'
     ];
 
+    public function person() {
+        return $this->belongsTo(Person::class);
+    }
+
     public function personal_transactions() {
         return $this->hasMany(PersonalTransaction::class);
     }

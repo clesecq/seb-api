@@ -104,10 +104,21 @@ const messages = {
                 archives: "Archives",
                 archived_members: "Membres Archivés",
                 humans: "Gens",
-                people: "Personnes"
+                people: "Personnes",
+                personal_accounts: "Comptes Personnels"
             }
         },
         resources: {
+            personal_accounts: {
+                name: 'Compte Personnel |||| Comptes Personnels',
+                fields: {
+                    id: '#',
+                    person_id: 'Personne',
+                    balance: 'Solde',
+                    created_at: 'Créé le',
+                    updated_at: 'Modifié le'
+                }
+            },
             members: {
                 name: 'Membre |||| Membres',
                 fields: {

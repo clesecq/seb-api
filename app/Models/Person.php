@@ -15,6 +15,10 @@ class Person extends Model
         'discord_id'
     ];
 
+    protected $hidden = [
+        'edu_token'
+    ];
+
     protected $appends = ['fullname'];
 
     public function getFullnameAttribute()

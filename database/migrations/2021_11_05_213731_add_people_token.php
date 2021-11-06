@@ -14,7 +14,7 @@ class AddPeopleToken extends Migration
     public function up()
     {
         Schema::table('people', function (Blueprint $table) {
-            $table->string('edu_token')->nullable()->default(null);
+            $table->string('edu_token')->nullable()->default(null)->unique();
         });
     }
 

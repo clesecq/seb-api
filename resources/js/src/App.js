@@ -17,6 +17,7 @@ import automated_transactions from "./resources/AutomatedTransactions";
 import members from './resources/Members';
 import movements from "./resources/Movements";
 import people from './resources/People';
+import personal_accounts from "./resources/PersonalAccounts";
 import products from './resources/Products';
 import productscategories from "./resources/ProductsCategories";
 import productscounts from './resources/ProductsCounts';
@@ -52,6 +53,7 @@ export default class App extends Component {
                 <Resource name="transferts" {...transferts} />
                 <Resource name="archived_members" {...archived_members} />
                 <Resource name="automated_transactions" {...automated_transactions} />
+                <Resource name="personal_accounts" {...personal_accounts} />
             </Admin>
         );
     }
