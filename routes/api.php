@@ -91,4 +91,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::res("sales", Sale::class, SalesController::class, ['final']);
     Route::res("personal_accounts", PersonalAccount::class, PersonalAccountsController::class, ['final']);
     Route::res("personal_transactions", PersonalTransaction::class, PersonalTransactionsController::class, ['readonly']);
+    Route::post("personal_refills", [PersonalAccountsController::class, "refill"]);
 });

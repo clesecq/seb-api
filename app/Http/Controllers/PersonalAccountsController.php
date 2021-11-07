@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Config;
 use App\Models\Person;
 use App\Models\PersonalAccount;
+use App\Models\PersonalTransaction;
+use App\Models\Transaction;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +27,7 @@ class PersonalAccountsController extends Controller
             if (is_array($request->filter)) {
                 foreach ($request->filter as $k => $v) {
                     if ($k == 'fullname') {
-                        $data->whereHas('person', function($query) use ($v) {
+                        $data->whereHas('person', function ($query) use ($v) {
                             // Todo: create a view ?
                             $query->where(DB::raw('CONCAT(firstname, " ", lastname)'), 'like', '%' . $v . '%');
                         });
@@ -73,5 +77,55 @@ class PersonalAccountsController extends Controller
         } else {
             return ['data' => Person::where('edu_token', $id)->firstOrFail()->personal_account->load('person')];
         }
+    }
+
+    /**
+     * Refill an account
+     */
+    public function refill(Request $request)
+    {
+        $data = $request->validate([
+            'amount' => ['required', 'numeric'],
+            'token' => ['required', 'exists:people,edu_token'],
+            'payment' => ['required', Rule::in(['cash', 'card'])]
+        ]);
+
+        $person = Person::where('edu_token', $data['token'])->firstOrFail();
+        $account = $person->personal_account;
+
+        if (!$account->exists()) {
+            abort(404);
+        }
+
+        $transaction = Transaction::create([
+            'name' => Config::format('personal.refills.transaction', ['person' => $person->attributesToArray()]),
+            'amount' => $data['amount'],
+            'rectification' => false,
+            'account_id' => $data["payment"] == 'card' ? Config::integer('card.account') : Config::integer('sales.account'),
+            'category_id' => Config::integer('personal.category'),
+            'user_id' => $request->user()->id
+        ]);
+
+        if ($data["payment"] == 'card') {
+            // We round the transaction fees to the upper cent
+            // (Information given by our card payment provider).
+            $amount = ceil($data['amount'] * Config::number('card.fees.percent') * 100) / 100;
+
+            $transaction = Transaction::create([
+                'name' => Config::format('card.fees.message', ['transaction' => $transaction->attributesToArray()]),
+                'amount' => -$amount,
+                'rectification' => false,
+                'account_id' => Config::integer('card.account'),
+                'category_id' => Config::integer('card.fees.category'),
+                'user_id' => $request->user()->id
+            ]);
+        }
+
+        return ['data' => PersonalTransaction::create([
+            'amount' => $data['amount'],
+            'user_id' => $request->user()->id,
+            'personal_account_id' => $account->id,
+            'transaction_id' => $transaction->id
+        ])];
     }
 }

@@ -13,7 +13,7 @@ class PersonalTransaction extends Model
     {
         static::created(function ($transaction) {
             if (config('recalculate_for_all_transaction', true))
-                $transaction->account->recalculate();
+                $transaction->personal_account->recalculate();
         });
     }
 
