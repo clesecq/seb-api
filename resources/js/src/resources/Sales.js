@@ -1,9 +1,11 @@
-import React from "react";
-import { ArrayField, Create, Datagrid, List, ReferenceField, ShowButton, SimpleForm, SimpleShowLayout, TextField, useNotify, useRefresh } from 'react-admin';
+import { TextField as MuiTextField } from "@material-ui/core";
+import React, { useState } from "react";
+import { ArrayField, Create, Datagrid, FormDataConsumer, FormTab, List, ReferenceField, SelectInput, ShowButton, SimpleShowLayout, TabbedForm, TextField, useNotify, useRefresh, useTranslate } from 'react-admin';
 import DateField from '../components/DateField';
 import { ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
 import { MultiProductCountInput, MultiProductCountItem } from "../components/MultiProductCountInput";
+import PersonalAccountSelector from "../components/PersonalAccountSelector";
 
 const Sales = (props) => {
     return (
@@ -49,17 +51,35 @@ const Sales = (props) => {
 const Sell = props => {
     const refresh = useRefresh();
     const notify = useNotify();
+    const translate = useTranslate();
+
+    const [price, setPrice] = useState(0);
 
     return <>
         <Create {...props} onSuccess={() => {
             notify('ra.notification.created', 'info', { smart_count: 1 });
             refresh();
         }}>
-            <SimpleForm>
-                <MultiProductCountInput source="products" total onlysalable>
-                    <MultiProductCountItem price showcount />
-                </MultiProductCountInput>
-            </SimpleForm>
+            <TabbedForm syncWithLocation={false}>
+                <FormTab label="Produits">
+                    <MultiProductCountInput source="products" total onlysalable priceChanged={(p) => setPrice(p)}>
+                        <MultiProductCountItem price showcount />
+                    </MultiProductCountInput>
+                </FormTab>
+                <FormTab label="Paiement">
+                    <MuiTextField value={Number(price).toLocaleString('fr-FR', { currency: 'EUR', currencyDisplay: 'symbol', style: 'currency' })} disabled variant="filled" type="text" label={translate('inputs.multiproductcount.price')} />
+                    <SelectInput source="payment" label="Moyen de paiement" allowEmpty={false} choices={[
+                        { id: 'cash', name: 'Liquide (Caisse)' },
+                        { id: 'card', name: 'Carte Bancaire' },
+                        { id: 'account', name: 'Compte personel' },
+                    ]} />
+                    <FormDataConsumer>
+                        {({ formData, ...rest }) => formData.payment === 'account' &&
+                            <PersonalAccountSelector source="token" label="Compte" />
+                        }
+                    </FormDataConsumer>
+                </FormTab>
+            </TabbedForm>
         </Create>
     </>
 };

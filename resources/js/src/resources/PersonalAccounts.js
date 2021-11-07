@@ -1,5 +1,6 @@
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import * as React from "react";
-import { AutocompleteInput, Datagrid, FunctionField, List, ReferenceField, ReferenceInput, ShowButton, SimpleForm, SimpleShowLayout, TextField } from 'react-admin';
+import { AutocompleteInput, Button, CreateButton, Datagrid, ExportButton, FilterButton, FunctionField, List, ReferenceField, ReferenceInput, ShowButton, SimpleForm, SimpleShowLayout, TextField, TopToolbar, useRedirect } from 'react-admin';
 import DateField from '../components/DateField';
 import { CreateDialog, ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
@@ -11,9 +12,27 @@ const PersonalAccountsFilters = [
     </ReferenceInput>
 ];
 
+const PersonalAccountsListActions = ({ basePath, ...props }) => {
+    const redirect = useRedirect();
+
+    return (
+        <TopToolbar>
+            <Button
+                onClick={() => {
+                    redirect('/personal_accounts/refill');
+                }}
+                label="Recharger"
+            ><AttachMoneyIcon /></Button>
+            <FilterButton />
+            <CreateButton />
+            <ExportButton />
+        </TopToolbar>
+    );
+}
+
 const PersonalAccounts = (props) => (
     <>
-        <List {...props} filters={PersonalAccountsFilters}>
+        <List {...props} filters={PersonalAccountsFilters} actions={<PersonalAccountsListActions />}>
             <Datagrid>
                 <TextField source="id" />
                 <ReferenceField source="person_id" reference="people" link="show" >

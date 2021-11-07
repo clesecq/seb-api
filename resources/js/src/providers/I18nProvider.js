@@ -106,10 +106,18 @@ const messages = {
                 humans: "Gens",
                 people: "Personnes",
                 personal_accounts: "Comptes Personnels",
-                personal_transactions: "Transactions Personnelles"
+                personal_transactions: "Transactions Personnelles",
+                personal_refills: "Recharge Compte Perso.",
+                refill: "Recharger"
             }
         },
         resources: {
+            personal_refills: {
+                name: 'Recharger Compte Perso.',
+                fields: {
+                    amount: 'Montant'
+                }
+            },
             personal_transactions: {
                 name: 'Transaction Personnelle |||| Transactions Personnelles',
                 fields: {
@@ -459,7 +467,7 @@ const messages = {
                     category: 'Catégorie',
                     none: 'Aucun'
                 },
-                price: 'Totale'
+                price: 'Total'
             }
         }
     }),
