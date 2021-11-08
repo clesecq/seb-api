@@ -33,7 +33,7 @@ const PersonalAccountSelector = ({ label, ...props }) => {
     };
     const onScan = (data) => {
         if (data) {
-            let s = data.toString().match("http:\/\/esc\.gg\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}).*");
+            let s = data.toString().match("(?:https?:\/\/esc\.gg\/|core:\/\/)([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}).*");
             if (s !== null) {
                 onChange(s[1]);
                 setScanning(false);

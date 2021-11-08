@@ -47,7 +47,7 @@ const PersonalAccounts = (props) => (
                 <ReferenceInput source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText, has_account: false })}>
                     <AutocompleteInput optionText="fullname" />
                 </ReferenceInput>
-                <QRInput source="token" label="Scan Carte Étudiant" regexp="http:\/\/esc\.gg\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}).*" />
+                <QRInput source="token" label="Scan Carte Étudiant" regexp="(?:https?:\/\/esc\.gg\/|core:\/\/)([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}).*" />
             </SimpleForm>
         </CreateDialog>
         <ShowDialog>
