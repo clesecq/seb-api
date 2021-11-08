@@ -4,7 +4,7 @@ import DateField from '../components/DateField';
 import { ShowDialog } from '../components/DialogForm';
 
 const ArchivedMembersFilters = [
-    <ReferenceInput source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText, is_member: true })}>
+    <ReferenceInput source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText })}>
         <AutocompleteInput optionText="fullname" />
     </ReferenceInput>,
     <BooleanInput source="payed" />

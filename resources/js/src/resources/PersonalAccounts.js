@@ -7,7 +7,7 @@ import MoneyField from "../components/MoneyField";
 import QRInput from "../components/QRInput";
 
 const PersonalAccountsFilters = [
-    <ReferenceInput source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText, is_member: true })}>
+    <ReferenceInput source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText, has_account: true })}>
         <AutocompleteInput optionText="fullname" />
     </ReferenceInput>
 ];
@@ -44,7 +44,7 @@ const PersonalAccounts = (props) => (
         </List>
         <CreateDialog {...props}>
             <SimpleForm redirect="list">
-                <ReferenceInput source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText, is_member: false })}>
+                <ReferenceInput source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText, has_account: false })}>
                     <AutocompleteInput optionText="fullname" />
                 </ReferenceInput>
                 <QRInput source="token" label="Scan Carte Étudiant" regexp="http:\/\/esc\.gg\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}).*" />

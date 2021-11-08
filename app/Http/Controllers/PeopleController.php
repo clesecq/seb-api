@@ -24,11 +24,17 @@ class PeopleController extends Controller
                 foreach ($request->filter as $k => $v) {
                     if ($k == 'fullname') {
                         $data = $data->where(DB::raw("CONCAT(`firstname`, ' ', `lastname`)"), 'like', '%' . $v . '%');
-                    }else if ($k == 'is_member') {
+                    } else if ($k == 'is_member') {
                         if ($v) {
                             $data = $data->has('member');
                         } else {
                             $data = $data->doesntHave('member');
+                        }
+                    } else if ($k == 'has_account') {
+                        if ($v) {
+                            $data = $data->has('personal_account');
+                        } else {
+                            $data = $data->doesntHave('personal_account');
                         }
                     } else {
                         $data = $data->where($k, 'like', '%' . $v . '%');
