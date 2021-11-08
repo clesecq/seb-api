@@ -5,27 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Account extends Model
+class PersonalAccount extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        "id",
-        'name',
-        'iban',
-        'bic'
+        'person_id'
     ];
 
     protected $casts = [
         'balance' => 'double'
     ];
 
-    public function transactions() {
-        return $this->hasMany(Transaction::class);
+    public function person() {
+        return $this->belongsTo(Person::class);
+    }
+
+    public function personal_transactions() {
+        return $this->hasMany(PersonalTransaction::class);
     }
 
     public function recalculate() {
-        $this->balance = $this->transactions->sum('amount');
+        $this->balance = $this->personal_transactions->sum('amount');
         $this->save();
     }
 

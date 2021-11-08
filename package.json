@@ -35,6 +35,7 @@
     "ra-data-simple-rest": "^3.16.0",
     "ra-language-french": "^3.17.1",
     "react-admin": "^3.17.0",
+    "react-qr-reader": "^2.2.1",
     "react-router-dom": "^5.2.0",
     "recharts": "^2.1.1",
     "sass-reset": "^1.0.3",
@@ -45,7 +46,7 @@
   },
   "name": "seb",
   "description": "Management of stocks, member, accounting, sales, ...",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "main": "webpack.mix.js",
   "directories": {
     "test": "tests"

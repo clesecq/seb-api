@@ -15,6 +15,10 @@ class Person extends Model
         'discord_id'
     ];
 
+    protected $hidden = [
+        'edu_token'
+    ];
+
     protected $appends = ['fullname'];
 
     public function getFullnameAttribute()
@@ -24,5 +28,9 @@ class Person extends Model
 
     public function member() {
         return $this->hasOne(Member::class);
+    }
+
+    public function personal_account() {
+        return $this->hasOne(PersonalAccount::class);
     }
 }

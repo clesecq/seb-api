@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
     private function initAccounts($faker, $date)
     {
         // We start by creating a second accout, which will be the "Bank".
-        Account::create(['id' => 2, 'name' => 'Bank']);
+        Account::create(['id' => 1000, 'name' => 'Bank']);
 
         // We put some money in the bank
         $bankAmount = $faker->randomFloat(2, 300, 600);
@@ -100,7 +100,7 @@ class DatabaseSeeder extends Seeder
             'amount' => $bankAmount,
             'rectification' => true,
             'user_id' => 1, // Force ROOT
-            'account_id' => 2, // Bank account
+            'account_id' => 1000, // Bank account
             'category_id' => Config::integer('counts.category')
         ]);
 
@@ -301,7 +301,7 @@ class DatabaseSeeder extends Seeder
             'name' => Config::format("transferts.transaction", ["transfert" => $transfert->attributesToArray()]),
             'amount' => $amount,
             'rectification' => false,
-            'account_id' => 2,
+            'account_id' => 1000,
             'category_id' => Config::integer('transferts.category'),
             'user_id' => 1
         ]);
@@ -346,7 +346,7 @@ class DatabaseSeeder extends Seeder
             'name' => Config::format("purchases.transaction", ["purchase" => $purchase->attributesToArray()]),
             'amount' => -$price,
             'rectification' => false,
-            'account_id' => 2, // Pay with Bank account
+            'account_id' => 1000, // Pay with Bank account
             'category_id' => 2,
             'user_id' => 1 // By ROOT
         ]);
@@ -434,7 +434,7 @@ class DatabaseSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        $start = new DateTime('2017-08-01');
+        $start = new DateTime('2020-08-01');
         $end = new DateTime('2021-10-27');
 
         // Set the accounts up

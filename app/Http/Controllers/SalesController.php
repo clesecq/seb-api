@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Config;
 use App\Models\Sale;
 use App\Models\Movement;
+use App\Models\Person;
+use App\Models\PersonalTransaction;
 use App\Models\ProductMovement;
 use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class SalesController extends Controller
 {
@@ -36,6 +39,19 @@ class SalesController extends Controller
         }
     }
 
+    private function calculate_price($products) {
+        $amount = 0;
+
+        foreach ($products as $product) {
+            // Should never fail, but we never know
+            $p = Product::findOrFail($product['id']);
+            // Add to the amount
+            $amount += $p->price * intval($product["count"]);
+        }
+
+        return $amount;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -49,11 +65,27 @@ class SalesController extends Controller
             "products" => ['required', 'array'],
             "products.*.id" => ["required", "exists:products,id", "distinct"],
             "products.*.count" => ["required", "numeric", "integer", "min:1"],
+            "payment" => ['required', Rule::in(['cash', 'card', 'account'])]
         ]);
+
+        $amount = $this->calculate_price($products_data["products"]);
+        $paccount = null;
+        if ($products_data["payment"] == "account") {
+            $key_data = $request->validate(['token' => ['required', 'exists:people,edu_token']]);
+            $person = Person::where('edu_token', $key_data['token'])->firstOrFail();
+            $paccount = $person->personal_account;
+    
+            if (!$paccount->exists()) {
+                abort(404);
+            }
+
+            if ($paccount->balance < $amount) {
+                abort(422, "Pas assez d'argent sur le compte.");
+            }
+        }
 
         // We create the sale (needed to have the ID for the names)
         $sale = Sale::create();
-        $amount = 0;
 
         // We create the movement
         $movement = Movement::create([
@@ -72,22 +104,50 @@ class SalesController extends Controller
 
             // Create a product movement
             ProductMovement::create($data);
-
-            // Should never fail, but we never know
-            $p = Product::findOrFail($product['id']);
-            // Add to the amount
-            $amount += $p->price * intval($product["count"]);
         }
+
+        $account_id = $products_data["payment"] == "account" ? Config::integer('personal.account') : ($products_data["payment"] == 'card' ? Config::integer('card.account') : Config::integer('sales.account'));
 
         // We create the transaction
         $transaction = Transaction::create([
             'name' => Config::format("sales.transaction", ["sale" => $sale->attributesToArray()]),
             'amount' => $amount,
             'rectification' => false,
-            'account_id' => Config::integer('sales.account'),
+            'account_id' => $account_id,
             'category_id' => Config::integer('sales.category'),
             'user_id' => $request->user()->id
         ]);
+
+        if ($products_data["payment"] == "card") {
+            // We round the transaction fees to the upper cent
+            // (Information given by our card payment provider).
+            $a = ceil($amount * Config::number('card.fees.percent') * 100) / 100;
+
+            Transaction::create([
+                'name' => Config::format('card.fees.message', ['transaction' => $transaction->attributesToArray()]),
+                'amount' => -$a,
+                'rectification' => false,
+                'account_id' => Config::integer('card.account'),
+                'category_id' => Config::integer('card.fees.category'),
+                'user_id' => $request->user()->id
+            ]);
+        } else if ($products_data["payment"] == "account") {
+            $t = Transaction::create([
+                'name' => Config::format("sales.transaction", ["sale" => $sale->attributesToArray()]),
+                'amount' => -$amount,
+                'rectification' => false,
+                'account_id' => Config::integer('personal.account'),
+                'category_id' => Config::integer('personal.category'),
+                'user_id' => $request->user()->id
+            ]);
+
+            PersonalTransaction::create([
+                'amount' => -$amount,
+                'user_id' => $request->user()->id,
+                'personal_account_id' => $paccount->id,
+                'transaction_id' => $t->id
+            ]);
+        }
 
         // We affect the new transaction and movement to the sale
         $sale->transaction_id = $transaction->id;

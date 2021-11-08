@@ -106,8 +106,10 @@ const Menu = ({ onMenuClick, logout }) => {
             <Item to="/products_counts/create" permissions="products_counts.create" primaryText={translate('menu.left.count_stocks')} leftIcon={<BarChartIcon />} />
             <Accordeon open={false} title={translate('menu.left.humans')} permissions={["people.show", "members.show", "users.show"]}>
                 <Item to="/people" permissions="people.show" primaryText={translate('menu.left.people')} leftIcon={<EmojiPeopleIcon />} />
-            <Item to="/members" permissions="members.show" primaryText={translate('menu.left.members')} leftIcon={<GroupIcon />} />
+                <Item to="/members" permissions="members.show" primaryText={translate('menu.left.members')} leftIcon={<GroupIcon />} />
                 <Item to="/users" permissions="users.show" primaryText={translate('menu.left.users')} leftIcon={<AccountBoxIcon />} />
+                <Item to="/personal_accounts" permissions="personal_accounts.show" primaryText={translate('menu.left.personal_accounts')} leftIcon={<AccountBalanceIcon />} />
+                <Item to="/personal_transactions" permissions="personal_transactions.show" primaryText={translate('menu.left.personal_transactions')} leftIcon={<SwapHorizIcon />} />
             </Accordeon>
             <Accordeon open={false} title={translate('menu.left.stocks')} permissions={["products.show", "products_categories.show", "movements.show", "products_counts.show"]}>
                 <Item to="/products" permissions="products.show" primaryText={translate('menu.left.products')} leftIcon={<LocalCafeIcon />} />
