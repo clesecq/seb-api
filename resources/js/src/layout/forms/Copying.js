@@ -49,10 +49,12 @@ const Copying = withRouter(({ history: { goBack }, ...props }) => {
                             <li><a href="https://github.com/facebook/react">React</a> - {translate('copying.released')} <a href="https://opensource.org/licenses/MIT">{translate('copying.license.mit')}</a></li>
                             <li><a href="https://github.com/axios/axios">Axios</a> - {translate('copying.released')} <a href="https://opensource.org/licenses/MIT">{translate('copying.license.mit')}</a></li>
                             <li><a href="https://github.com/jashkenas/underscore">Underscore</a> - {translate('copying.released')} <a href="https://opensource.org/licenses/MIT">{translate('copying.license.mit')}</a></li>
+                            <li><a href="https://github.com/kybarg/react-qr-scanner">react-qr-scanner</a> - {translate('copying.released')} <a href="https://opensource.org/licenses/MIT">{translate('copying.license.mit')}</a></li>
                         </ul>
                         <Typography variant="h5" component="h2" gutterBottom>{translate('copying.contributors')}</Typography>
                         <ul>
-                            <li><a href="github.com/M4xi1m3/">Maxime "M4x1m3" Friess</a> <a href="mailto:maxime.friess@pm.me">&lt;maxime.friess@pm.me&gt;</a> </li>
+                            <li><a href="https://github.com/M4xi1m3/">Maxime "M4x1m3" Friess</a> <a href="mailto:maxime.friess@pm.me">&lt;maxime.friess@pm.me&gt;</a> </li>
+                            <li><a href="https://github.com/StelFux/">Charles Lesecq</a> <a href="mailto:charles.lesecq@etu.unistra.fr">&lt;charles.lesecq@etu.unistra.fr&gt;</a> </li>
                         </ul>
                     </div>
                     <TopToolbar style={{ paddingTop: 0 }}>
