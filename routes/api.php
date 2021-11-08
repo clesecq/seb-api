@@ -18,6 +18,7 @@ use App\Http\Controllers\MovementsController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\PersonalAccountsController;
+use App\Http\Controllers\PersonalRefillsController;
 use App\Http\Controllers\PersonalTransactionsController;
 use App\Http\Controllers\ProductCountsController;
 use App\Http\Controllers\PurchasesController;
@@ -91,5 +92,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::res("sales", Sale::class, SalesController::class, ['final']);
     Route::res("personal_accounts", PersonalAccount::class, PersonalAccountsController::class, ['final']);
     Route::res("personal_transactions", PersonalTransaction::class, PersonalTransactionsController::class, ['readonly']);
-    Route::post("personal_refills", [PersonalAccountsController::class, "refill"]);
+    Route::res("personal_refills", PersonalTransaction::class, PersonalRefillsController::class, ['writeonly']);
 });

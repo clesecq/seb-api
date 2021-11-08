@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
                 Route::get($name . "/archive", [$controller, "archive"])->middleware('permission:' . $name . '.archive');
             }
 
-            if (!in_array('final', $options) && !in_array('readonly', $options)) {
+            if (!in_array('final', $options) && !in_array('readonly', $options) && !in_array('writeonly', $options)) {
                 Route::delete($name . "/{id}", [$controller, "destroy"])->middleware('permission:' . $name . '.delete');
                 Route::delete($name, [$controller, "destroyMany"])->middleware('permission:' . $name . '.delete');
                 Route::put($name . "/{id}", [$controller, "update"])->middleware('permission:' . $name . '.update');
@@ -54,8 +54,10 @@ class AppServiceProvider extends ServiceProvider
                 Route::post($name, [$controller, "store"])->middleware('permission:' . $name . '.create');
             }
 
-            Route::get($name, [$controller, "index"])->middleware('permission:' . $name . '.show');
-            Route::get($name . "/{id}", [$controller, "show"])->middleware('permission:' . $name . '.show');
+            if (!in_array('writeonly', $options)) {
+                Route::get($name, [$controller, "index"])->middleware('permission:' . $name . '.show');
+                Route::get($name . "/{id}", [$controller, "show"])->middleware('permission:' . $name . '.show');
+            }
         });
     }
 }
