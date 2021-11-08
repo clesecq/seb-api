@@ -111,7 +111,7 @@ class PersonalAccountsController extends Controller
             // (Information given by our card payment provider).
             $amount = ceil($data['amount'] * Config::number('card.fees.percent') * 100) / 100;
 
-            $transaction = Transaction::create([
+            Transaction::create([
                 'name' => Config::format('card.fees.message', ['transaction' => $transaction->attributesToArray()]),
                 'amount' => -$amount,
                 'rectification' => false,
