@@ -124,6 +124,7 @@ const messages = {
                     id: '#',
                     amount: 'Montant',
                     personal_account_id: 'Compte Personel',
+                    transaction_id: 'Transaction',
                     user_id: 'Créateur',
                     created_at: 'Créé le',
                     updated_at: 'Modifié le'

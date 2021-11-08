@@ -19,6 +19,9 @@ const PersonalTransactions = (props) => (
             <Datagrid>
                 <TextField source="id" />
                 <MoneyField noLabel={true} source="amount" />
+                <ReferenceField source="transaction_id" reference="transactions" link="show">
+                    <TextField source="name" />
+                </ReferenceField>
                 <ReferenceField source="personal_account_id" reference="personal_accounts">
                     <TextField source="person.fullname" />
                 </ReferenceField>
@@ -35,6 +38,9 @@ const PersonalTransactions = (props) => (
                 <MoneyField source="amount" />
                 <ReferenceField source="personal_account_id" reference="personal_accounts" link="show">
                     <TextField source="person.fullname" />
+                </ReferenceField>
+                <ReferenceField source="transaction_id" reference="transactions" link="show">
+                    <TextField source="name" />
                 </ReferenceField>
                 <ReferenceField source="user_id" reference="users" link="show">
                     <TextField source="username" />

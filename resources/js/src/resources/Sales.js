@@ -72,7 +72,7 @@ const Sell = props => {
                         { id: 'cash', name: 'Liquide (Caisse)' },
                         { id: 'card', name: 'Carte Bancaire' },
                         { id: 'account', name: 'Compte personel' },
-                    ]} />
+                    ]} initialValue='cash' />
                     <FormDataConsumer>
                         {({ formData, ...rest }) => formData.payment === 'account' &&
                             <PersonalAccountSelector source="token" label="Compte" />
