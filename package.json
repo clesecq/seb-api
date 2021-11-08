@@ -46,7 +46,6 @@
   },
   "name": "seb",
   "description": "Management of stocks, member, accounting, sales, ...",
-  "version": "dev",
   "main": "webpack.mix.js",
   "directories": {
     "test": "tests"
