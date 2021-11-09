@@ -59,6 +59,8 @@ class CreatePeopleTable extends Migration
         });
         Schema::table('archived_members', function(Blueprint $table) {
             $table->dropColumn('discord_id');
+        });
+        Schema::table('archived_members', function(Blueprint $table) {
             $table->foreignId('person_id');
         });
     }

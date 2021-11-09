@@ -10,6 +10,7 @@ use App\Models\Sale;
 use App\Models\Transaction;
 use App\Models\TransactionCategory;
 use App\Models\User;
+use Carbon\Carbon;
 use DateTimeImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -50,7 +51,7 @@ class DashboardController extends Controller
         foreach(Product::all() as $product) {
             $data['products'][] = [
                 'name' => $product->name,
-                'value' => -doubleval(Movement::where('created_at', '>', DB::raw('CURRENT_DATE() - INTERVAL 1 YEAR'))->whereIn('id', $sales_movement_id)->join('product_movement', 'movements.id', '=', 'product_movement.movement_id')->where('product_id', $product->id)->where('count', '<', '0')->sum('count'))
+                'value' => -doubleval(Movement::where('created_at', '>', Carbon::now()->subYear())->whereIn('id', $sales_movement_id)->join('product_movement', 'movements.id', '=', 'product_movement.movement_id')->where('product_id', $product->id)->where('count', '<', '0')->sum('count'))
             ];
         }
 
@@ -95,8 +96,8 @@ class DashboardController extends Controller
         $account_last_values = [];
 
         foreach (Account::all() as $account) {
-            $transactions_start = doubleval(Transaction::where('created_at', '<', DB::raw('CURRENT_DATE() - INTERVAL 1 YEAR'))->where('account_id', $account->id)->sum('amount'));
-            $transactions_data = DB::table('transactions')->select(DB::raw('DATE(created_at) as date, sum(amount) as amount'))->where('created_at', '>=', DB::raw('CURRENT_DATE() - INTERVAL 1 YEAR'))->where('account_id', $account->id)->groupBy('date')->get();
+            $transactions_start = doubleval(Transaction::where('created_at', '<', Carbon::now()->subYear())->where('account_id', $account->id)->sum('amount'));
+            $transactions_data = DB::table('transactions')->select(DB::raw('DATE(created_at) as date, sum(amount) as amount'))->where('created_at', '>=', Carbon::now()->subYear())->where('account_id', $account->id)->groupBy('date')->get();
             $account_last_values[$account->id] = $transactions_start;
             foreach ($transactions_data as $transaction) {
                 if (!array_key_exists($transaction->date, $temp_data)) {
@@ -151,16 +152,16 @@ class DashboardController extends Controller
 
             $data['categories'][] = [
                 'name' => $category->name,
-                'value' => max(0, doubleval(Transaction::where('created_at', '>', DB::raw('CURRENT_DATE() - INTERVAL 1 YEAR'))->where('category_id', $category->id)->sum('amount')))
+                'value' => max(0, doubleval(Transaction::where('created_at', '>', Carbon::now()->subYear())->where('category_id', $category->id)->sum('amount')))
             ];
 
             $data['categories_positive'][] = [
                 'name' => $category->name,
-                'value' => doubleval(Transaction::where('created_at', '>', DB::raw('CURRENT_DATE() - INTERVAL 1 YEAR'))->where('category_id', $category->id)->where('amount', '>', '0')->sum('amount'))
+                'value' => doubleval(Transaction::where('created_at', '>', Carbon::now()->subYear())->where('category_id', $category->id)->where('amount', '>', '0')->sum('amount'))
             ];
             $data['categories_negative'][] = [
                 'name' => $category->name,
-                'value' => -doubleval(Transaction::where('created_at', '>', DB::raw('CURRENT_DATE() - INTERVAL 1 YEAR'))->where('category_id', $category->id)->where('amount', '<', '0')->sum('amount'))
+                'value' => -doubleval(Transaction::where('created_at', '>', Carbon::now()->subYear())->where('category_id', $category->id)->where('amount', '<', '0')->sum('amount'))
             ];
         }
 
