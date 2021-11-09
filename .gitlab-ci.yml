@@ -28,7 +28,6 @@ npm:
   artifacts:
     expire_in: 1 month
     paths:
-      - node_modules/
       - public/css/
       - public/js/
 
