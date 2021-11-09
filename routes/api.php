@@ -70,10 +70,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
     Route::get("profile/me", [ProfileController::class, 'show']);
+
     Route::get("dashboard/home", [DashboardController::class, 'home']);
-    Route::get("dashboard/accounts", [DashboardController::class, 'accounts']);
-    Route::get("dashboard/products", [DashboardController::class, 'products']);
-    Route::get("dashboard/sellers", [DashboardController::class, 'sellers']);
+    Route::get("dashboard/accounts", [DashboardController::class, 'accounts'])->middleware('permission:accounts.show');
+    Route::get("dashboard/products", [DashboardController::class, 'products'])->middleware('permission:sales.show');
+    Route::get("dashboard/sellers", [DashboardController::class, 'sellers'])->middleware('permission:users.show');
+
     Route::res("users", User::class, UsersController::class);
     Route::res("people", Person::class, PeopleController::class);
     Route::res("members", Member::class, MembersController::class, ['archive']);
