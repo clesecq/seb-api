@@ -23,12 +23,11 @@ npm:
     paths:
       - node_modules/
   script:
-    - npm install
-    - npm run production
+    - yarn install
+    - yarn run production
   artifacts:
     expire_in: 1 month
     paths:
-      - node_modules/
       - public/css/
       - public/js/
 
