@@ -25,15 +25,19 @@ class Member extends Model
         return $this->transaction_id != null;
     }
 
+    // phpcs:ignore
     public function person()
     {
         return $this->belongsTo(Person::class);
     }
 
-    function pay()
+    public function pay()
     {
         if ($this->transaction_id == null) {
-            $message = Config::format("members.contribution.transaction", ["member" => $this->person->attributesToArray()]);
+            $message = Config::format(
+                "members.contribution.transaction",
+                ["member" => $this->person->attributesToArray()]
+            );
 
             $this->transaction_id = Transaction::create([
                 'name' => $message,

@@ -36,7 +36,8 @@ class PersonalRefillsController extends Controller
             'name' => Config::format('personal.refills.transaction', ['person' => $person->attributesToArray()]),
             'amount' => $data['amount'],
             'rectification' => false,
-            'account_id' => $data["payment"] == 'card' ? Config::integer('card.account') : Config::integer('sales.account'),
+            'account_id' => $data["payment"] == 'card' ?
+                Config::integer('card.account') : Config::integer('sales.account'),
             'category_id' => Config::integer('personal.category'),
             'user_id' => $request->user()->id
         ]);

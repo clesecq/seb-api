@@ -21,16 +21,18 @@ class AccountCountsController extends Controller
         if (is_array($request->ids)) {
             return ["data" => AccountCount::with('transaction')->whereIn('id', $request->ids)->get()];
         } else {
-            $data = AccountCount::with('transaction')->orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
+            $data = AccountCount::with('transaction')
+                ->orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
                 foreach ($request->filter as $k => $v) {
                     $data = $data->where($k, 'like', '%' . $v . '%');
                 }
             }
-            if (!is_null($request->per_page))
+            if (!is_null($request->per_page)) {
                 $data = $data->paginate((int) $request->per_page);
-            else
+            } else {
                 $data = ["data" => $data->get(), "total" => $data->count()];
+            }
             return $data;
         }
     }

@@ -33,7 +33,10 @@ class DashboardController extends Controller
         }
 
         if ($request->user()->hasPermission('products.show')) {
-            $data["stocks_value"] = doubleval(Product::select(DB::raw('sum(price * count) as total'))->first()->total);
+            $data["stocks_value"] = doubleval(
+                Product::select(DB::raw('sum(price * count) as total'))
+                    ->first()->total
+            );
         }
 
         return ['data' => $data];
@@ -45,17 +48,22 @@ class DashboardController extends Controller
 
         // Product sales
         $data['products'] = [];
-        
+
         $sales_movement_id = Sale::all()->pluck('movement_id')->toArray();
 
-        foreach(Product::all() as $product) {
+        foreach (Product::all() as $product) {
             $data['products'][] = [
                 'name' => $product->name,
-                'value' => -doubleval(Movement::where('created_at', '>', Carbon::now()->subYear())->whereIn('id', $sales_movement_id)->join('product_movement', 'movements.id', '=', 'product_movement.movement_id')->where('product_id', $product->id)->where('count', '<', '0')->sum('count'))
+                'value' => -doubleval(
+                    Movement::where('created_at', '>', Carbon::now()->subYear())
+                        ->whereIn('id', $sales_movement_id)
+                        ->join('product_movement', 'movements.id', '=', 'product_movement.movement_id')
+                        ->where('product_id', $product->id)->where('count', '<', '0')->sum('count')
+                )
             ];
         }
 
-    
+
         return ['data' => $data];
     }
 
@@ -63,7 +71,7 @@ class DashboardController extends Controller
     {
         $req = DB::table("movements")
             ->join("product_movement", "movements.id", "=", "product_movement.movement_id")
-            ->whereIn('product_movement.movement_id', function($q) {
+            ->whereIn('product_movement.movement_id', function ($q) {
                 $q->select('movement_id')->from('sales');
             })
             ->groupBy('movements.user_id')
@@ -73,7 +81,7 @@ class DashboardController extends Controller
 
         $data = [];
 
-        foreach($raw as $line) {
+        foreach ($raw as $line) {
             $users = User::findOrFail($line->user_id);
             $data[] = [
                 "name" => $users->firstname . " " . $users->lastname,
@@ -96,8 +104,17 @@ class DashboardController extends Controller
         $account_last_values = [];
 
         foreach (Account::all() as $account) {
-            $transactions_start = doubleval(Transaction::where('created_at', '<', Carbon::now()->subYear())->where('account_id', $account->id)->sum('amount'));
-            $transactions_data = DB::table('transactions')->select(DB::raw('DATE(created_at) as date, sum(amount) as amount'))->where('created_at', '>=', Carbon::now()->subYear())->where('account_id', $account->id)->groupBy('date')->get();
+            $transactions_start = doubleval(
+                Transaction::where('created_at', '<', Carbon::now()->subYear())
+                    ->where('account_id', $account->id)
+                    ->sum('amount')
+            );
+            $transactions_data = DB::table('transactions')
+                ->select(DB::raw('DATE(created_at) as date, sum(amount) as amount'))
+                ->where('created_at', '>=', Carbon::now()->subYear())
+                ->where('account_id', $account->id)
+                ->groupBy('date')
+                ->get();
             $account_last_values[$account->id] = $transactions_start;
             foreach ($transactions_data as $transaction) {
                 if (!array_key_exists($transaction->date, $temp_data)) {
@@ -147,21 +164,38 @@ class DashboardController extends Controller
         $data['categories'] = [];
 
         foreach (TransactionCategory::all() as $category) {
-            if ($category->id == Config::integer('transferts.category') || $category->id == Config::integer('counts.category'))
+            if ($category->id == Config::integer('transferts.category') ||
+                $category->id == Config::integer('counts.category')
+            ) {
                 continue;
+            }
 
             $data['categories'][] = [
                 'name' => $category->name,
-                'value' => max(0, doubleval(Transaction::where('created_at', '>', Carbon::now()->subYear())->where('category_id', $category->id)->sum('amount')))
+                'value' => max(0, doubleval(
+                    Transaction::where('created_at', '>', Carbon::now()->subYear())
+                        ->where('category_id', $category->id)
+                        ->sum('amount')
+                ))
             ];
 
             $data['categories_positive'][] = [
                 'name' => $category->name,
-                'value' => doubleval(Transaction::where('created_at', '>', Carbon::now()->subYear())->where('category_id', $category->id)->where('amount', '>', '0')->sum('amount'))
+                'value' => doubleval(
+                    Transaction::where('created_at', '>', Carbon::now()->subYear())
+                        ->where('category_id', $category->id)
+                        ->where('amount', '>', '0')
+                        ->sum('amount')
+                )
             ];
             $data['categories_negative'][] = [
                 'name' => $category->name,
-                'value' => -doubleval(Transaction::where('created_at', '>', Carbon::now()->subYear())->where('category_id', $category->id)->where('amount', '<', '0')->sum('amount'))
+                'value' => -doubleval(
+                    Transaction::where('created_at', '>', Carbon::now()->subYear())
+                        ->where('category_id', $category->id)
+                        ->where('amount', '<', '0')
+                        ->sum('amount')
+                )
             ];
         }
 

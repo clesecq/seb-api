@@ -21,7 +21,6 @@ class AddPersonalAccountsOptions extends Migration
         TransactionCategory::create(['id' => 5, 'name' => 'Personal Accounts']);
         Config::create(['name' => 'personal.category', 'value' => '5']);
         Config::create(['name' => 'personal.refills.transaction', 'value' => 'Refill {person.fullname}']);
-    
     }
 
     /**

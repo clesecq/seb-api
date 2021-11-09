@@ -71,7 +71,7 @@ const Accordeon = (props) => {
                         <ListItemText primary={props.title} />
                     </MenuItem>
                 </Tooltip>
-                <Collapse in={open} style={{minHeight: "auto"}}>
+                <Collapse in={open} style={{ minHeight: "auto" }}>
                     {props.children}
                 </Collapse>
             </>) : ''}

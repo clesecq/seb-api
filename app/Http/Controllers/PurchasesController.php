@@ -27,10 +27,11 @@ class PurchasesController extends Controller
                     $data = $data->where($k, 'like', '%' . $v . '%');
                 }
             }
-            if (!is_null($request->per_page))
+            if (!is_null($request->per_page)) {
                 $data = $data->paginate((int) $request->per_page);
-            else
+            } else {
                 $data = ["data" => $data->get(), "total" => $data->count()];
+            }
             return $data;
         }
     }
@@ -52,8 +53,9 @@ class PurchasesController extends Controller
             'has_products' => ['sometimes', 'required', 'boolean']
         ]);
 
-        if (!array_key_exists('has_products', $data))
-        $data['has_products'] = false;
+        if (!array_key_exists('has_products', $data)) {
+            $data['has_products'] = false;
+        }
 
         if ($data['has_products']) {
             $products_data = $request->validate([
@@ -115,6 +117,8 @@ class PurchasesController extends Controller
      */
     public function show($id)
     {
-        return ['data' => Purchase::with(['movement', 'movement.products', 'movement.products.product', 'transaction'])->findOrFail($id)];
+        return ['data' => Purchase::with(
+            ['movement', 'movement.products', 'movement.products.product', 'transaction']
+        )->findOrFail($id)];
     }
 }

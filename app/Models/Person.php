@@ -26,11 +26,15 @@ class Person extends Model
         return $this->firstname . " " . $this->lastname;
     }
 
-    public function member() {
+    // phpcs:ignore
+    public function member()
+    {
         return $this->hasOne(Member::class);
     }
 
-    public function personal_account() {
+    // phpcs:ignore
+    public function personal_account()
+    {
         return $this->hasOne(PersonalAccount::class);
     }
 }

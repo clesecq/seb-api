@@ -18,18 +18,21 @@ class TransfertsController extends Controller
     public function index(Request $request)
     {
         if (is_array($request->ids)) {
-            return ["data" => Transfert::with(['sub_transaction', 'add_transaction'])->whereIn('id', $request->ids)->get()];
+            return ["data" => Transfert::with(['sub_transaction', 'add_transaction'])
+                ->whereIn('id', $request->ids)->get()];
         } else {
-            $data = Transfert::with(['sub_transaction', 'add_transaction'])->orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
+            $data = Transfert::with(['sub_transaction', 'add_transaction'])
+                ->orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
                 foreach ($request->filter as $k => $v) {
                     $data = $data->where($k, 'like', '%' . $v . '%');
                 }
             }
-            if (!is_null($request->per_page))
+            if (!is_null($request->per_page)) {
                 $data = $data->paginate((int) $request->per_page);
-            else
+            } else {
                 $data = ["data" => $data->get(), "total" => $data->count()];
+            }
             return $data;
         }
     }

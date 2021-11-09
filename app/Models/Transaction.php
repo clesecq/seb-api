@@ -12,8 +12,9 @@ class Transaction extends Model
     protected static function booted()
     {
         static::created(function ($transaction) {
-            if (config('recalculate_for_all_transaction', true))
+            if (config('recalculate_for_all_transaction', true)) {
                 $transaction->account->recalculate();
+            }
         });
     }
 

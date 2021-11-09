@@ -33,11 +33,11 @@ const Users = (props) => (
         </List>
         <CreateDialog {...props}>
             <SimpleForm redirect="list">
-                <TextInput  source="username" />
-                <TextInput  source="firstname" />
-                <TextInput  source="lastname" />
-                <TextInput  source="email" />
-                <ReferenceArrayInput  label="Permissions" reference="permissions" source="permissions">
+                <TextInput source="username" />
+                <TextInput source="firstname" />
+                <TextInput source="lastname" />
+                <TextInput source="email" />
+                <ReferenceArrayInput label="Permissions" reference="permissions" source="permissions">
                     <AutocompleteArrayInput />
                 </ReferenceArrayInput>
             </SimpleForm>

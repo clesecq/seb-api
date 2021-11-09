@@ -6,7 +6,7 @@ import { CartesianGrid, Cell, Legend, Line, LineChart, Pie, PieChart, Responsive
 import ColorProvider from '../../providers/ColorProvider';
 
 const dateFormatter = date => {
-    return format(new Date(date*1000), "dd/MM/yyyy");
+    return format(new Date(date * 1000), "dd/MM/yyyy");
 };
 
 const formatter = (value, name, props) => {
@@ -65,7 +65,7 @@ const TransactionsGraphPanel = ({ data }) => {
     const translate = useTranslate();
 
     let start = new Date();
-    start.setFullYear( start.getFullYear() - 1 );
+    start.setFullYear(start.getFullYear() - 1);
 
     return ('transactions' in data ? (
         <Grid item xs={12}>
@@ -73,7 +73,7 @@ const TransactionsGraphPanel = ({ data }) => {
             <ResponsiveContainer width="100%" height={400}>
                 <LineChart data={data.transactions.data} width={600} height={300}
                     margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                    <XAxis domain={[Math.floor(start.getTime()/1000), Math.floor(Date.now()/1000)]} type="number" dataKey={data.transactions.date_field} tickFormatter={dateFormatter} />
+                    <XAxis domain={[Math.floor(start.getTime() / 1000), Math.floor(Date.now() / 1000)]} type="number" dataKey={data.transactions.date_field} tickFormatter={dateFormatter} />
                     <Tooltip labelFormatter={dateFormatter} formatter={formatter} />
                     <Legend verticalAlign="top" />
                     <YAxis />

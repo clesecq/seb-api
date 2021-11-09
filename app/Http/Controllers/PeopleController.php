@@ -24,13 +24,13 @@ class PeopleController extends Controller
                 foreach ($request->filter as $k => $v) {
                     if ($k == 'fullname') {
                         $data = $data->where(DB::raw("CONCAT(`firstname`, ' ', `lastname`)"), 'like', '%' . $v . '%');
-                    } else if ($k == 'is_member') {
+                    } elseif ($k == 'is_member') {
                         if ($v) {
                             $data = $data->has('member');
                         } else {
                             $data = $data->doesntHave('member');
                         }
-                    } else if ($k == 'has_account') {
+                    } elseif ($k == 'has_account') {
                         if ($v) {
                             $data = $data->has('personal_account');
                         } else {
@@ -41,10 +41,11 @@ class PeopleController extends Controller
                     }
                 }
             }
-            if (!is_null($request->per_page))
+            if (!is_null($request->per_page)) {
                 $data = $data->paginate((int) $request->per_page);
-            else
+            } else {
                 $data = ["data" => $data->get(), "total" => $data->count()];
+            }
             return $data;
         }
     }

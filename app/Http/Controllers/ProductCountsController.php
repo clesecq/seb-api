@@ -27,10 +27,11 @@ class ProductCountsController extends Controller
                     $data = $data->where($k, 'like', '%' . $v . '%');
                 }
             }
-            if (!is_null($request->per_page))
+            if (!is_null($request->per_page)) {
                 $data = $data->paginate((int) $request->per_page);
-            else
+            } else {
                 $data = ["data" => $data->get(), "total" => $data->count()];
+            }
             return $data;
         }
     }

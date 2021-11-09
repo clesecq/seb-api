@@ -204,7 +204,7 @@ const TokenField = ({ onClick, ...props }) => {
     const record = useRecordContext(props);
     const translate = useTranslate();
 
-    
+
     const { loading, handleDelete } = useDeleteWithConfirmController({
         resource: "tokens",
         record: record,

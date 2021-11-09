@@ -44,7 +44,7 @@ const BestSellersBarPanel = ({ data }) => {
                             {sellers.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={ColorProvider.randomSColor()} />
                             ))}
-                            <LabelList dataKey="name" content={renderCustomizedLabel} position="insideRight" style={{ fill: "white" }}/>
+                            <LabelList dataKey="name" content={renderCustomizedLabel} position="insideRight" style={{ fill: "white" }} />
                         </Bar>
                     </BarChart>
                 </ResponsiveContainer>

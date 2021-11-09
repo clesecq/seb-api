@@ -31,15 +31,17 @@ class SalesController extends Controller
                     $data = $data->where($k, 'like', '%' . $v . '%');
                 }
             }
-            if (!is_null($request->per_page))
+            if (!is_null($request->per_page)) {
                 $data = $data->paginate((int) $request->per_page);
-            else
+            } else {
                 $data = ["data" => $data->get(), "total" => $data->count()];
+            }
             return $data;
         }
     }
 
-    private function calculate_price($products) {
+    private function calculatePrice($products)
+    {
         $amount = 0;
 
         foreach ($products as $product) {
@@ -68,13 +70,13 @@ class SalesController extends Controller
             "payment" => ['required', Rule::in(['cash', 'card', 'account'])]
         ]);
 
-        $amount = $this->calculate_price($products_data["products"]);
+        $amount = $this->calculatePrice($products_data["products"]);
         $paccount = null;
         if ($products_data["payment"] == "account") {
             $key_data = $request->validate(['token' => ['required', 'exists:people,edu_token']]);
             $person = Person::where('edu_token', $key_data['token'])->firstOrFail();
             $paccount = $person->personal_account;
-    
+
             if (!$paccount->exists()) {
                 abort(404);
             }
@@ -106,7 +108,9 @@ class SalesController extends Controller
             ProductMovement::create($data);
         }
 
-        $account_id = $products_data["payment"] == "account" ? Config::integer('personal.account') : ($products_data["payment"] == 'card' ? Config::integer('card.account') : Config::integer('sales.account'));
+        $account_id = $products_data["payment"] == "account" ?
+            Config::integer('personal.account') : ($products_data["payment"] == 'card' ?
+                Config::integer('card.account') : Config::integer('sales.account'));
 
         // We create the transaction
         $transaction = Transaction::create([
@@ -131,7 +135,7 @@ class SalesController extends Controller
                 'category_id' => Config::integer('card.fees.category'),
                 'user_id' => $request->user()->id
             ]);
-        } else if ($products_data["payment"] == "account") {
+        } elseif ($products_data["payment"] == "account") {
             $t = Transaction::create([
                 'name' => Config::format("sales.transaction", ["sale" => $sale->attributesToArray()]),
                 'amount' => -$amount,
@@ -166,6 +170,8 @@ class SalesController extends Controller
      */
     public function show($id)
     {
-        return ['data' => Sale::with(['movement', 'movement.products', 'movement.products.product', 'transaction'])->findOrFail($id)];
+        return ['data' => Sale::with(
+            ['movement', 'movement.products', 'movement.products.product', 'transaction']
+        )->findOrFail($id)];
     }
 }

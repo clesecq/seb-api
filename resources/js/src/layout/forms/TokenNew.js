@@ -62,7 +62,7 @@ const TokenNew = (props) => {
                     setStep(1);
                 }).catch(error => {
                     setLoading(false);
-            
+
                     if (error?.response?.data?.message) {
                         let message = "";
                         if (error?.response?.data?.errors !== undefined) {

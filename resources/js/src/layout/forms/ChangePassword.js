@@ -47,7 +47,7 @@ const ChangePassword = (props) => {
     const redirect = useRedirect();
     const classes = useStyles(props);
 
-    const submit = ({current_password, password, password_confirmation}) => {
+    const submit = ({ current_password, password, password_confirmation }) => {
         setLoading(true);
         axios.get('/sanctum/csrf-cookie').then(response => {
             return axios.put('/user/password', {

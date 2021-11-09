@@ -136,9 +136,10 @@ class AutomatedTransactionsController extends Controller
         $data['user_id'] = $request->user()->id;
 
         if (is_array($request->ids)) {
-            AutomatedTransaction::whereIn('id', $request->ids)->get()->each(function ($automated_transaction) use ($data) {
-                $automated_transaction->update($data);
-            });
+            AutomatedTransaction::whereIn('id', $request->ids)->get()
+                ->each(function ($automated_transaction) use ($data) {
+                    $automated_transaction->update($data);
+                });
             return response(["data" => $request->ids], 200);
         } else {
             return response([], 400);

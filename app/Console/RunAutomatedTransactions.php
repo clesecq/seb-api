@@ -8,8 +8,9 @@ use Carbon\Carbon;
 
 class RunAutomatedTransactions
 {
-    private function should_run(AutomatedTransaction $trans) : bool {
-        switch($trans->frequency) {
+    private function shouldRun(AutomatedTransaction $trans): bool
+    {
+        switch ($trans->frequency) {
             case "dayly":
                 return true;
             case "weekly":
@@ -24,8 +25,8 @@ class RunAutomatedTransactions
 
     public function __invoke()
     {
-        foreach(AutomatedTransaction::all() as $auto_transaction) {
-            if ($this->should_run($auto_transaction)) {
+        foreach (AutomatedTransaction::all() as $auto_transaction) {
+            if ($this->shouldRun($auto_transaction)) {
                 echo '[AutoTransaction] ' . $auto_transaction->name . "\n";
                 Transaction::create($auto_transaction->attributesToArray());
             }

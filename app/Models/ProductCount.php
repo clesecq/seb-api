@@ -18,7 +18,8 @@ class ProductCount extends Model
         'data' => 'array'
     ];
 
-    public function movement() {
+    public function movement()
+    {
         return $this->belongsTo(Movement::class);
     }
 }
