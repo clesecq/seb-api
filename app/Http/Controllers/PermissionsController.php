@@ -91,8 +91,9 @@ class PermissionsController extends Controller
                 }
             }
             $total = $data->count();
-            if (!is_null($request->per_page))
+            if (!is_null($request->per_page)) {
                 $data = $data->forPage((int) $request->page, (int) $request->per_page);
+            }
             return ["data" => $data->values(), "total" => $total];
         }
     }

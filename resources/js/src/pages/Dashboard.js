@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, Grid, makeStyles, Tab, Table, TableBody, TableCell, TableRow, Tabs, Typography } from '@material-ui/core';
 import React from "react";
-import { Error, Loading, Title, useQuery, useTranslate } from 'react-admin';
+import { Error, Loading, Title, usePermissions, useQuery, useTranslate } from 'react-admin';
 import ColorProvider from '../providers/ColorProvider';
 import AccountsStatistics from './statistics/AccountsStatistics';
 import ProductsStatistics from './statistics/ProductsStatistics';
@@ -19,7 +19,7 @@ const AccountsPanel = ({ data }) => {
     const translate = useTranslate();
     const styles = useStyles();
 
-    return ('accounts' in data || 'stocks_value' in data ? (
+    return ('accounts' in data && 'stocks_value' in data ? (
         <Grid item xs={12} lg={4} xl={3}>
             <Card style={{ height: '100%' }}>
                 <CardContent>
@@ -108,8 +108,18 @@ function TabPanel(props) {
     );
 }
 
+function permMatch(userperms, elemperm) {
+    if (userperms === undefined)
+        return false;
+
+    const [resource, access] = elemperm.split(".");
+
+    return userperms.includes("*.*") || userperms.includes(resource + ".*") || userperms.includes("*." + access) || userperms.includes(elemperm);
+}
+
 const StatisticsPanel = (props) => {
     const [value, setValue] = React.useState(0);
+    const { permissions } = usePermissions();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -119,7 +129,9 @@ const StatisticsPanel = (props) => {
         setValue(index);
     };
 
-    return (
+    let i = 0;
+
+    return (permMatch(permissions, "accounts.show") || permMatch(permissions, "sales.show") || permMatch(permissions, "users.show")) ? (
         <Grid item xs={12}>
             <Card style={{ height: '100%' }}>
                 <Tabs
@@ -127,22 +139,22 @@ const StatisticsPanel = (props) => {
                     onChange={handleChange}
                     indicatorColor="primary"
                     textColor="primary">
-                    <Tab label="Comptes" />
-                    <Tab label="Stocks" />
-                    <Tab label="Vendeurs" />
+                    {permMatch(permissions, "accounts.show") ? (<Tab label="Comptes" />) : ""}
+                    {permMatch(permissions, "sales.show") ? (<Tab label="Stocks" />) : ""}
+                    {permMatch(permissions, "users.show") ? (<Tab label="Vendeurs" />) : ""}
                 </Tabs>
-                <TabPanel value={value} index={0}>
+                {permMatch(permissions, "accounts.show") ? (<TabPanel value={value} index={i++}>
                     <AccountsStatistics />
-                </TabPanel>
-                <TabPanel value={value} index={1}>
+                </TabPanel>) : ""}
+                {permMatch(permissions, "sales.show") ? (<TabPanel value={value} index={i++}>
                     <ProductsStatistics />
-                </TabPanel>
-                <TabPanel value={value} index={2}>
+                </TabPanel>) : ""}
+                {permMatch(permissions, "users.show") ? (<TabPanel value={value} index={i++}>
                     <SellersStatistics />
-                </TabPanel>
+                </TabPanel>) : ""}
             </Card>
         </Grid>
-    );
+    ) : "";
 };
 
 export default () => {

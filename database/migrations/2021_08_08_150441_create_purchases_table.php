@@ -21,7 +21,7 @@ class CreatePurchasesTable extends Migration
             $table->foreignId('movement_id')->nullable()->default(null);
             $table->timestamps();
         });
-        
+
         Config::create(['name' => 'purchases.transaction', 'value' => 'Purchase #{purchase.id}']);
         Config::create(['name' => 'purchases.movement', 'value' => 'Purchase #{purchase.id}']);
     }

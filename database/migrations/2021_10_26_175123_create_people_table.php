@@ -27,7 +27,7 @@ class CreatePeopleTable extends Migration
         });
 
         $members = DB::table('members')->get();
-        foreach($members as $member) {
+        foreach ($members as $member) {
             $id = DB::table('people')->insertGetId([
                 'firstname' => $member->firstname,
                 'lastname' => $member->lastname,
@@ -51,14 +51,16 @@ class CreatePeopleTable extends Migration
         });
 
         // Warning: We assume we don't have any archived membre when running the query (true at the moment of writing this)
-        Schema::table('archived_members', function(Blueprint $table) {
+        Schema::table('archived_members', function (Blueprint $table) {
             $table->dropColumn('firstname');
         });
-        Schema::table('archived_members', function(Blueprint $table) {
+        Schema::table('archived_members', function (Blueprint $table) {
             $table->dropColumn('lastname');
         });
-        Schema::table('archived_members', function(Blueprint $table) {
+        Schema::table('archived_members', function (Blueprint $table) {
             $table->dropColumn('discord_id');
+        });
+        Schema::table('archived_members', function (Blueprint $table) {
             $table->foreignId('person_id');
         });
     }
@@ -78,7 +80,7 @@ class CreatePeopleTable extends Migration
         });
 
         $members = DB::table('members')->get();
-        foreach($members as $member) {
+        foreach ($members as $member) {
             $person = DB::table('people')->where('id', $member->person_id)->first();
             DB::table('members')->where('id', $member->id)->update([
                 'firstname' => $person->firstname,

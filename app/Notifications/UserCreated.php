@@ -47,11 +47,12 @@ class UserCreated extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject("Your Seb account has been created!")
-                    ->greeting("Welcome " . $this->user->firstname . " " . $this->user->lastname . ".")
-                    ->line("Your Seb account named \"" . $this->user->username . "\" has been created.")
-                    ->action('Set my password', url("/enable-account/" . $this->token . "?email=" . $this->user->email))
-                    ->line("This password link will expire in 60 minutes. You can get a new one by clicking on \"Password lost\" on the login form.");
+            ->subject("Your Seb account has been created!")
+            ->greeting("Welcome " . $this->user->firstname . " " . $this->user->lastname . ".")
+            ->line("Your Seb account named \"" . $this->user->username . "\" has been created.")
+            ->action('Set my password', url("/enable-account/" . $this->token . "?email=" . $this->user->email))
+            ->line("This password link will expire in 60 minutes." .
+                " You can get a new one by clicking on \"Password lost\" on the login form.");
     }
 
     /**

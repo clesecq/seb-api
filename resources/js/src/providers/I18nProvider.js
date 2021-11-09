@@ -381,7 +381,7 @@ const messages = {
                     email: 'Adresse email'
                 },
                 me: "Mon Profil",
-                permissions:  {
+                permissions: {
                     title: "Permissions",
                 },
                 password: {

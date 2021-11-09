@@ -45,8 +45,9 @@ function hasPerm(permissions, perm) {
 
     if (Array.isArray(perm)) {
         for (let p of perm) {
-            if (permMatch(permissions, p))
+            if (permMatch(permissions, p)) {
                 return true;
+            }
         }
     } else {
         if (permMatch(permissions, perm))
@@ -55,25 +56,25 @@ function hasPerm(permissions, perm) {
     return false;
 }
 
-const Accordeon = ({ children, title, permissions, ...props }) => {
-    const { perms } = usePermissions();
+const Accordeon = (props) => {
+    const { permissions: perms } = usePermissions();
     const [open, setOpen] = useState(props.open);
 
     return (
-        <>{(!hasPerm(perms, permissions)) &&
+        <>{hasPerm(perms, props.permissions) ? (
             <>
-                <Tooltip title={title} placement="right">
+                <Tooltip title={props.title} placement="right">
                     <MenuItem button onClick={() => setOpen(!open)} className={"RaMenuItemLink-root-36 MuiMenuItem-root"}>
                         <ListItemIcon className={"RaMenuItemLink-icon-38"}>
                             {open ? <ExpandLess /> : <ExpandMore />}
                         </ListItemIcon>
-                        <ListItemText primary={title} />
+                        <ListItemText primary={props.title} />
                     </MenuItem>
                 </Tooltip>
-                <Collapse in={open} style={{minHeight: "auto"}}>
-                    {children}
+                <Collapse in={open} style={{ minHeight: "auto" }}>
+                    {props.children}
                 </Collapse>
-            </>}
+            </>) : ''}
         </>
     );
 }

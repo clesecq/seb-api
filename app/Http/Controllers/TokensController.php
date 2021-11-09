@@ -17,7 +17,7 @@ class TokensController extends Controller
     {
         $tokens = [];
 
-        foreach($request->user()->tokens as $token) {
+        foreach ($request->user()->tokens as $token) {
             $tokens[] = $token->only(['id', 'name', 'last_used_at', 'created_at']);
         }
 

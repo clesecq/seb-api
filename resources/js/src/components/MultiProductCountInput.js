@@ -58,7 +58,7 @@ const MultiProductCountItem = ({ product, filterCategory, filterName, countZero,
                             {price && showcount ? " | " : ''}
                             {Number(product.count).toLocaleString('fr-FR', { style: 'decimal' })}
                         </Typography>
-                    : ''}
+                        : ''}
                     <Grid container style={{ justifyContent: "center" }}>
                         <Grid item className={classes.rows}>
                             <IconButton aria-label="sub" onClick={(e) => { addCount(e.shiftKey ? -10 : -1) }}>

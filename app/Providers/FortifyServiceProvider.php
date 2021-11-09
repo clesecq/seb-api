@@ -18,7 +18,6 @@ use Laravel\Fortify\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLog
 use App\Http\Responses\TwoFactorLoginResponse;
 use Laravel\Fortify\Contracts\TwoFactorLoginResponse as TwoFactorLoginResponseContract;
 
-
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
@@ -44,7 +43,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
         RateLimiter::for('login', function (Request $request) {
-            return Limit::perMinute(5)->by($request->email.$request->ip());
+            return Limit::perMinute(5)->by($request->email . $request->ip());
         });
 
         RateLimiter::for('two-factor', function (Request $request) {

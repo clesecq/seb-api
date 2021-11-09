@@ -12,8 +12,9 @@ class PersonalTransaction extends Model
     protected static function booted()
     {
         static::created(function ($transaction) {
-            if (config('recalculate_for_all_transaction', true))
+            if (config('recalculate_for_all_transaction', true)) {
                 $transaction->personal_account->recalculate();
+            }
         });
     }
 
@@ -28,11 +29,13 @@ class PersonalTransaction extends Model
         'transaction_id'
     ];
 
+    // phpcs:ignore
     public function personal_account()
     {
         return $this->belongsTo(PersonalAccount::class);
     }
 
+    // phpcs:ignore
     public function transaction()
     {
         return $this->belongsTo(Transaction::class);

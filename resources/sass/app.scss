@@ -1,11 +1,11 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Nunito");
 
 // Variables
-@import 'variables';
+@import "variables";
 
 // Reset
-@import '~sass-reset';
+@import "~sass-reset";
 
 .MuiCollapse-wrapper .MuiListItemIcon-root {
     margin-right: 16px;
@@ -29,7 +29,8 @@ a:hover {
 }
 
 .MuiDrawer-root {
-    a:hover, li:hover {
+    a:hover,
+    li:hover {
         color: #fb963a;
     }
 }
@@ -38,7 +39,8 @@ a:hover {
     background: #303030;
 }
 
-.MuiTableBody-root, .MuiDrawer-root {
+.MuiTableBody-root,
+.MuiDrawer-root {
     background: #424242;
 }
 
@@ -49,7 +51,7 @@ a:hover {
 }
 
 .MuiGrid-spacing-xs-3 > .MuiGrid-item {
-    width:100%;
+    width: 100%;
 }
 
 .MuiSnackbarContent-message {

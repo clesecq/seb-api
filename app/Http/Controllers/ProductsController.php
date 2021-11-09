@@ -31,10 +31,11 @@ class ProductsController extends Controller
                     }
                 }
             }
-            if (!is_null($request->per_page))
+            if (!is_null($request->per_page)) {
                 $data = $data->paginate((int) $request->per_page);
-            else
+            } else {
                 $data = ["data" => $data->get(), "total" => $data->count()];
+            }
             return $data;
         }
     }

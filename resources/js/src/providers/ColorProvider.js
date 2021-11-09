@@ -23,13 +23,13 @@ import _ from 'lodash';
 const colors = {
     'amber': amber,
     'blue': blue,
-//    'blueGrey': blueGrey,
-//    'brown': brown,
+    //    'blueGrey': blueGrey,
+    //    'brown': brown,
     'cyan': cyan,
     'deepOrange': deepOrange,
     'deepPurple': deepPurple,
     'green': green,
-//    'grey': grey,
+    //    'grey': grey,
     'indigo': indigo,
     'lightBlue': lightBlue,
     'lightGreen': lightGreen,
@@ -44,7 +44,7 @@ const colors = {
 
 const randomProperty = (obj) => {
     var keys = Object.keys(obj);
-    return obj[keys[ keys.length * Math.random() << 0]];
+    return obj[keys[keys.length * Math.random() << 0]];
 };
 
 class ColorProvider {
@@ -58,13 +58,13 @@ class ColorProvider {
     }
 
     randomSColor() {
-        this.counter = (this.counter+1) % this.shuffled_colors.length;
+        this.counter = (this.counter + 1) % this.shuffled_colors.length;
         return this.shuffled_colors[this.counter];
     }
 
     shuffledColors(shade) {
         let color_arr = [];
-        for(let key in colors) {
+        for (let key in colors) {
             color_arr.push(colors[key][shade]);
         }
         return _.shuffle(color_arr);

@@ -33,14 +33,15 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Route::macro('res', function ($name, $model, $controller, $options = []) {
-            App::make(Gateway::class)->regsiter_model($model, $name);
+            App::make(Gateway::class)->regsiterModel($model, $name);
 
             if (in_array('reload', $options)) {
                 Route::get($name . "/reload", [$controller, "reload"])->middleware('permission:' . $name . '.reload');
             }
 
             if (in_array('archive', $options)) {
-                Route::get($name . "/archive", [$controller, "archive"])->middleware('permission:' . $name . '.archive');
+                Route::get($name . "/archive", [$controller, "archive"])
+                    ->middleware('permission:' . $name . '.archive');
             }
 
             if (!in_array('final', $options) && !in_array('readonly', $options) && !in_array('writeonly', $options)) {

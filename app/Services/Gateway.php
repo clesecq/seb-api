@@ -21,15 +21,16 @@ class Gateway
         $this->models = [];
     }
 
-    public function regsiter_model($model, string $name)
+    public function regsiterModel($model, string $name)
     {
         $this->models[$model] = $name;
     }
 
     public function event($type, $model, $data)
     {
-        if (!$this->enabled)
+        if (!$this->enabled) {
             return;
+        }
 
         if (array_key_exists($model, $this->models)) {
             try {

@@ -58,7 +58,7 @@ const TokenClear = (props) => {
             redirect("/profile");
         }).catch(error => {
             setLoading(false);
-            
+
             if (error?.response?.data?.message) {
                 let message = "";
                 if (error?.response?.data?.errors !== undefined) {

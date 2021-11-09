@@ -21,7 +21,7 @@ export const customRoutes = [
     <RouteWithoutLayout exact path="/enable-account/:token" component={ActivateAccount} />,
     <RouteWithoutLayout exact path="/two-factor/enable" component={TwoFactorEnable} />,
     <RouteWithoutLayout exact path="/two-factor/disable" component={TwoFactorDisable} />,
-    <RouteWithoutLayout exact path="/tokens/create" component={TokenNew}/>,
+    <RouteWithoutLayout exact path="/tokens/create" component={TokenNew} />,
     <RouteWithoutLayout exact path="/tokens/clear" component={TokenClear} />,
     <RouteWithoutLayout exact path="/copying" component={Copying} />,
     <Route exact path="/personal_accounts/refill" component={personal_refills.create} />

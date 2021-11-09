@@ -21,7 +21,8 @@ class AccountCount extends Model
         'balance' => 'double'
     ];
 
-    public function transaction() {
+    public function transaction()
+    {
         return $this->belongsTo(Transaction::class);
     }
 }

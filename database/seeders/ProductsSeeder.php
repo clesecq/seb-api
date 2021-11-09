@@ -62,7 +62,5 @@ class ProductsSeeder extends Seeder
         Product::create(['name' => 'T - Café Long Classique', 'price' => 0.3, 'category_id' => $cid, 'alert_level' => 0]);
         Product::create(['name' => 'T - Café Petit Dej\'', 'price' => 0.3, 'category_id' => $cid, 'alert_level' => 0]);
         Product::create(['name' => 'T - Chocolat Chaud', 'price' => 0.3, 'category_id' => $cid, 'alert_level' => 0]);
-
-
     }
 }

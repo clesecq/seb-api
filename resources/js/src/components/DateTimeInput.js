@@ -38,8 +38,8 @@ class LocalizedUtils extends DateFnsUtils {
     }
 
     getDateTimePickerHeaderText(date) {
-    return format(date, "d MMM", { locale: this.locale });
-}
+        return format(date, "d MMM", { locale: this.locale });
+    }
 }
 
 const Picker = ({ PickerComponent, ...fieldProps }) => {

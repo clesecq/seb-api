@@ -9,11 +9,13 @@ class Sale extends Model
 {
     use HasFactory;
 
-    public function movement() {
+    public function movement()
+    {
         return $this->belongsTo(Movement::class);
     }
 
-    public function transaction() {
+    public function transaction()
+    {
         return $this->belongsTo(Transaction::class);
     }
 

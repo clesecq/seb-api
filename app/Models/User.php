@@ -55,6 +55,9 @@ class User extends Authenticatable
         $resource = $split[0];
         $action = $split[1];
 
-        return in_array('*.*', $this->permissions) || in_array($resource . '.*', $this->permissions) || in_array('*.' . $action, $this->permissions) || in_array($name, $this->permissions);
+        return in_array('*.*', $this->permissions) ||
+               in_array($resource . '.*', $this->permissions) ||
+               in_array('*.' . $action, $this->permissions) ||
+               in_array($name, $this->permissions);
     }
 }

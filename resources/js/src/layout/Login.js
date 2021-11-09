@@ -108,8 +108,8 @@ const MyLoginPage = (props) => {
                     if (error?.response?.data?.message) {
                         let message = "";
                         if (error?.response?.data?.errors !== undefined) {
-                            for(let ms in error.response.data.errors) {
-                                for(let m of error.response.data.errors[ms]) {
+                            for (let ms in error.response.data.errors) {
+                                for (let m of error.response.data.errors[ms]) {
                                     message += m + "\n";
                                 }
                             }
@@ -127,53 +127,53 @@ const MyLoginPage = (props) => {
 
     return (
         <>
-        <Login>
-            <Form onSubmit={submit} render={({ handleSubmit }) => (twoFA ?
-                <form onSubmit={handleSubmit} noValidate>
-                    <div className={classes.form}>
-                        <div className={classes.input}>
-                            <Field inputRef={inputRef} id="code" name="code" component={Input} label={translate('ra.auth.2fa.verification_code')} disabled={loading} />
+            <Login>
+                <Form onSubmit={submit} render={({ handleSubmit }) => (twoFA ?
+                    <form onSubmit={handleSubmit} noValidate>
+                        <div className={classes.form}>
+                            <div className={classes.input}>
+                                <Field inputRef={inputRef} id="code" name="code" component={Input} label={translate('ra.auth.2fa.verification_code')} disabled={loading} />
+                            </div>
                         </div>
-                    </div>
-                    <CardActions>
-                        <Button variant="contained" type="submit" color="secondary" disabled={loading} className={classes.button} >
-                            {loading && (
-                                <CircularProgress className={classes.icon} size={18} thickness={2} />
-                            )}
-                            {translate('ra.auth.2fa.login')}
-                        </Button>
-                    </CardActions>
-                </form>
-                :
-                <form onSubmit={handleSubmit} noValidate>
-                    <div className={classes.form}>
-                        <div className={classes.input}>
-                            <Field autoFocus id="username" name="username" component={Input} label={translate('ra.auth.username')} disabled={loading} />
-                        </div>
-                        <div className={classes.input}>
-                            <Field id="password" name="password" component={Input} label={translate('ra.auth.password')} type="password"
-                                disabled={loading} autoComplete="current-password" helperText={
-                                    <Link component={RouterLink} to="/forgot-password" className={classes.link}>{translate('ra.auth.forgot')}</Link>
-                                } />
-                        </div>
+                        <CardActions>
+                            <Button variant="contained" type="submit" color="secondary" disabled={loading} className={classes.button} >
+                                {loading && (
+                                    <CircularProgress className={classes.icon} size={18} thickness={2} />
+                                )}
+                                {translate('ra.auth.2fa.login')}
+                            </Button>
+                        </CardActions>
+                    </form>
+                    :
+                    <form onSubmit={handleSubmit} noValidate>
+                        <div className={classes.form}>
+                            <div className={classes.input}>
+                                <Field autoFocus id="username" name="username" component={Input} label={translate('ra.auth.username')} disabled={loading} />
+                            </div>
+                            <div className={classes.input}>
+                                <Field id="password" name="password" component={Input} label={translate('ra.auth.password')} type="password"
+                                    disabled={loading} autoComplete="current-password" helperText={
+                                        <Link component={RouterLink} to="/forgot-password" className={classes.link}>{translate('ra.auth.forgot')}</Link>
+                                    } />
+                            </div>
 
-                    </div>
-                    <CardActions>
-                        <Button variant="contained" type="submit" color="secondary" disabled={loading} className={classes.button} >
-                            {loading && (
-                                <CircularProgress className={classes.icon} size={18} thickness={2} />
-                            )}
-                            {translate('ra.auth.sign_in')}
-                        </Button>
-                    </CardActions>
-                </form>
-            )} />
-        </Login>
-        <div className={classes.copying}>
-            <Typography>
-                {translate('copying.bottommessage')} <Link to="/copying" component={RouterLink} className={classes.link}>GNU AGPLv3</Link>
-            </Typography>
-        </div>
+                        </div>
+                        <CardActions>
+                            <Button variant="contained" type="submit" color="secondary" disabled={loading} className={classes.button} >
+                                {loading && (
+                                    <CircularProgress className={classes.icon} size={18} thickness={2} />
+                                )}
+                                {translate('ra.auth.sign_in')}
+                            </Button>
+                        </CardActions>
+                    </form>
+                )} />
+            </Login>
+            <div className={classes.copying}>
+                <Typography>
+                    {translate('copying.bottommessage')} <Link to="/copying" component={RouterLink} className={classes.link}>GNU AGPLv3</Link>
+                </Typography>
+            </div>
         </>
     );
 };
