@@ -21,11 +21,15 @@ class PersonalRefillsController extends Controller
     {
         $data = $request->validate([
             'amount' => ['required', 'numeric'],
-            'token' => ['required', 'exists:people,edu_token'],
+            'token' => ['required', function ($attribute, $value, $fail) {
+                if (!Person::where('edu_token', hash('sha256', $value))->exists()) {
+                    $fail("Cette carte n'est pas attribuée à un compte.");
+                }
+            }],
             'payment' => ['required', Rule::in(['cash', 'card'])]
         ]);
 
-        $person = Person::where('edu_token', $data['token'])->firstOrFail();
+        $person = Person::where('edu_token', hash('sha256', $data['token']))->firstOrFail();
         $account = $person->personal_account;
 
         if (!$account->exists()) {

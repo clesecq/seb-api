@@ -73,8 +73,12 @@ class SalesController extends Controller
         $amount = $this->calculatePrice($products_data["products"]);
         $paccount = null;
         if ($products_data["payment"] == "account") {
-            $key_data = $request->validate(['token' => ['required', 'exists:people,edu_token']]);
-            $person = Person::where('edu_token', $key_data['token'])->firstOrFail();
+            $key_data = $request->validate(['token' => ['required', function ($attribute, $value, $fail) {
+                if (!Person::where('edu_token', hash('sha256', $value))->exists()) {
+                    $fail("Cette carte n'est pas attribuée à un compte.");
+                }
+            }]]);
+            $person = Person::where('edu_token', hash('sha256', $key_data['token']))->firstOrFail();
             $paccount = $person->personal_account;
 
             if (!$paccount->exists()) {
