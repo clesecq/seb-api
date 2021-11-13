@@ -53,16 +53,18 @@ class PeopleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'firstname' => ['required', 'string'],
-            'lastname' => ['required', 'string'],
-            'discord_id' => ['sometimes', 'required', 'string', 'unique:people,discord_id']
-        ]);
+        $data = $request->validate(
+            [
+                'firstname' => ['required', 'string'],
+                'lastname' => ['required', 'string'],
+                'discord_id' => ['sometimes', 'required', 'string', 'unique:people,discord_id']
+            ]
+        );
 
         $person = Person::create($data);
 
@@ -72,7 +74,7 @@ class PeopleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -83,17 +85,19 @@ class PeopleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $data = $request->validate([
-            'firstname' => ['sometimes', 'required', 'string'],
-            'lastname' => ['sometimes', 'required', 'string'],
-            'discord_id' => ['sometimes', 'required', 'nullable', 'string', 'unique:people,discord_id']
-        ]);
+        $data = $request->validate(
+            [
+                'firstname' => ['sometimes', 'required', 'string'],
+                'lastname' => ['sometimes', 'required', 'string'],
+                'discord_id' => ['sometimes', 'required', 'nullable', 'string', 'unique:people,discord_id']
+            ]
+        );
 
         $person = Person::findOrFail($id);
         $person->update($data);
@@ -104,7 +108,7 @@ class PeopleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -120,9 +124,11 @@ class PeopleController extends Controller
     public function destroyMany(Request $request)
     {
         if (is_array($request->ids)) {
-            Person::whereIn('id', $request->ids)->get()->each(function ($person) {
-                $person->delete();
-            });
+            Person::whereIn('id', $request->ids)->get()->each(
+                function ($person) {
+                    $person->delete();
+                }
+            );
             return response(["data" => $request->ids], 200);
         } else {
             return response([], 400);
@@ -134,19 +140,34 @@ class PeopleController extends Controller
      */
     public function updateMany(Request $request)
     {
-        $data = $request->validate([
-            'firstname' => ['sometimes', 'required', 'string'],
-            'lastname' => ['sometimes', 'required', 'string'],
-            'discord_id' => ['sometimes', 'required', 'nullable', 'string', 'unique:people,discord_id'],
-        ]);
+        $data = $request->validate(
+            [
+                'firstname' => ['sometimes', 'required', 'string'],
+                'lastname' => ['sometimes', 'required', 'string'],
+                'discord_id' => ['sometimes', 'required', 'nullable', 'string', 'unique:people,discord_id'],
+            ]
+        );
 
         if (is_array($request->ids)) {
-            Person::whereIn('id', $request->ids)->get()->each(function ($person) use ($data) {
-                $person->update($data);
-            });
+            Person::whereIn('id', $request->ids)->get()->each(
+                function ($person) use ($data) {
+                    $person->update($data);
+                }
+            );
             return response(["data" => $request->ids], 200);
         } else {
             return response([], 400);
         }
+    }
+
+    public function export($id)
+    {
+        return ['data' => Person::with(
+            'member',
+            'member.transaction:id,name,amount,rectification,created_at,updated_at',
+            'personal_account',
+            'personal_account.personal_transactions:id,amount,personal_account_id,transaction_id,created_at,updated_at',
+            'personal_account.personal_transactions.transaction:id,name,amount,rectification,created_at,updated_at'
+        )->findOrFail($id)->makeVisible('edu_token')->makeHidden('fullname')];
     }
 }
