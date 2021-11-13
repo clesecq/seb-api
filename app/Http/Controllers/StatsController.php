@@ -146,7 +146,7 @@ class StatsController extends Controller
             return "N/A";
         }
 
-        return User::find($req->first()->user_id)->firstname;
+        return User::find($req->first()->user_id)->person->firstname;
     }
 
     private function priceCoca()
@@ -170,7 +170,7 @@ class StatsController extends Controller
             'latest_restock' => $this->latestRestock(),
             'most_sales' => $this->mostSales(),
             'members' => Member::whereNotNull('transaction_id')->count(),
-            'priceCoca' => $this->priceCoca()
+            'price_coca' => $this->priceCoca()
         ];
     }
 }
