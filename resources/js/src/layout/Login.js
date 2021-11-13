@@ -171,7 +171,8 @@ const MyLoginPage = (props) => {
             </Login>
             <div className={classes.copying}>
                 <Typography>
-                    {translate('copying.bottommessage')} <Link to="/copying" component={RouterLink} className={classes.link}>GNU AGPLv3</Link>
+                    {translate('copying.bottommessage')} <Link to="/copying" component={RouterLink} className={classes.link}>GNU AGPLv3</Link><br/>
+                    <a className={classes.link} href="/doc/privacy-policy.pdf">Politique de Confidentialité</a>
                 </Typography>
             </div>
         </>

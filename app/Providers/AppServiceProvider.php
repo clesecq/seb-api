@@ -59,6 +59,11 @@ class AppServiceProvider extends ServiceProvider
                 Route::get($name, [$controller, "index"])->middleware('permission:' . $name . '.show');
                 Route::get($name . "/{id}", [$controller, "show"])->middleware('permission:' . $name . '.show');
             }
+
+            if (in_array('export', $options)) {
+                Route::get($name . "/{id}/export", [$controller, "export"])
+                    ->middleware('permission:' . $name . '.export');
+            }
         });
     }
 }

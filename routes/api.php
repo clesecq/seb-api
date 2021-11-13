@@ -55,6 +55,7 @@ use App\Models\User;
 |
 */
 
+// @codingStandardsIgnoreStart
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get("permissions", [PermissionsController::class, 'index']);
     Route::get("stats", [StatsController::class, 'stats']);
@@ -77,7 +78,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get("dashboard/sellers", [DashboardController::class, 'sellers'])->middleware('permission:users.show');
 
     Route::res("users", User::class, UsersController::class);
-    Route::res("people", Person::class, PeopleController::class);
+    Route::res("people", Person::class, PeopleController::class, ['export']);
     Route::res("members", Member::class, MembersController::class, ['archive']);
     Route::res("archived_members", ArchivedMember::class, ArchivedMembersController::class, ['readonly']);
     Route::res("purchases", Purchase::class, PurchasesController::class, ['final']);
@@ -96,3 +97,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::res("personal_transactions", PersonalTransaction::class, PersonalTransactionsController::class, ['readonly']);
     Route::res("personal_refills", PersonalTransaction::class, PersonalRefillsController::class, ['writeonly']);
 });
+// @codingStandardsIgnoreEnd

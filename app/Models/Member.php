@@ -25,6 +25,11 @@ class Member extends Model
         return $this->transaction_id != null;
     }
 
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class);
+    }
+
     // phpcs:ignore
     public function person()
     {

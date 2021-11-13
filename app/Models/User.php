@@ -21,8 +21,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'username',
-        'firstname',
-        'lastname',
+        'person_id',
         'email',
         'password',
         'permissions',
@@ -59,5 +58,10 @@ class User extends Authenticatable
                in_array($resource . '.*', $this->permissions) ||
                in_array('*.' . $action, $this->permissions) ||
                in_array($name, $this->permissions);
+    }
+
+    public function person()
+    {
+        return $this->belongsTo(Person::class);
     }
 }

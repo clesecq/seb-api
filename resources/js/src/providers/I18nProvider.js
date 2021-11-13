@@ -44,6 +44,9 @@ const messages = {
                         cleared: "Vos tokens ont étés effacés"
                     }
                 }
+            },
+            notification: {
+                exported: "Élement exporté!"
             }
         },
         copying: {
@@ -324,7 +327,7 @@ const messages = {
                     created_at: 'Créé le',
                     updated_at: 'Modifié le',
                     'transaction.amount': 'Montant',
-                    'transaction.amount.user_id': 'Créateur',
+                    'transaction.user_id': 'Créateur',
                     movement_id: 'Mouvement',
                     transaction_id: 'Transaction',
                     'movement.products': 'Produits',
@@ -363,8 +366,7 @@ const messages = {
                     id: '#',
                     username: 'Login',
                     password: 'Mot de passe',
-                    firstname: 'Prénom',
-                    lastname: 'Nom',
+                    person_id: 'Personne',
                     email: 'Adresse email',
                     permissions: 'Permissions',
                     created_at: 'Créé le',
