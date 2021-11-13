@@ -44,6 +44,9 @@ const messages = {
                         cleared: "Vos tokens ont étés effacés"
                     }
                 }
+            },
+            notification: {
+                exported: "Élement exporté!"
             }
         },
         copying: {

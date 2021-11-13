@@ -54,6 +54,12 @@ class DataProvider {
         }).catch(this.__handleError);
     }
 
+    export(resource, { id }) {
+        return axios.get('/api/' + resource + '/' + id + '/export').then(response => {
+            return response.data;
+        }).catch(this.__handleError);
+    }
+
     getMany(resource, { ids }) {
         let parameters = "";
         for (let i = 0; i < ids.length; i++) {
