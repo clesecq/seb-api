@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AutocompleteArrayInput, BooleanInput, ChipField, Datagrid, EditButton, List, ReferenceArrayField, ReferenceArrayInput, SimpleForm, SingleFieldList, TextField, TextInput } from 'react-admin';
+import { AutocompleteArrayInput, AutocompleteInput, BooleanInput, ChipField, Datagrid, EditButton, FunctionField, List, ReferenceArrayField, ReferenceArrayInput, ReferenceField, ReferenceInput, SimpleForm, SingleFieldList, TextField, TextInput } from 'react-admin';
 import DateField from '../components/DateField';
 import DateInput from '../components/DateInput';
 import { CreateDialog, EditDialog } from '../components/DialogForm';
@@ -17,8 +17,9 @@ const Users = (props) => (
             <Datagrid>
                 <TextField source="id" />
                 <TextField source="username" />
-                <TextField source="firstname" />
-                <TextField source="lastname" />
+                <ReferenceField source="person_id" reference="people" link="show" >
+                    <FunctionField render={r => r.firstname + " " + r.lastname} />
+                </ReferenceField>
                 <TextField source="email" />
                 <ReferenceArrayField label="Permissions" reference="permissions" source="permissions">
                     <SingleFieldList linkType={false}>
@@ -34,8 +35,9 @@ const Users = (props) => (
         <CreateDialog {...props}>
             <SimpleForm redirect="list">
                 <TextInput source="username" />
-                <TextInput source="firstname" />
-                <TextInput source="lastname" />
+                <ReferenceInput source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText, has_account: false })}>
+                    <AutocompleteInput optionText="fullname" />
+                </ReferenceInput>
                 <TextInput source="email" />
                 <ReferenceArrayInput label="Permissions" reference="permissions" source="permissions">
                     <AutocompleteArrayInput />
@@ -45,8 +47,9 @@ const Users = (props) => (
         <EditDialog {...props}>
             <SimpleForm redirect="list">
                 <TextInput source="username" />
-                <TextInput source="firstname" />
-                <TextInput source="lastname" />
+                <ReferenceInput disabled source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText, has_account: false })}>
+                    <AutocompleteInput optionText="fullname" />
+                </ReferenceInput>
                 <TextInput source="email" />
                 <ReferenceArrayInput label="Permissions" reference="permissions" source="permissions">
                     <AutocompleteArrayInput />

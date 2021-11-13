@@ -21,7 +21,7 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         if (is_array($request->ids)) {
-            return ["data" => User::whereIn('id', $request->ids)->get()];
+            return ["data" => User::with("person")->whereIn('id', $request->ids)->get()];
         } else {
             $data = User::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
@@ -48,8 +48,7 @@ class UsersController extends Controller
     {
         $data = $request->validate([
             'username' => ['required', 'string', 'unique:users,username'],
-            'firstname' => ['required', 'string'],
-            'lastname' => ['required', 'string'],
+            'person_id' => ['required', 'exists:people,id'],
             'email' => ['required', 'email', 'unique:users,email'],
             'permissions' => ['required', 'array'],
             'permissions.*' => ['string', "distinct"]
@@ -92,8 +91,6 @@ class UsersController extends Controller
 
         $data = $request->validate([
             'username' => ['sometimes', 'required', 'string', 'unique:users,username'],
-            'firstname' => ['sometimes', 'required', 'string'],
-            'lastname' => ['sometimes', 'required', 'string'],
             'email' => ['sometimes', 'required', 'email', 'unique:users,email'],
             'permissions' => ['required', 'array'],
             'permissions.*' => ['string', "distinct"]
@@ -151,7 +148,7 @@ class UsersController extends Controller
     public function updateMany(Request $request)
     {
         $data = $request->validate([
-            'name' => ['sometimes', 'required', 'string'],
+            'username' => ['sometimes', 'required', 'string'],
             'email' => ['sometimes', 'required', 'email', 'unique:users,email'],
             'permissions' => ['required', 'array'],
             'permissions.*' => ['string', 'exists:permissions,id', "distinct"]

@@ -33,7 +33,7 @@ const PeopleExportButton = ({ record, ...rest }) => {
     const onClick = () => {
         console.log(record.id);
         dataProvider.export('people', { id: record.id }).then((response) => {
-            download(JSON.stringify(response), "export.js", "application/json");
+            download(JSON.stringify(response), "export.json", "application/json");
 
             notify('ra.notification.exported');
             console.log(response);

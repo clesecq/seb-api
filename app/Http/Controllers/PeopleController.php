@@ -163,6 +163,7 @@ class PeopleController extends Controller
     public function export($id)
     {
         return ['data' => Person::with(
+            'users',
             'member',
             'member.transaction:id,name,amount,rectification,created_at,updated_at',
             'personal_account',

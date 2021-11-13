@@ -27,6 +27,8 @@ class ProfileController extends Controller
         }
 
         $data['tokens'] = $tokens;
+        $data["firstname"] = $request->user()->person->firstname;
+        $data["lastname"] = $request->user()->person->lastname;
         return ["data" => $data];
     }
 
@@ -51,6 +53,7 @@ class ProfileController extends Controller
         }
 
         $request->user()->update($data);
-        return ["data" => $request->user()];
+        $request->user()->person->update($data);
+        return $this->show($request);
     }
 }

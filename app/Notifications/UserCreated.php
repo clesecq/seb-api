@@ -48,7 +48,7 @@ class UserCreated extends Notification
     {
         return (new MailMessage)
             ->subject("Your Seb account has been created!")
-            ->greeting("Welcome " . $this->user->firstname . " " . $this->user->lastname . ".")
+            ->greeting("Welcome " . $this->user->person->firstname . " " . $this->user->person->lastname . ".")
             ->line("Your Seb account named \"" . $this->user->username . "\" has been created.")
             ->action('Set my password', url("/enable-account/" . $this->token . "?email=" . $this->user->email))
             ->line("This password link will expire in 60 minutes." .
