@@ -49,7 +49,7 @@ class CreateEventsTable extends Migration
                 $table->decimal("max_people");
                 $table->decimal('price', $precision = 12, $scale = 3)->default(0);
                 $table->decimal('price_member', $precision = 12, $scale = 3)->default(0);
-                $table->json("additional_data");
+                $table->json("data_structure");
                 $table->foreignId("category_id");
                 $table->timestamps();
             }
