@@ -5,6 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class CreateUsersTable extends Migration
 {
@@ -28,13 +29,13 @@ class CreateUsersTable extends Migration
             $table->timestamp('password_changed_at')->nullable()->default(null);
         });
 
-        $user = User::create([
+        DB::table('users')->insert([
             'username' => 'root',
             'firstname' => 'Chuck',
             'lastname' => 'NORRIS',
             'email' => 'root@localhost',
             'password' => Hash::make('rootroot'),
-            'permissions' => ["*.*"]
+            'permissions' => '["*.*"]'
         ]);
 
         // Ensure next IDs are > 1000.

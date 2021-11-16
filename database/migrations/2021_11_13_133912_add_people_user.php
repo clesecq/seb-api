@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Person;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -26,6 +27,10 @@ class AddPeopleUser extends Migration
                 $person = DB::table('people')
                     ->where('firstname', $user->firstname)
                     ->where('lastname', $user->lastname)->first();
+
+                if ($person == null) {
+                    $person = Person::create(["firstname" => $user->firstname, "lastname" => $user->lastname]);
+                }
 
                 DB::table('users')->where('id', $user->id)->update(['person_id' => $person->id]);
             }
