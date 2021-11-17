@@ -1,14 +1,12 @@
 import * as React from "react";
-import { AutocompleteArrayInput, AutocompleteInput, BooleanInput, ChipField, Datagrid, EditButton, FunctionField, List, ReferenceArrayField, ReferenceArrayInput, ReferenceField, ReferenceInput, SimpleForm, SingleFieldList, TextField, TextInput } from 'react-admin';
+import { AutocompleteArrayInput, AutocompleteInput, ChipField, Datagrid, EditButton, FunctionField, List, ReferenceArrayField, ReferenceArrayInput, ReferenceField, ReferenceInput, SimpleForm, SingleFieldList, TextField, TextInput } from 'react-admin';
 import DateField from '../components/DateField';
 import DateInput from '../components/DateInput';
 import { CreateDialog, EditDialog } from '../components/DialogForm';
 
 const UsersFilters = [
-    <TextInput label="First Name" source="firstname" />,
-    <TextInput label="Last Name" source="lastname" />,
-    <TextInput label="Email" source="email" />,
-    <BooleanInput label="Payed" source="payed" />
+    <TextInput label="Username" source="username" />,
+    <TextInput label="Email" source="email" />
 ];
 
 const Users = (props) => (

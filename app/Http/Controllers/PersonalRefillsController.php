@@ -47,9 +47,9 @@ class PersonalRefillsController extends Controller
         ]);
 
         if ($data["payment"] == 'card') {
-            // We round the transaction fees to the upper cent
+            // We round the transaction fees
             // (Information given by our card payment provider).
-            $amount = ceil($data['amount'] * Config::number('card.fees.percent') * 100) / 100;
+            $amount = round($data['amount'] * Config::number('card.fees.percent') * 100) / 100;
 
             Transaction::create([
                 'name' => Config::format('card.fees.message', ['transaction' => $transaction->attributesToArray()]),

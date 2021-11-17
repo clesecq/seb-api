@@ -147,7 +147,7 @@ const messages = {
                 name: 'Membre |||| Membres',
                 fields: {
                     id: '#',
-                    payed: 'Payé',
+                    paid: 'Payé',
                     person_id: 'Personne',
                     transaction: 'Transaction',
                     created_at: 'Créé le',
@@ -170,7 +170,7 @@ const messages = {
                 fields: {
                     id: '#',
                     person_id: 'Personne',
-                    payed: 'Payé',
+                    paid: 'Payé',
                     transaction: 'Transaction',
                     created_at: 'Créé le',
                     updated_at: 'Modifié le',

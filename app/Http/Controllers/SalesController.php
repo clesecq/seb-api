@@ -127,9 +127,9 @@ class SalesController extends Controller
         ]);
 
         if ($products_data["payment"] == "card") {
-            // We round the transaction fees to the upper cent
+            // We round the transaction fees
             // (Information given by our card payment provider).
-            $a = ceil($amount * Config::number('card.fees.percent') * 100) / 100;
+            $a = round($amount * Config::number('card.fees.percent') * 100) / 100;
 
             Transaction::create([
                 'name' => Config::format('card.fees.message', ['transaction' => $transaction->attributesToArray()]),

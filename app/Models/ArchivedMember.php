@@ -10,7 +10,7 @@ class ArchivedMember extends Model
     use HasFactory;
 
     protected $casts = [
-        'payed' => 'boolean'
+        'paid' => 'boolean'
     ];
 
     protected $fillable = [
@@ -21,9 +21,9 @@ class ArchivedMember extends Model
         'year'
     ];
 
-    protected $appends = ['payed', 'school_year'];
+    protected $appends = ['paid', 'school_year'];
 
-    public function getPayedAttribute()
+    public function getPaidAttribute()
     {
         return $this->transaction_id != null;
     }

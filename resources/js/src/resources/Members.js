@@ -11,7 +11,7 @@ const MembersFilters = [
     <ReferenceInput source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText, is_member: true })}>
         <AutocompleteInput optionText="fullname" />
     </ReferenceInput>,
-    <BooleanInput source="payed" />
+    <BooleanInput source="paid" />
 ];
 
 const MembersListActions = ({ basePath, ...props }) => (
@@ -27,7 +27,7 @@ const MembersBulkActionButtons = props => {
     const translate = useTranslate();
     return (
         <Fragment>
-            <BulkUpdateButton {...props} label={translate('resources.members.mark_payed')} data={{ "payed": true }} icon={<AttachMoneyIcon />} />
+            <BulkUpdateButton {...props} label={translate('resources.members.mark_payed')} data={{ "paid": true }} icon={<AttachMoneyIcon />} />
             <BulkDeleteButton {...props} />
         </Fragment>
     );
@@ -41,7 +41,7 @@ const Members = (props) => (
                 <ReferenceField source="person_id" reference="people" link="show" >
                     <FunctionField render={r => r.firstname + " " + r.lastname} />
                 </ReferenceField>
-                <BooleanField source="payed" />
+                <BooleanField source="paid" />
                 <ReferenceField source="transaction_id" reference="transactions" link="show" >
                     <FunctionField render={r => "#" + r.id} />
                 </ReferenceField>
@@ -53,7 +53,7 @@ const Members = (props) => (
                 <ReferenceInput source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText, is_member: false })}>
                     <AutocompleteInput optionText="fullname" />
                 </ReferenceInput>
-                <BooleanInput source="payed" />
+                <BooleanInput source="paid" />
             </SimpleForm>
         </CreateDialog>
         <EditDialog {...props}>
@@ -62,7 +62,7 @@ const Members = (props) => (
                 <ReferenceField source="person_id" reference="people" >
                     <FunctionField render={r => r.firstname + " " + r.lastname} />
                 </ReferenceField>
-                <BooleanInput source="payed" />
+                <BooleanInput source="paid" />
                 <DateInput disabled source="created_at" />
                 <DateInput disabled source="updated_at" />
             </SimpleForm>
@@ -73,7 +73,7 @@ const Members = (props) => (
                 <ReferenceField source="person_id" reference="people" link="show" >
                     <FunctionField render={r => r.firstname + " " + r.lastname} />
                 </ReferenceField>
-                <BooleanField source="payed" />
+                <BooleanField source="paid" />
                 <DateField source="created_at" />
                 <DateField source="updated_at" />
             </SimpleShowLayout>

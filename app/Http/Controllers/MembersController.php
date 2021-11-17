@@ -22,7 +22,7 @@ class MembersController extends Controller
             $data = Member::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
             if (is_array($request->filter)) {
                 foreach ($request->filter as $k => $v) {
-                    if ($k == 'payed') {
+                    if ($k == 'paid') {
                         if ($v) {
                             $data = $data->whereNotNull('transaction_id');
                         } else {
@@ -52,12 +52,12 @@ class MembersController extends Controller
     {
         $data = $request->validate([
             'person_id' => ['required', 'exists:people,id', 'unique:members,person_id'],
-            'payed' => ['sometimes', 'required', 'boolean'],
+            'paid' => ['sometimes', 'required', 'boolean'],
         ]);
 
         $member = Member::create($data);
 
-        if (array_key_exists('payed', $data) && $data['payed']) {
+        if (array_key_exists('paid', $data) && $data['paid']) {
             $member->pay();
         }
 
@@ -85,12 +85,12 @@ class MembersController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'payed' => ['sometimes', 'required', 'boolean']
+            'paid' => ['sometimes', 'required', 'boolean']
         ]);
 
         $member = Member::findOrFail($id);
 
-        if ($data['payed']) {
+        if ($data['paid']) {
             $member->pay();
         }
 
@@ -131,14 +131,14 @@ class MembersController extends Controller
     public function updateMany(Request $request)
     {
         $data = $request->validate([
-            'payed' => ['sometimes', 'required', 'boolean']
+            'paid' => ['sometimes', 'required', 'boolean']
         ]);
 
         if (is_array($request->ids)) {
             Member::whereIn('id', $request->ids)->get()->each(function ($member) use ($data) {
                 $member->update($data);
 
-                if ($data['payed']) {
+                if ($data['paid']) {
                     $member->pay();
                 }
             });
