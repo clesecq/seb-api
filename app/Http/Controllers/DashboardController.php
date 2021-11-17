@@ -84,7 +84,7 @@ class DashboardController extends Controller
         foreach ($raw as $line) {
             $users = User::findOrFail($line->user_id);
             $data[] = [
-                "name" => $users->firstname . " " . $users->lastname,
+                "name" => $users->person->firstname . " " . $users->person->lastname,
                 "value" => intval($line->count)
             ];
         }
