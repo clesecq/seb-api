@@ -11,16 +11,16 @@ class Member extends Model
     use HasFactory;
 
     protected $casts = [
-        'payed' => 'boolean'
+        'paid' => 'boolean'
     ];
 
     protected $fillable = [
         'person_id'
     ];
 
-    protected $appends = ['payed'];
+    protected $appends = ['paid'];
 
-    public function getPayedAttribute()
+    public function getPaidAttribute()
     {
         return $this->transaction_id != null;
     }

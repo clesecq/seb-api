@@ -7,7 +7,7 @@ const ArchivedMembersFilters = [
     <ReferenceInput source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText })}>
         <AutocompleteInput optionText="fullname" />
     </ReferenceInput>,
-    <BooleanInput source="payed" />
+    <BooleanInput source="paid" />
 ];
 
 const ArchivedMembersListActions = ({ basePath, ...props }) => (
@@ -25,7 +25,7 @@ const ArchivedMembers = (props) => (
                 <ReferenceField source="person_id" reference="people" link="show" >
                     <FunctionField render={r => r.firstname + " " + r.lastname} />
                 </ReferenceField>
-                <BooleanField source="payed" />
+                <BooleanField source="paid" />
                 <ReferenceField source="transaction_id" reference="transactions" link="show" >
                     <FunctionField render={r => "#" + r.id} />
                 </ReferenceField>
@@ -39,7 +39,7 @@ const ArchivedMembers = (props) => (
                 <ReferenceField source="person_id" reference="people" link="show" >
                     <FunctionField render={r => r.firstname + " " + r.lastname} />
                 </ReferenceField>
-                <BooleanField source="payed" />
+                <BooleanField source="paid" />
                 <ReferenceField source="transaction_id" reference="transactions" link="show" >
                     <FunctionField render={r => "#" + r.id} />
                 </ReferenceField>
