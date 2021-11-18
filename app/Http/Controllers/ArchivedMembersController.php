@@ -14,30 +14,10 @@ class ArchivedMembersController extends Controller
      */
     public function index(Request $request)
     {
-        if (is_array($request->ids)) {
-            return ["data" => ArchivedMember::whereIn('id', $request->ids)->get()];
-        } else {
-            $data = ArchivedMember::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
-            if (is_array($request->filter)) {
-                foreach ($request->filter as $k => $v) {
-                    if ($k == 'paid') {
-                        if ($v) {
-                            $data = $data->whereNotNull('transaction_id');
-                        } else {
-                            $data = $data->whereNull('transaction_id');
-                        }
-                    } else {
-                        $data = $data->where($k, 'like', '%' . $v . '%');
-                    }
-                }
-            }
-            if (!is_null($request->per_page)) {
-                $data = $data->paginate((int) $request->per_page);
-            } else {
-                $data = ["data" => $data->get(), "total" => $data->count()];
-            }
-            return $data;
-        }
+        return $this->commonIndex($request, ArchivedMember::class, [
+            "person_id" => "equals:person_id",
+            "paid" => "has:transaction"
+        ]);
     }
 
     /**

@@ -18,22 +18,7 @@ class ProductCountsController extends Controller
      */
     public function index(Request $request)
     {
-        if (is_array($request->ids)) {
-            return ["data" => ProductCount::with('movement')->whereIn('id', $request->ids)->get()];
-        } else {
-            $data = ProductCount::with('movement')->orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
-            if (is_array($request->filter)) {
-                foreach ($request->filter as $k => $v) {
-                    $data = $data->where($k, 'like', '%' . $v . '%');
-                }
-            }
-            if (!is_null($request->per_page)) {
-                $data = $data->paginate((int) $request->per_page);
-            } else {
-                $data = ["data" => $data->get(), "total" => $data->count()];
-            }
-            return $data;
-        }
+        return $this->commonIndex($request, ProductCount::class);
     }
 
     /**

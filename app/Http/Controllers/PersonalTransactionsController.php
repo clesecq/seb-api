@@ -14,22 +14,10 @@ class PersonalTransactionsController extends Controller
      */
     public function index(Request $request)
     {
-        if (is_array($request->ids)) {
-            return ["data" => PersonalTransaction::whereIn('id', $request->ids)->get()];
-        } else {
-            $data = PersonalTransaction::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
-            if (is_array($request->filter)) {
-                foreach ($request->filter as $k => $v) {
-                    $data = $data->where($k, 'like', '%' . $v . '%');
-                }
-            }
-            if (!is_null($request->per_page)) {
-                $data = $data->paginate((int) $request->per_page);
-            } else {
-                $data = ["data" => $data->get(), "total" => $data->count()];
-            }
-            return $data;
-        }
+        return $this->commonIndex($request, PersonalTransaction::class, [
+            'user_id' => "equals:user_id",
+            'personal_account_id' => "equals:personal_account_id"
+        ]);
     }
 
     /**

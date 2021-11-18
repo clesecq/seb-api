@@ -32,4 +32,9 @@ class ArchivedMember extends Model
     {
         return ($this->year - 1) . '/' . ($this->year);
     }
+
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class);
+    }
 }

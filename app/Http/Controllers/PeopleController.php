@@ -16,43 +16,22 @@ class PeopleController extends Controller
      */
     public function index(Request $request)
     {
-        if (is_array($request->ids)) {
-            return ["data" => Person::whereIn('id', $request->ids)->get()];
-        } else {
-            $data = Person::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
-            if (is_array($request->filter)) {
-                foreach ($request->filter as $k => $v) {
-                    if ($k == 'fullname') {
-                        $data = $data->where(DB::raw("CONCAT(`firstname`, ' ', `lastname`)"), 'like', '%' . $v . '%');
-                    } elseif ($k == 'is_member') {
-                        if ($v) {
-                            $data = $data->has('member');
-                        } else {
-                            $data = $data->doesntHave('member');
-                        }
-                    } elseif ($k == 'has_account') {
-                        if ($v) {
-                            $data = $data->has('personal_account');
-                        } else {
-                            $data = $data->doesntHave('personal_account');
-                        }
-                    } else {
-                        $data = $data->where($k, 'like', '%' . $v . '%');
-                    }
-                }
-            }
-            if (!is_null($request->per_page)) {
-                $data = $data->paginate((int) $request->per_page);
-            } else {
-                $data = ["data" => $data->get(), "total" => $data->count()];
-            }
-            return $data;
-        }
+        return $this->commonIndex($request, Person::class, [
+            "fullname" => function ($r, $k, $v) {
+                return $r->where(DB::raw("CONCAT(`firstname`, ' ', `lastname`)"), 'like', '%' . $v . '%');
+            },
+            "is_member" => "has:member",
+            "has_account" => "has:personal_account",
+            "has_users" => "has:users",
+            "firstname" => "like:firstname",
+            "lastname" => "like:lastname",
+            "discord_id" => "equals:discord_id"
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
-     *
+     *I
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */

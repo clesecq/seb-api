@@ -13,7 +13,8 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    private function getDefaultFilters() {
+    private function getDefaultFilters()
+    {
         return [
             "has" => function ($r, $a, $k, $v) {
                 return $v ? $r->has($a) : $r->doesntHave($a);

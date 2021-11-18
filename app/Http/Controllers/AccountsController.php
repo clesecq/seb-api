@@ -14,22 +14,11 @@ class AccountsController extends Controller
      */
     public function index(Request $request)
     {
-        if (is_array($request->ids)) {
-            return ["data" => Account::whereIn('id', $request->ids)->get()];
-        } else {
-            $data = Account::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
-            if (is_array($request->filter)) {
-                foreach ($request->filter as $k => $v) {
-                    $data = $data->where($k, 'like', '%' . $v . '%');
-                }
-            }
-            if (!is_null($request->per_page)) {
-                $data = $data->paginate((int) $request->per_page);
-            } else {
-                $data = ["data" => $data->get(), "total" => $data->count()];
-            }
-            return $data;
-        }
+        return $this->commonIndex($request, Account::class, [
+            "name" => "like:name",
+            "iban" => "like:iban",
+            "bic" => "like:bic"
+        ]);
     }
 
     /**
