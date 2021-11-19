@@ -5,8 +5,10 @@ import { ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
 
 const PersonalTransactionsFilters = [
-    <ReferenceInput source="personal_account_id" reference="personal_accounts" filterToQuery={searchText => ({ fullname: searchText })}>
-        <AutocompleteInput optionText="person.fullname" />
+    <ReferenceInput source="personal_account_id" reference="personal_accounts">
+        <ReferenceInput source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText })}>
+            <AutocompleteInput optionText="fullname" />
+        </ReferenceInput>
     </ReferenceInput>,
     <ReferenceInput source="user_id" reference="users" filterToQuery={searchText => ({ username: searchText })}>
         <AutocompleteInput optionText="username" />
@@ -23,7 +25,9 @@ const PersonalTransactions = (props) => (
                     <TextField source="name" />
                 </ReferenceField>
                 <ReferenceField source="personal_account_id" reference="personal_accounts">
-                    <TextField source="person.fullname" />
+                    <ReferenceField source="person_id" reference="people" link="show">
+                        <TextField source="fullname" />
+                    </ReferenceField>
                 </ReferenceField>
                 <ReferenceField source="user_id" reference="users">
                     <TextField source="username" />
@@ -36,8 +40,10 @@ const PersonalTransactions = (props) => (
             <SimpleShowLayout>
                 <TextField source="id" />
                 <MoneyField source="amount" />
-                <ReferenceField source="personal_account_id" reference="personal_accounts" link="show">
-                    <TextField source="person.fullname" />
+                <ReferenceField source="personal_account_id" reference="personal_accounts">
+                    <ReferenceField source="person_id" reference="people" link="show">
+                        <TextField source="fullname" />
+                    </ReferenceField>
                 </ReferenceField>
                 <ReferenceField source="transaction_id" reference="transactions" link="show">
                     <TextField source="name" />

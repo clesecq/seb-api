@@ -56,11 +56,15 @@ const AccountsCounts = (props) => (
                 <ReferenceField source="transaction_id" reference="transactions" link="show">
                     <TextField source="name" />
                 </ReferenceField>
-                <ReferenceField source="transaction.account_id" reference="accounts" link="show">
-                    <TextField source="name" />
+                <ReferenceField label="Compte" source="transaction_id" reference="transactions" link="show">
+                    <ReferenceField source="account_id" reference="accounts" link="show">
+                        <TextField source="name" />
+                    </ReferenceField>
                 </ReferenceField>
-                <ReferenceField source="transaction.user_id" reference="users">
-                    <TextField source="username" />
+                <ReferenceField label="Créateur" source="transaction_id" reference="transactions" link="show">
+                    <ReferenceField source="user_id" reference="users" link="show">
+                        <TextField source="username" />
+                    </ReferenceField>
                 </ReferenceField>
                 <DateField source="created_at" />
                 <ShowButton />
@@ -74,11 +78,15 @@ const AccountsCounts = (props) => (
                 <ReferenceField source="transaction_id" reference="transactions" link="show">
                     <TextField source="name" />
                 </ReferenceField>
-                <ReferenceField source="transaction.account_id" reference="accounts" link="show">
-                    <TextField source="name" />
+                <ReferenceField label="Compte" source="transaction_id" reference="transactions" link="show">
+                    <ReferenceField source="account_id" reference="accounts" link="show">
+                        <TextField source="name" />
+                    </ReferenceField>
                 </ReferenceField>
-                <ReferenceField source="transaction.user_id" reference="users">
-                    <TextField source="username" />
+                <ReferenceField label="Créateur" source="transaction_id" reference="transactions" link="show">
+                    <ReferenceField source="user_id" reference="users" link="show">
+                        <TextField source="username" />
+                    </ReferenceField>
                 </ReferenceField>
                 <DateField source="created_at" />
                 <DateField source="updated_at" />

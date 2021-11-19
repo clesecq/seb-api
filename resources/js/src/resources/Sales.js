@@ -14,9 +14,13 @@ const Sales = (props) => {
                 <Datagrid>
                     <TextField source="id" />
                     <DateField source="created_at" />
-                    <MoneyField noLabel={true} source="transaction.amount" />
-                    <ReferenceField source="transaction.user_id" reference="users" link="show">
-                        <TextField source="username" />
+                    <ReferenceField label="Montant" source="transaction_id" reference="transactions" link="show">
+                        <MoneyField source="amount" noLabel={true} />
+                    </ReferenceField>
+                    <ReferenceField label="Créateur" source="transaction_id" reference="transactions" link="show">
+                        <ReferenceField source="user_id" reference="users">
+                            <TextField source="username" />
+                        </ReferenceField>
                     </ReferenceField>
                     <ReferenceField source="movement_id" reference="movements" link="show">
                         <TextField source="name" />
@@ -30,9 +34,13 @@ const Sales = (props) => {
             <ShowDialog>
                 <SimpleShowLayout>
                     <TextField source="id" />
-                    <MoneyField source="transaction.amount" />
-                    <ReferenceField source="transaction.user_id" reference="users" link="show">
-                        <TextField source="username" />
+                    <ReferenceField label="Montant" source="transaction_id" reference="transactions" link="show">
+                        <MoneyField source="amount" noLabel={true} />
+                    </ReferenceField>
+                    <ReferenceField label="Créateur" source="transaction_id" reference="transactions" link="show">
+                        <ReferenceField source="user_id" reference="users">
+                            <TextField source="username" />
+                        </ReferenceField>
                     </ReferenceField>
                     <ArrayField source="movement.products" >
                         <Datagrid>

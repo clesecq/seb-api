@@ -10,15 +10,23 @@ const Transferts = (props) => (
         <List {...props} bulkActionButtons={false}>
             <Datagrid>
                 <TextField source="id" />
-                <ReferenceField source="sub_transaction.account_id" reference="accounts">
-                    <TextField source="name" />
+                <ReferenceField label="Depuis" source="sub_transaction_id" reference="transactions" link="show">
+                    <ReferenceField source="account_id" reference="accounts">
+                        <TextField source="name" />
+                    </ReferenceField>
                 </ReferenceField>
-                <ReferenceField source="add_transaction.account_id" reference="accounts">
-                    <TextField source="name" />
+                <ReferenceField label="Vers" source="add_transaction_id" reference="transactions" link="show">
+                    <ReferenceField source="account_id" reference="accounts">
+                        <TextField source="name" />
+                    </ReferenceField>
                 </ReferenceField>
-                <MoneyField noLabel={true} source="add_transaction.amount" />
-                <ReferenceField source="sub_transaction.user_id" reference="users">
-                    <TextField source="username" />
+                <ReferenceField label="Montant" source="add_transaction_id" reference="transactions" link="show">
+                    <MoneyField source="amount" noLabel={true} />
+                </ReferenceField>
+                <ReferenceField label="Créateur" source="add_transaction_id" reference="transactions" link="show">
+                    <ReferenceField source="user_id" reference="users">
+                        <TextField source="username" />
+                    </ReferenceField>
                 </ReferenceField>
                 <DateField source="created_at" />
                 <ShowButton />
@@ -38,21 +46,29 @@ const Transferts = (props) => (
         <ShowDialog>
             <SimpleShowLayout>
                 <TextField source="id" />
-                <ReferenceField source="sub_transaction.account_id" reference="accounts">
+                <ReferenceField label="Depuis" source="sub_transaction_id" reference="transactions" link="show">
+                    <ReferenceField source="account_id" reference="accounts">
+                        <TextField source="name" />
+                    </ReferenceField>
+                </ReferenceField>
+                <ReferenceField label="Transaction soustraction" source="sub_transaction_id" reference="transactions" link="show">
                     <TextField source="name" />
                 </ReferenceField>
-                <ReferenceField source="sub_transaction_id" reference="transactions">
+                <ReferenceField label="Vers" source="add_transaction_id" reference="transactions" link="show">
+                    <ReferenceField source="account_id" reference="accounts">
+                        <TextField source="name" />
+                    </ReferenceField>
+                </ReferenceField>
+                <ReferenceField label="Transaction addition" source="add_transaction_id" reference="transactions" link="show">
                     <TextField source="name" />
                 </ReferenceField>
-                <ReferenceField source="add_transaction.account_id" reference="accounts">
-                    <TextField source="name" />
+                <ReferenceField label="Montant" source="add_transaction_id" reference="transactions" link="show">
+                    <MoneyField source="amount" noLabel={true} />
                 </ReferenceField>
-                <ReferenceField source="add_transaction_id" reference="transactions">
-                    <TextField source="name" />
-                </ReferenceField>
-                <MoneyField source="add_transaction.amount" />
-                <ReferenceField source="sub_transaction.user_id" reference="users">
-                    <TextField source="username" />
+                <ReferenceField label="Créateur" source="add_transaction_id" reference="transactions" link="show">
+                    <ReferenceField source="user_id" reference="users">
+                        <TextField source="username" />
+                    </ReferenceField>
                 </ReferenceField>
                 <DateField source="created_at" />
                 <DateField source="updated_at" />

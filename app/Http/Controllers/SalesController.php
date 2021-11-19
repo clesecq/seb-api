@@ -159,8 +159,6 @@ class SalesController extends Controller
      */
     public function show($id)
     {
-        return ['data' => Sale::with(
-            ['movement', 'movement.products', 'movement.products.product', 'transaction']
-        )->findOrFail($id)];
+        return ['data' => Sale::findOrFail($id)];
     }
 }

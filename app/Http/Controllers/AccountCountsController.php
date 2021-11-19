@@ -105,6 +105,6 @@ class AccountCountsController extends Controller
      */
     public function show($id)
     {
-        return ['data' => AccountCount::with('transaction')->findOrFail($id)];
+        return ['data' => AccountCount::findOrFail($id)];
     }
 }

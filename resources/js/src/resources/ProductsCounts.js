@@ -12,8 +12,10 @@ const ProductsCounts = (props) => (
                 <ReferenceField source="movement_id" reference="movements" link="show">
                     <TextField source="name" />
                 </ReferenceField>
-                <ReferenceField source="movement.user_id" reference="users">
-                    <TextField source="username" />
+                <ReferenceField label="Créateur" source="movement_id" reference="movements" link="show">
+                    <ReferenceField source="user_id" reference="users">
+                        <TextField source="username" />
+                    </ReferenceField>
                 </ReferenceField>
                 <DateField source="created_at" />
                 <ShowButton />
@@ -33,8 +35,10 @@ const ProductsCounts = (props) => (
                 <ReferenceField source="movement_id" reference="movements" link="show">
                     <TextField source="name" />
                 </ReferenceField>
-                <ReferenceField source="movement.user_id" reference="users">
-                    <TextField source="username" />
+                <ReferenceField label="Créateur" source="movement_id" reference="movements" link="show">
+                    <ReferenceField source="user_id" reference="users">
+                        <TextField source="username" />
+                    </ReferenceField>
                 </ReferenceField>
                 <DateField source="created_at" />
                 <DateField source="updated_at" />

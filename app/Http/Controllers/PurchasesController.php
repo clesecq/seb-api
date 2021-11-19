@@ -104,8 +104,6 @@ class PurchasesController extends Controller
      */
     public function show($id)
     {
-        return ['data' => Purchase::with(
-            ['movement', 'movement.products', 'movement.products.product', 'transaction']
-        )->findOrFail($id)];
+        return ['data' => Purchase::findOrFail($id)];
     }
 }
