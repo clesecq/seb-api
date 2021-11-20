@@ -1,5 +1,6 @@
+import { useMediaQuery } from '@material-ui/core';
 import * as React from "react";
-import { AutocompleteInput, BooleanField, BooleanInput, Datagrid, DateInput, EditButton, List, NumberField, NumberInput, ReferenceField, ReferenceInput, SelectField, SelectInput, SimpleForm, SimpleShowLayout, TextField, TextInput, useTranslate } from 'react-admin';
+import { AutocompleteInput, BooleanField, BooleanInput, Datagrid, DateInput, EditButton, List, NumberField, NumberInput, ReferenceField, ReferenceInput, SelectField, SelectInput, SimpleForm, SimpleList, SimpleShowLayout, TextField, TextInput, useTranslate } from 'react-admin';
 import DateField from '../components/DateField';
 import { CreateDialog, EditDialog, ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
@@ -21,9 +22,18 @@ const AutomatedTransactionsFilters = [
 const AutomatedTransactions = (props) => {
     const translate = useTranslate();
 
+    const isDesktop = useMediaQuery(theme => theme.breakpoints.up('md'));
+
+    const l = {
+        yearly: "année",
+        monthly: "mois",
+        weekly: "semaine"
+    }
+
     return (
         <>
             <List {...props} filters={AutomatedTransactionsFilters}>
+            {isDesktop ? (
                 <Datagrid>
                     <TextField source="id" />
                     <TextField source="name" />
@@ -48,6 +58,13 @@ const AutomatedTransactions = (props) => {
                     <DateField source="created_at" />
                     <EditButton />
                 </Datagrid>
+                ) : (
+                    <SimpleList
+                        primaryText={record => record.name}
+                        tertiaryText={record => Number(record.amount).toLocaleString('fr-FR', { currency: "EUR", currencyDisplay: 'symbol', style: 'currency' })}
+                        secondaryText={record => record.frequency === 'dayly' ? 'Tous les jours' : `Le ${record.day} de chaque ${l[record.frequency]}`}
+                    />
+                )}
             </List>
             <CreateDialog {...props}>
                 <SimpleForm redirect="list">

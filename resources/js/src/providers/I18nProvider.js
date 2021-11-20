@@ -222,7 +222,7 @@ const messages = {
                     user_id: 'Créateur',
                     created_at: 'Créé le',
                     updated_at: 'Modifié le',
-                    product_id: '#',
+                    product_id: 'Produit',
                     'product.name': 'Nom',
                     count: 'Différence',
                     products: 'Produits',
@@ -331,10 +331,8 @@ const messages = {
                     movement_id: 'Mouvement',
                     transaction_id: 'Transaction',
                     'movement.products': 'Produits',
-                    product_id: '#',
-                    'product_id.name': 'Nom',
-                    'product.name': 'Nom',
-                    count: 'Nombre'
+                    product_id: 'Produit',
+                    count: 'Différence'
                 }
             },
             purchases: {
@@ -350,9 +348,8 @@ const messages = {
                     transaction_id: 'Transaction',
                     'movement_id.products': 'Produits',
                     'movement.products': 'Produits',
-                    product_id: '#',
-                    'product.name': 'Nom',
-                    count: 'Nombre',
+                    product_id: 'Produit',
+                    count: 'Différence',
                     account_id: 'Compte',
                     category_id: 'Catégorie',
                     amount: 'Montant',

@@ -131,7 +131,7 @@ const Menu = ({ onMenuClick, logout }) => {
             <Accordeon open={false} title={translate('menu.left.archives')} permissions={["archived_members.show"]}>
                 <Item to="/archived_members" permissions="archived_members.show" primaryText={translate('menu.left.archived_members')} leftIcon={<GroupIcon />} />
             </Accordeon>
-            {isXSmall && <Item to="/profile" primaryText={translate('menu.left.logout')} leftIcon={<AccountCircleIcon />} />}
+            {isXSmall && <Item to="/profile" primaryText={translate('menu.left.profile')} leftIcon={<AccountCircleIcon />} />}
             {isXSmall && logout}
         </>
     );

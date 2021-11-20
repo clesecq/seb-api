@@ -1,6 +1,6 @@
-import { TextField as MuiTextField } from "@material-ui/core";
+import { TextField as MuiTextField, useMediaQuery } from "@material-ui/core";
 import React, { useState } from "react";
-import { ArrayField, Create, Datagrid, FormDataConsumer, FormTab, List, ReferenceField, SelectInput, ShowButton, SimpleShowLayout, TabbedForm, TextField, useNotify, useRefresh, useTranslate } from 'react-admin';
+import { ArrayField, Create, Datagrid, FormDataConsumer, FormTab, List, ReferenceField, SelectInput, ShowButton, SimpleList, SimpleShowLayout, TabbedForm, TextField, useNotify, useRefresh, useTranslate } from 'react-admin';
 import DateField from '../components/DateField';
 import { ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
@@ -8,28 +8,42 @@ import { MultiProductCountInput, MultiProductCountItem } from "../components/Mul
 import PersonalAccountSelector from "../components/PersonalAccountSelector";
 
 const Sales = (props) => {
+    const isDesktop = useMediaQuery(theme => theme.breakpoints.up('md'));
     return (
         <>
             <List {...props} bulkActionButtons={false} >
-                <Datagrid>
-                    <TextField source="id" />
-                    <DateField source="created_at" />
-                    <ReferenceField label="Montant" source="transaction_id" reference="transactions" link="show">
-                        <MoneyField source="amount" noLabel={true} />
-                    </ReferenceField>
-                    <ReferenceField label="Créateur" source="transaction_id" reference="transactions" link="show">
-                        <ReferenceField source="user_id" reference="users">
-                            <TextField source="username" />
+                {isDesktop ? (
+                    <Datagrid>
+                        <TextField source="id" />
+                        <DateField source="created_at" />
+                        <ReferenceField label="Montant" source="transaction_id" reference="transactions" link="show">
+                            <MoneyField source="amount" noLabel={true} />
                         </ReferenceField>
-                    </ReferenceField>
-                    <ReferenceField source="movement_id" reference="movements" link="show">
-                        <TextField source="name" />
-                    </ReferenceField>
-                    <ReferenceField source="transaction_id" reference="transactions" link="show">
-                        <TextField source="name" />
-                    </ReferenceField>
-                    <ShowButton />
-                </Datagrid>
+                        <ReferenceField label="Créateur" source="transaction_id" reference="transactions" link={false}>
+                            <ReferenceField source="user_id" reference="users" link="show">
+                                <TextField source="username" />
+                            </ReferenceField>
+                        </ReferenceField>
+                        <ReferenceField source="movement_id" reference="movements" link="show">
+                            <TextField source="name" />
+                        </ReferenceField>
+                        <ReferenceField source="transaction_id" reference="transactions" link="show">
+                            <TextField source="name" />
+                        </ReferenceField>
+                        <ShowButton />
+                    </Datagrid>
+                ) : (
+                    <SimpleList
+                        primaryText={record => <ReferenceField record={record} source="movement_id" reference="movements" link={false}>
+                            <TextField source="name" />
+                        </ReferenceField>}
+                        secondaryText={record => new Date(record.created_at).toLocaleString()}
+                        tertiaryText={record => <ReferenceField record={record} label="Montant" source="transaction_id" reference="transactions" link={false}>
+                            <MoneyField source="amount" noLabel={true} />
+                        </ReferenceField>}
+                        linkType="show"
+                    />
+                )}
             </List>
             <ShowDialog>
                 <SimpleShowLayout>
