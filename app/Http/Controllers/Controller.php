@@ -28,12 +28,21 @@ class Controller extends BaseController
         ];
     }
 
-    protected function commonIndex(Request $request, $class, $filters = [])
+    protected function commonIndex(Request $request, $class, $filters = [], $with = null)
     {
         if (is_array($request->ids)) {
-            return ["data" => $class::whereIn('id', $request->ids)->get()];
+            if ($with == null) {
+                return ["data" => $class::whereIn('id', $request->ids)->get()];
+            } else {
+                return ["data" => $class::with($with)->whereIn('id', $request->ids)->get()];
+            }
         } else {
-            $data = $class::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
+            if ($with == null) {
+                $data = $class::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
+            } else {
+                $data = $class::with($with)->orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
+            }
+
             if (is_array($request->filter)) {
                 foreach ($request->filter as $k => $v) {
                     if (array_key_exists($k, $filters)) {

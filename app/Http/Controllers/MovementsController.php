@@ -19,7 +19,7 @@ class MovementsController extends Controller
             'name' => "like:name",
             'rectification' => "equals:rectification",
             'user_id' => "equals:user_id"
-        ]);
+        ], 'products');
     }
 
     /**
@@ -30,7 +30,7 @@ class MovementsController extends Controller
      */
     public function show($id)
     {
-        return ['data' => Movement::with(['products', 'products.product'])->findOrFail($id)];
+        return ['data' => Movement::with(['products'])->findOrFail($id)];
     }
 
     public function store(Request $request)
