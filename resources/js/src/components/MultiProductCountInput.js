@@ -61,7 +61,7 @@ const MultiProductCountItem = ({ product, filterCategory, filterName, countZero,
                         : ''}
                     <Grid container style={{ justifyContent: "center" }}>
                         <Grid item className={classes.rows}>
-                            <IconButton aria-label="sub" onClick={(e) => { addCount(e.shiftKey ? -10 : -1) }}>
+                            <IconButton aria-label="sub" onClick={(e) => { addCount(e.shiftKey ? -10 : -1) }} tabIndex="-1">
                                 <RemoveIcon />
                             </IconButton>
                         </Grid>
@@ -91,7 +91,7 @@ const MultiProductCountItem = ({ product, filterCategory, filterName, countZero,
                             </Grid>
                         </Grid>
                         <Grid item className={classes.rows}>
-                            <IconButton aria-label="add" onClick={(e) => { addCount(e.shiftKey ? 10 : 1) }}>
+                            <IconButton aria-label="add" onClick={(e) => { addCount(e.shiftKey ? 10 : 1) }} tabIndex="-1">
                                 <AddIcon />
                             </IconButton>
                         </Grid>
