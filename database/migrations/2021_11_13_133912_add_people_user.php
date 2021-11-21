@@ -27,6 +27,17 @@ class AddPeopleUser extends Migration
                     ->where('firstname', $user->firstname)
                     ->where('lastname', $user->lastname)->first();
 
+                if ($person == null) {
+                    $person = DB::table('people')->insert([
+                        'firstname' => $user->firstname,
+                        'lastname' => $user->lastname
+                    ]);
+
+                    $person = DB::table('people')
+                        ->where('firstname', $user->firstname)
+                        ->where('lastname', $user->lastname)->first();
+                }
+
                 DB::table('users')->where('id', $user->id)->update(['person_id' => $person->id]);
             }
         });

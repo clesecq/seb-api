@@ -147,7 +147,11 @@ class PeopleController extends Controller
             'member.transaction:id,name,amount,rectification,created_at,updated_at',
             'personal_account',
             'personal_account.personal_transactions:id,amount,personal_account_id,transaction_id,created_at,updated_at',
-            'personal_account.personal_transactions.transaction:id,name,amount,rectification,created_at,updated_at'
+            'personal_account.personal_transactions.transaction:id,name,amount,rectification,created_at,updated_at',
+            'sales',
+            'sales.movement',
+            'sales.movement.products',
+            'sales.movement.products.product:name,id,price',
         )->findOrFail($id)->makeVisible('edu_token')->makeHidden('fullname')];
     }
 }

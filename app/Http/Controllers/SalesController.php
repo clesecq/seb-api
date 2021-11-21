@@ -22,7 +22,9 @@ class SalesController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->commonIndex($request, Sale::class);
+        return $this->commonIndex($request, Sale::class, [
+            'person_id' => "equals:person_id"
+        ]);
     }
 
     private function calculatePrice($products)
@@ -140,6 +142,8 @@ class SalesController extends Controller
                 'personal_account_id' => $paccount->id,
                 'transaction_id' => $t->id
             ]);
+
+            $sale->person_id = $paccount->person_id;
         }
 
         // We affect the new transaction and movement to the sale

@@ -33,6 +33,12 @@ class Person extends Model
     }
 
     // phpcs:ignore
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
+
+    // phpcs:ignore
     public function users()
     {
         return $this->hasMany(User::class);

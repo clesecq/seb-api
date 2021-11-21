@@ -21,6 +21,7 @@ class Sale extends Model
 
     protected $fillable = [
         'transaction_id',
-        'movement_id'
+        'movement_id',
+        'person_id'
     ];
 }
