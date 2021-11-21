@@ -4,6 +4,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import React, { useMemo } from 'react';
 import { createMuiTheme, TopToolbar, useTranslate } from 'react-admin';
 import { withRouter } from 'react-router-dom';
+import pkg from '../../../../../package.json';
 import theme from '../Theme';
 
 const useStyles = makeStyles(
@@ -32,7 +33,7 @@ const Copying = withRouter(({ history: { goBack }, ...props }) => {
             <ThemeProvider theme={muiTheme}>
                 <Container maxWidth="md" style={{ backgroundColor: "#424242", color: "#ffffff" }}>
                     <div className={classes.form}>
-                        <Typography variant="h4" component="h1" gutterBottom>{translate('copying.title')}</Typography>
+                        <Typography variant="h4" component="h1" gutterBottom>{translate('copying.title')} - Seb {pkg.version ?? "DEV"}</Typography>
                         <Typography variant="h5" component="h2" gutterBottom>{translate('copying.notice')}</Typography>
                         <Typography gutterBottom>
                             {translate('copying.agpl.line1')}<br />

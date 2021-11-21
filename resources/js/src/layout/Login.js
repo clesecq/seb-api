@@ -5,6 +5,7 @@ import React from 'react';
 import { Login } from 'react-admin';
 import { Field, Form } from 'react-final-form';
 import { Link as RouterLink } from 'react-router-dom';
+import pkg from '../../../../package.json';
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -171,6 +172,7 @@ const MyLoginPage = (props) => {
             </Login>
             <div className={classes.copying}>
                 <Typography>
+                    Seb {pkg.version ?? "DEV"}<br/>
                     {translate('copying.bottommessage')} <Link to="/copying" component={RouterLink} className={classes.link}>GNU AGPLv3</Link><br/>
                     <a className={classes.link} href="/doc/privacy-policy.pdf">Politique de Confidentialité</a>
                 </Typography>
