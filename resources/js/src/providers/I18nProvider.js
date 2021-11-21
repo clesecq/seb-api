@@ -331,6 +331,7 @@ const messages = {
                     movement_id: 'Mouvement',
                     transaction_id: 'Transaction',
                     'movement.products': 'Produits',
+                    person_id: 'Personne',
                     product_id: 'Produit',
                     count: 'Différence'
                 }

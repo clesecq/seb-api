@@ -1,17 +1,23 @@
 import { TextField as MuiTextField, useMediaQuery } from "@material-ui/core";
 import React, { useState } from "react";
-import { ArrayField, Create, Datagrid, FormDataConsumer, FormTab, List, ReferenceField, SelectInput, ShowButton, SimpleList, SimpleShowLayout, TabbedForm, TextField, useNotify, useRefresh, useTranslate } from 'react-admin';
+import { ArrayField, AutocompleteInput, Create, Datagrid, FormDataConsumer, FormTab, FunctionField, List, ReferenceField, ReferenceInput, SelectInput, ShowButton, SimpleList, SimpleShowLayout, TabbedForm, TextField, useNotify, useRefresh, useTranslate } from 'react-admin';
 import DateField from '../components/DateField';
 import { ShowDialog } from '../components/DialogForm';
 import MoneyField from "../components/MoneyField";
 import { MultiProductCountInput, MultiProductCountItem } from "../components/MultiProductCountInput";
 import PersonalAccountSelector from "../components/PersonalAccountSelector";
 
+const SalesFilters = [
+    <ReferenceInput source="person_id" reference="people" filterToQuery={searchText => ({ fullname: searchText, has_account: true })}>
+        <AutocompleteInput optionText="fullname" />
+    </ReferenceInput>
+];
+
 const Sales = (props) => {
     const isDesktop = useMediaQuery(theme => theme.breakpoints.up('md'));
     return (
         <>
-            <List {...props} bulkActionButtons={false} >
+            <List {...props} filters={SalesFilters} bulkActionButtons={false} >
                 {isDesktop ? (
                     <Datagrid>
                         <TextField source="id" />
@@ -29,6 +35,9 @@ const Sales = (props) => {
                         </ReferenceField>
                         <ReferenceField source="transaction_id" reference="transactions" link="show">
                             <TextField source="name" />
+                        </ReferenceField>
+                        <ReferenceField source="person_id" reference="people" link="show" >
+                            <FunctionField render={r => r.firstname + " " + r.lastname} />
                         </ReferenceField>
                         <ShowButton />
                     </Datagrid>
