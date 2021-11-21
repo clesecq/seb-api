@@ -14,30 +14,13 @@ class ProductsController extends Controller
      */
     public function index(Request $request)
     {
-        if (is_array($request->ids)) {
-            return ["data" => Product::whereIn('id', $request->ids)->get()];
-        } else {
-            $data = Product::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
-            if (is_array($request->filter)) {
-                foreach ($request->filter as $k => $v) {
-                    if ($k == "alerts") {
-                        if ($v) {
-                            $data = $data->whereColumn('count', '<', 'alert_level');
-                        } else {
-                            $data = $data->whereColumn('count', '>=', 'alert_level');
-                        }
-                    } else {
-                        $data = $data->where($k, 'like', '%' . $v . '%');
-                    }
-                }
+        return $this->commonIndex($request, Product::class, [
+            'name' => 'like:name',
+            'category_id' => 'equals:category_id',
+            'alerts' => function ($r, $k, $v) {
+                return $r->whereColumn('count', $v ? '<' : '>=', 'alert_level');
             }
-            if (!is_null($request->per_page)) {
-                $data = $data->paginate((int) $request->per_page);
-            } else {
-                $data = ["data" => $data->get(), "total" => $data->count()];
-            }
-            return $data;
-        }
+        ]);
     }
 
     /**

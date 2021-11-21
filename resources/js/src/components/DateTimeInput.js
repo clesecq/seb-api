@@ -54,7 +54,6 @@ const Picker = ({ PickerComponent, ...fieldProps }) => {
         providerOptions,
         disabled,
     } = fieldProps;
-    console.log(fieldProps);
 
     const { input, meta } = useInput({ source });
 

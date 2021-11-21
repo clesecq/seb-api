@@ -61,7 +61,7 @@ const MultiProductCountItem = ({ product, filterCategory, filterName, countZero,
                         : ''}
                     <Grid container style={{ justifyContent: "center" }}>
                         <Grid item className={classes.rows}>
-                            <IconButton aria-label="sub" onClick={(e) => { addCount(e.shiftKey ? -10 : -1) }}>
+                            <IconButton aria-label="sub" onClick={(e) => { addCount(e.shiftKey ? -10 : -1) }} tabIndex="-1">
                                 <RemoveIcon />
                             </IconButton>
                         </Grid>
@@ -91,7 +91,7 @@ const MultiProductCountItem = ({ product, filterCategory, filterName, countZero,
                             </Grid>
                         </Grid>
                         <Grid item className={classes.rows}>
-                            <IconButton aria-label="add" onClick={(e) => { addCount(e.shiftKey ? 10 : 1) }}>
+                            <IconButton aria-label="add" onClick={(e) => { addCount(e.shiftKey ? 10 : 1) }} tabIndex="-1">
                                 <AddIcon />
                             </IconButton>
                         </Grid>
@@ -201,7 +201,7 @@ const MultiProductCountInput = ({ total, children, countZero, onlysalable, price
                         <Button color="primary" startIcon={<ClearIcon />} onClick={() => doRefresh(prev => prev + 1)}>{translate('actions.clear')}</Button>
                     </Grid>
                 </Grid>
-                <Grid container item xs={12} spacing={2} style={{ height: 'calc(100vh - 420px)', overflowY: 'scroll', width: 'auto', margin: '0' }}>
+                <Grid container item xs={12} spacing={2} style={{ height: 'calc(100vh - 420px)', minHeight: '400px', overflowY: 'scroll', width: 'auto', margin: '0' }}>
                     {products_data.map((val, key) => {
                         if (!onlysalable || onlysalable && val.salable)
                             return React.cloneElement(React.Children.only(children), { key: key, product: val, refresh: refresh, filterCategory: filterCategory, filterName: filterName, updatePrice: updatePrice, countZero: countZero });

@@ -18,23 +18,7 @@ class AccountCountsController extends Controller
      */
     public function index(Request $request)
     {
-        if (is_array($request->ids)) {
-            return ["data" => AccountCount::with('transaction')->whereIn('id', $request->ids)->get()];
-        } else {
-            $data = AccountCount::with('transaction')
-                ->orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
-            if (is_array($request->filter)) {
-                foreach ($request->filter as $k => $v) {
-                    $data = $data->where($k, 'like', '%' . $v . '%');
-                }
-            }
-            if (!is_null($request->per_page)) {
-                $data = $data->paginate((int) $request->per_page);
-            } else {
-                $data = ["data" => $data->get(), "total" => $data->count()];
-            }
-            return $data;
-        }
+        return $this->commonIndex($request, AccountCount::class);
     }
 
     /**
@@ -121,6 +105,6 @@ class AccountCountsController extends Controller
      */
     public function show($id)
     {
-        return ['data' => AccountCount::with('transaction')->findOrFail($id)];
+        return ['data' => AccountCount::findOrFail($id)];
     }
 }

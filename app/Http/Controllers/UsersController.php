@@ -20,22 +20,11 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        if (is_array($request->ids)) {
-            return ["data" => User::with("person")->whereIn('id', $request->ids)->get()];
-        } else {
-            $data = User::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
-            if (is_array($request->filter)) {
-                foreach ($request->filter as $k => $v) {
-                    $data = $data->where($k, 'like', '%' . $v . '%');
-                }
-            }
-            if (!is_null($request->per_page)) {
-                $data = $data->paginate((int) $request->per_page);
-            } else {
-                $data = ["data" => $data->get(), "total" => $data->count()];
-            }
-            return $data;
-        }
+        return $this->commonIndex($request, User::class, [
+            'username' => "like:username",
+            'email' => "like:email",
+            'person_id' => 'equals:person_id'
+        ]);
     }
 
     /**

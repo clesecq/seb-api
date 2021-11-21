@@ -15,17 +15,13 @@ class AutomatedTransactionsController extends Controller
      */
     public function index(Request $request)
     {
-        if (is_array($request->ids)) {
-            return ["data" => AutomatedTransaction::whereIn('id', $request->ids)->get()];
-        } else {
-            $data = AutomatedTransaction::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
-            if (is_array($request->filter)) {
-                foreach ($request->filter as $k => $v) {
-                    $data = $data->where($k, 'like', '%' . $v . '%');
-                }
-            }
-            return $data->paginate((int) $request->per_page);
-        }
+        return $this->commonIndex($request, AutomatedTransaction::class, [
+            "name" => "like:name",
+            "account_id" => "equals:account_id",
+            "category_id" => "equals:category_id",
+            "user_id" => "equals:user_id",
+            "rectification" => "equals:rectification"
+        ]);
     }
 
     /**

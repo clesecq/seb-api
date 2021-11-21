@@ -15,22 +15,11 @@ class MovementsController extends Controller
      */
     public function index(Request $request)
     {
-        if (is_array($request->ids)) {
-            return ["data" => Movement::whereIn('id', $request->ids)->get()];
-        } else {
-            $data = Movement::orderBy($request->order_by ?? 'id', $request->order_sort ?? 'asc');
-            if (is_array($request->filter)) {
-                foreach ($request->filter as $k => $v) {
-                    $data = $data->where($k, 'like', '%' . $v . '%');
-                }
-            }
-            if (!is_null($request->per_page)) {
-                $data = $data->paginate((int) $request->per_page);
-            } else {
-                $data = ["data" => $data->get(), "total" => $data->count()];
-            }
-            return $data;
-        }
+        return $this->commonIndex($request, Movement::class, [
+            'name' => "like:name",
+            'rectification' => "equals:rectification",
+            'user_id' => "equals:user_id"
+        ], 'products');
     }
 
     /**
@@ -41,7 +30,7 @@ class MovementsController extends Controller
      */
     public function show($id)
     {
-        return ['data' => Movement::with(['products', 'products.product'])->findOrFail($id)];
+        return ['data' => Movement::with(['products'])->findOrFail($id)];
     }
 
     public function store(Request $request)
