@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Account;
-use App\Models\Config;
-use App\Models\Transaction;
-use App\Models\Transfert;
+use Database\Models\Account;
+use Database\Models\Config;
+use Database\Models\Transaction;
+use Database\Models\Transfert;
 use Illuminate\Http\Request;
 
 class TransfertsController extends Controller

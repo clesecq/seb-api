@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Config;
-use App\Models\Movement;
-use App\Models\ProductMovement;
-use App\Models\Purchase;
-use App\Models\Transaction;
+use Database\Models\Config;
+use Database\Models\Movement;
+use Database\Models\ProductMovement;
+use Database\Models\Purchase;
+use Database\Models\Transaction;
 use Illuminate\Http\Request;
 
 class PurchasesController extends Controller

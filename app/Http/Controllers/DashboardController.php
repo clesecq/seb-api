@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Account;
-use App\Models\Config;
-use App\Models\Movement;
-use App\Models\Product;
-use App\Models\Sale;
-use App\Models\Transaction;
-use App\Models\TransactionCategory;
-use App\Models\User;
+use Database\Models\Account;
+use Database\Models\Config;
+use Database\Models\Movement;
+use Database\Models\Product;
+use Database\Models\Sale;
+use Database\Models\Transaction;
+use Database\Models\TransactionCategory;
+use Database\Models\User;
 use Carbon\Carbon;
 use DateTimeImmutable;
 use Illuminate\Http\Request;

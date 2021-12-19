@@ -2,8 +2,8 @@
 
 namespace App\Console;
 
-use App\Models\AutomatedTransaction;
-use App\Models\Transaction;
+use Database\Models\AutomatedTransaction;
+use Database\Models\Transaction;
 use Carbon\Carbon;
 
 class RunAutomatedTransactions

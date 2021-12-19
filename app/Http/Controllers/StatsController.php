@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Member;
-use App\Models\Movement;
-use App\Models\Product;
-use App\Models\ProductMovement;
-use App\Models\Sale;
-use App\Models\User;
+use Database\Models\Member;
+use Database\Models\Movement;
+use Database\Models\Product;
+use Database\Models\ProductMovement;
+use Database\Models\Sale;
+use Database\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

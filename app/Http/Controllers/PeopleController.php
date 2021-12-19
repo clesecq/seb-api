@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Member;
-use App\Models\Person;
+use Database\Models\Member;
+use Database\Models\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Config;
-use App\Models\Sale;
-use App\Models\Movement;
-use App\Models\Person;
-use App\Models\PersonalTransaction;
-use App\Models\ProductMovement;
-use App\Models\Product;
-use App\Models\Transaction;
+use Database\Models\Config;
+use Database\Models\Sale;
+use Database\Models\Movement;
+use Database\Models\Person;
+use Database\Models\PersonalTransaction;
+use Database\Models\ProductMovement;
+use Database\Models\Product;
+use Database\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 

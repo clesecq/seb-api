@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ArchivedMember;
+use Database\Models\ArchivedMember;
 use Illuminate\Http\Request;
 
 class ArchivedMembersController extends Controller

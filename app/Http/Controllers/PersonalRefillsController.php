@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Config;
-use App\Models\Person;
-use App\Models\PersonalTransaction;
-use App\Models\Transaction;
+use Database\Models\Config;
+use Database\Models\Person;
+use Database\Models\PersonalTransaction;
+use Database\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 

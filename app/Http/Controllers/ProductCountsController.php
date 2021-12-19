@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Config;
-use App\Models\Movement;
-use App\Models\Product;
-use App\Models\ProductCount;
-use App\Models\ProductMovement;
+use Database\Models\Config;
+use Database\Models\Movement;
+use Database\Models\Product;
+use Database\Models\ProductCount;
+use Database\Models\ProductMovement;
 use Illuminate\Http\Request;
 
 class ProductCountsController extends Controller

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Account;
-use App\Models\AccountCount;
-use App\Models\Config;
-use App\Models\Transaction;
+use Database\Models\Account;
+use Database\Models\AccountCount;
+use Database\Models\Config;
+use Database\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 

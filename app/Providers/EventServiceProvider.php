@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Account;
+use Database\Models\Account;
 use App\Observers\GatewayObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;

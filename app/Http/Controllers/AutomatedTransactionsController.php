@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AutomatedTransaction;
+use Database\Models\AutomatedTransaction;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 

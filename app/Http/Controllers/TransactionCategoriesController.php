@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TransactionCategory;
+use Database\Models\TransactionCategory;
 use Illuminate\Http\Request;
 
 class TransactionCategoriesController extends Controller

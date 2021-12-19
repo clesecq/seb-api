@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Movement;
-use App\Models\ProductMovement;
+use Database\Models\Movement;
+use Database\Models\ProductMovement;
 use Illuminate\Http\Request;
 
 class MovementsController extends Controller

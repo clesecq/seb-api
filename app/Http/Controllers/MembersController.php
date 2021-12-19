@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Config;
-use App\Models\Member;
-use App\Models\Person;
+use Database\Models\Config;
+use Database\Models\Member;
+use Database\Models\Person;
 use Illuminate\Http\Request;
 
 class MembersController extends Controller

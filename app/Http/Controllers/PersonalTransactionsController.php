@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PersonalTransaction;
+use Database\Models\PersonalTransaction;
 use Illuminate\Http\Request;
 
 class PersonalTransactionsController extends Controller

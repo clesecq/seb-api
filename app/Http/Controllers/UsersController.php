@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use App\Models\User;
+use Database\Models\Product;
+use Database\Models\User;
 use App\Notifications\UserCreated;
 use App\Services\Gateway;
 use Illuminate\Http\Request;
