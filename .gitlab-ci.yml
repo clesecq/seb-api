@@ -16,21 +16,6 @@ composer:
       - vendor/
       - .env
 
-npm:
-  stage: build
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}-npm
-    paths:
-      - node_modules/
-  script:
-    - yarn install
-    - yarn run production
-  artifacts:
-    expire_in: 1 month
-    paths:
-      - public/css/
-      - public/js/
-
 codestyle:
   stage: test
   dependencies: []

@@ -89,7 +89,7 @@ return [
     |
     */
 
-    'middleware' => ['web', \App\Http\Middleware\ForceJSON::class],
+    'middleware' => ["web"],
 
     /*
     |--------------------------------------------------------------------------

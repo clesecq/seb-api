@@ -13,11 +13,11 @@ class Gateway
 
     private array $models;
 
-    public function __construct(bool $enabled, string $url, string $key)
+    public function __construct(?bool $enabled, ?string $url, ?string $key)
     {
-        $this->enabled = $enabled;
-        $this->url = $url;
-        $this->key = $key;
+        $this->enabled = $enabled ?? false;
+        $this->url = $url ?? "";
+        $this->key = $key ?? "";
         $this->models = [];
     }
 
