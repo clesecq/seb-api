@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.unistra.fr/amicale-core/seb/seb-models.git",
-                "reference": "fa5ce648f36493bdefbc143fa7fc346c5235fde3"
+                "reference": "dc14f94190eade7c07a10847d4cecc8b802cfc1b"
             },
             "require": {
                 "doctrine/dbal": "^3.1",
@@ -30,14 +30,14 @@
             "autoload": {
                 "psr-4": {
                     "Database\\Models\\": "src/models/",
-                    "Database\\Factories\\": "src/database/factories/",
-                    "Database\\Seeders\\": "src/database/seeders/"
+                    "Database\\Factories\\": "src/factories/",
+                    "Database\\Seeders\\": "src/seeders/"
                 }
             },
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "time": "2021-12-19T18:41:29+00:00"
+            "time": "2021-12-20T11:23:47+00:00"
         },
         {
             "name": "asm89/stack-cors",

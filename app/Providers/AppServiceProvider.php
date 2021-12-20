@@ -28,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadMigrationsFrom(base_path("vendor/amicale-core/seb-models/src/migrations"));
+
         Fortify::loginView(function () {
             return view('app');
         });
