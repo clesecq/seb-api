@@ -16,6 +16,17 @@ composer:
       - vendor/
       - .env
 
+podman:
+  stage: build
+  image:
+    name: quay.io/podman/stable
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  script:
+    - podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - podman build -t $IMAGE_TAG .
+    - podman push $IMAGE_TAG
+
 codestyle:
   stage: test
   dependencies: []

@@ -1,4 +1,4 @@
-FROM php:8.1-fpm
+FROM docker.io/php:8.1-fpm
 
 # Add composer.lock and composer.json into the working directory
 ADD composer.lock composer.json /seb/
