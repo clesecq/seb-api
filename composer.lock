@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d22736b24c58e8fff13d34adc3bc7166",
+    "content-hash": "b905295d153bbf5d2801f3c65ee66444",
     "packages": [
         {
             "name": "amicale-core/seb-models",

@@ -1,5 +1,5 @@
 {
-    "name": "amicale-core/seb",
+    "name": "amicale-core/seb-api",
     "type": "project",
     "description": "Management of stocks, member, accounting, sales, ...",
     "license": "AGPL-3.0-or-later",
