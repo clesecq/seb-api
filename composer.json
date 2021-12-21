@@ -3,7 +3,7 @@
     "type": "project",
     "description": "Management of stocks, member, accounting, sales, ...",
     "license": "AGPL-3.0-or-later",
-    "version": "1.10.0",
+    "version": "2.0.1",
     "require": {
         "php": "^7.3|^8.0",
         "doctrine/dbal": "^3.1",
