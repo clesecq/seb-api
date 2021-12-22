@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.unistra.fr/amicale-core/seb/seb-models.git",
-                "reference": "dc14f94190eade7c07a10847d4cecc8b802cfc1b"
+                "reference": "9195193e1ce6f1c470ca8e344a8e9b626cfb8451"
             },
             "require": {
                 "doctrine/dbal": "^3.1",
@@ -37,7 +37,7 @@
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "time": "2021-12-20T11:23:47+00:00"
+            "time": "2021-12-22T14:00:42+00:00"
         },
         {
             "name": "asm89/stack-cors",

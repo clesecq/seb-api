@@ -12,6 +12,7 @@ use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\ArchivedMembersController;
 use App\Http\Controllers\AutomatedTransactionsController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EventsController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\TransactionCategoriesController;
 use App\Http\Controllers\MovementsController;
@@ -43,6 +44,7 @@ use App\Models\Transaction;
 use App\Models\TransactionCategory;
 use App\Models\Transfert;
 use App\Models\User;
+use Database\Models\Event;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,5 +98,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::res("personal_accounts", PersonalAccount::class, PersonalAccountsController::class, ['final']);
     Route::res("personal_transactions", PersonalTransaction::class, PersonalTransactionsController::class, ['readonly']);
     Route::res("personal_refills", PersonalTransaction::class, PersonalRefillsController::class, ['writeonly']);
+    Route::res("events", Event::class, EventsController::class, ['final']);
 });
 // @codingStandardsIgnoreEnd
