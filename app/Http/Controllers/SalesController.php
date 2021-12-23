@@ -13,7 +13,7 @@ use Database\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class SalesController extends Controller
+class SalesController extends PaymentController
 {
     /**
      * Display a listing of the resource.
@@ -58,24 +58,9 @@ class SalesController extends Controller
         ]);
 
         $amount = $this->calculatePrice($products_data["products"]);
-        $paccount = null;
-        if ($products_data["payment"] == "account") {
-            $key_data = $request->validate(['token' => ['required', function ($attribute, $value, $fail) {
-                if (!Person::where('edu_token', hash('sha256', $value))->exists()) {
-                    $fail("Cette carte n'est pas attribuée à un compte.");
-                }
-            }]]);
-            $person = Person::where('edu_token', hash('sha256', $key_data['token']))->firstOrFail();
-            $paccount = $person->personal_account;
 
-            if (!$paccount->exists()) {
-                abort(404);
-            }
-
-            if ($paccount->balance < $amount) {
-                abort(422, "Pas assez d'argent sur le compte.");
-            }
-        }
+        // Check payment data (personal account)
+        $this->checkPaymentData($request, $amount);
 
         // We create the sale (needed to have the ID for the names)
         $sale = Sale::create();
@@ -99,56 +84,17 @@ class SalesController extends Controller
             ProductMovement::create($data);
         }
 
-        $account_id = $products_data["payment"] == "account" ?
-            Config::integer('personal.account') : ($products_data["payment"] == 'card' ?
-                Config::integer('card.account') : Config::integer('sales.account'));
-
-        // We create the transaction
-        $transaction = Transaction::create([
-            'name' => Config::format("sales.transaction", ["sale" => $sale->attributesToArray()]),
-            'amount' => $amount,
-            'rectification' => false,
-            'account_id' => $account_id,
-            'category_id' => Config::integer('sales.category'),
-            'user_id' => $request->user()->id
-        ]);
-
-        if ($products_data["payment"] == "card") {
-            // We round the transaction fees
-            // (Information given by our card payment provider).
-            $a = round($amount * Config::number('card.fees.percent') * 100) / 100;
-
-            Transaction::create([
-                'name' => Config::format('card.fees.message', ['transaction' => $transaction->attributesToArray()]),
-                'amount' => -$a,
-                'rectification' => false,
-                'account_id' => Config::integer('card.account'),
-                'category_id' => Config::integer('card.fees.category'),
-                'user_id' => $request->user()->id
-            ]);
-        } elseif ($products_data["payment"] == "account") {
-            $t = Transaction::create([
-                'name' => Config::format("sales.transaction", ["sale" => $sale->attributesToArray()]),
-                'amount' => -$amount,
-                'rectification' => false,
-                'account_id' => Config::integer('personal.account'),
-                'category_id' => Config::integer('personal.category'),
-                'user_id' => $request->user()->id
-            ]);
-
-            PersonalTransaction::create([
-                'amount' => -$amount,
-                'user_id' => $request->user()->id,
-                'personal_account_id' => $paccount->id,
-                'transaction_id' => $t->id
-            ]);
-
-            $sale->person_id = $paccount->person_id;
-        }
+        $out = $this->doPayment(
+            $request,
+            $amount,
+            Config::format("sales.transaction", ["sale" => $sale->attributesToArray()]),
+            Config::integer('sales.category')
+        );
 
         // We affect the new transaction and movement to the sale
-        $sale->transaction_id = $transaction->id;
+        $sale->transaction_id = $out["transaction"];
         $sale->movement_id = $movement->id;
+        $sale->person_id = $out["person"];
         $sale->save();
 
         // We return the new sale
