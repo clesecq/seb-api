@@ -16,6 +16,7 @@ use App\Http\Controllers\EventsController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\TransactionCategoriesController;
 use App\Http\Controllers\MovementsController;
+use App\Http\Controllers\ParticipationsController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\PersonalAccountsController;
@@ -99,5 +100,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::res("personal_transactions", PersonalTransaction::class, PersonalTransactionsController::class, ['readonly']);
     Route::res("personal_refills", PersonalTransaction::class, PersonalRefillsController::class, ['writeonly']);
     Route::res("events", Event::class, EventsController::class, ['final']);
+    Route::res("participations", Event::class, ParticipationsController::class);
 });
 // @codingStandardsIgnoreEnd
