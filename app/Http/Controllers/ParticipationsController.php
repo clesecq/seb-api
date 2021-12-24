@@ -36,8 +36,12 @@ class ParticipationsController extends PaymentController
     {
         // Check the event and person
         $data = $request->validate([
-            'person_id' => ['required', Rule::unique('event_person', 'person_id')->where('event_id', $request->get('event_id', null)), 'exists:people,id'],
-            'event_id' => ['required', Rule::unique('event_person', 'evenT_id')->where('person_id', $request->get('person_id', null)), 'exists:events,id'],
+            'person_id' => ['required',
+                Rule::unique('event_person', 'person_id')->where('event_id', $request->get('event_id', null)),
+                'exists:people,id'],
+            'event_id' => ['required',
+                Rule::unique('event_person', 'evenT_id')->where('person_id', $request->get('person_id', null)),
+                'exists:events,id'],
         ]);
 
         $event = Event::findOrFail($data["event_id"]);
@@ -45,8 +49,12 @@ class ParticipationsController extends PaymentController
 
         // Check event, person and event data
         $data = $request->validate(array_merge([
-            'person_id' => ['required', Rule::unique('event_person', 'person_id')->where('event_id', $request->get('event_id', null)), 'exists:people,id'],
-            'event_id' => ['required', Rule::unique('event_person', 'evenT_id')->where('person_id', $request->get('person_id', null)), 'exists:events,id'],
+            'person_id' => ['required',
+                Rule::unique('event_person', 'person_id')->where('event_id', $request->get('event_id', null)),
+                'exists:people,id'],
+            'event_id' => ['required',
+                Rule::unique('event_person', 'evenT_id')->where('person_id', $request->get('person_id', null)),
+                'exists:events,id'],
         ], $event->validator()));
 
         // Calculate the price
@@ -58,8 +66,11 @@ class ParticipationsController extends PaymentController
         // Create relation
         $participation = EventPerson::create($data);
 
-        // Pay, bitch!
-        $out = $this->doPayment($request, $amount, Config::format("events.transaction", ["event" => $event->attributesToArray()]), $event->category_id, false);
+        // Pay
+        $out = $this->doPayment($request, $amount, Config::format(
+            "events.transaction",
+            ["event" => $event->attributesToArray()]
+        ), $event->category_id, false);
         $participation->transaction_id = $out["transaction"];
         $participation->save();
 
@@ -91,7 +102,6 @@ class ParticipationsController extends PaymentController
         if ($participation->transaction()->exists()) {
             abort(405, "La participation à l'évènement a déjà été payée!", ['Allow' => 'GET, HEAD']);
         } else {
-
         }
 
         $event = $participation->event;
@@ -99,8 +109,19 @@ class ParticipationsController extends PaymentController
         // Check data
         $data = $request->validate($event->validator(true));
         $participation->data = collect($participation->data)->merge($data["data"]);
-        $participation->save();
 
+        // Calculate the price
+        $amount = $event->price($data["data"], $participation->data);
+        // Check the payment infos
+        $this->checkPaymentData($request, $amount, false);
+        // Pay, bitch!
+        $out = $this->doPayment($request, $amount, Config::format(
+            "events.transaction",
+            ["event" => $event->attributesToArray()]
+        ), $event->category_id, false);
+        $participation->transaction_id = $out["transaction"];
+
+        $participation->save();
         return ['data' => $participation];
     }
 
@@ -130,7 +151,7 @@ class ParticipationsController extends PaymentController
     {
         if (is_array($request->ids)) {
             $out = [];
-            foreach($request->ids as $id) {
+            foreach ($request->ids as $id) {
                 $participation = EventPerson::findOrFail($id);
         
                 if (!$participation->transaction()->exists()) {

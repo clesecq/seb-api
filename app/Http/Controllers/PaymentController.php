@@ -11,7 +11,8 @@ use Illuminate\Validation\Rule;
 
 class PaymentController extends Controller
 {
-    private function getPersonalAccount($request) {
+    private function getPersonalAccount($request)
+    {
         $key_data = $request->validate(['token' => ['required', function ($attribute, $value, $fail) {
             if (!Person::where('edu_token', hash('sha256', $value))->exists()) {
                 $fail("Cette carte n'est pas attribuée à un compte.");
@@ -24,10 +25,12 @@ class PaymentController extends Controller
     protected function checkPaymentData($request, $amount, $required = true)
     {
         $data = $request->validate([
-            "payment" => array_merge($required ? [] : ['sometimes'], ['required', Rule::in(['cash', 'card', 'account'])])
+            "payment" => array_merge($required ?
+                [] :
+                ['sometimes', 'nullable'], [$required ? 'required' : 'nullable', Rule::in(['cash', 'card', 'account'])])
         ]);
 
-        if (!array_key_exists("payment", $data)) {
+        if (!array_key_exists("payment", $data) || $data["payment"] == null) {
             return;
         }
 
@@ -44,12 +47,15 @@ class PaymentController extends Controller
         }
     }
 
-    protected function doPayment($request, $amount, $name, $category, $required = true) {
+    protected function doPayment($request, $amount, $name, $category, $required = true)
+    {
         $data = $request->validate([
-            "payment" => array_merge($required ? [] : ['sometimes'], ['required', Rule::in(['cash', 'card', 'account'])])
+            "payment" => array_merge($required ?
+                [] :
+                ['sometimes'], [$required ? 'required' : 'nullable', Rule::in(['cash', 'card', 'account'])])
         ]);
 
-        if (!array_key_exists("payment", $data)) {
+        if (!array_key_exists("payment", $data) || $data["payment"] == null) {
             return ["transaction" => null, "person" => null];
         }
 
@@ -100,7 +106,6 @@ class PaymentController extends Controller
             ]);
 
             return ["person" => $paccount->person_id, "transaction" => $transaction->id];
-
         }
 
         return ["person" => null, "transaction" => $transaction->id];
