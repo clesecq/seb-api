@@ -7,7 +7,6 @@ use Database\Models\Event;
 use Database\Models\EventPerson;
 use Database\Models\Person;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class ParticipationsController extends PaymentController
@@ -19,43 +18,62 @@ class ParticipationsController extends PaymentController
      */
     public function index(Request $request)
     {
-        return $this->commonIndex($request, EventPerson::class, [
+        return $this->commonIndex(
+            $request,
+            EventPerson::class,
+            [
             "event_id" => "equals:event_id",
             "person_id" => "equals:person_id",
             "transaction_id" => "equals:transaction_id"
-        ]);
+            ]
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         // Check the event and person
-        $data = $request->validate([
-            'person_id' => ['required',
+        $data = $request->validate(
+            [
+            'person_id' => [
+                'required',
                 Rule::unique('event_person', 'person_id')->where('event_id', $request->get('event_id', null)),
-                'exists:people,id'],
-            'event_id' => ['required',
+                'exists:people,id'
+            ],
+            'event_id' => [
+                'required',
                 Rule::unique('event_person', 'evenT_id')->where('person_id', $request->get('person_id', null)),
-                'exists:events,id'],
-        ]);
+                'exists:events,id'
+            ],
+            ]
+        );
 
         $event = Event::findOrFail($data["event_id"]);
         $person = Person::findOrFail($data["person_id"]);
 
         // Check event, person and event data
-        $data = $request->validate(array_merge([
-            'person_id' => ['required',
+        $data = $request->validate(
+            array_merge(
+                [
+                'person_id' => [
+                'required',
                 Rule::unique('event_person', 'person_id')->where('event_id', $request->get('event_id', null)),
-                'exists:people,id'],
-            'event_id' => ['required',
+                'exists:people,id'
+                ],
+                'event_id' => [
+                'required',
                 Rule::unique('event_person', 'evenT_id')->where('person_id', $request->get('person_id', null)),
-                'exists:events,id'],
-        ], $event->validator()));
+                'exists:events,id'
+                ],
+                ],
+                $event->validator()
+            )
+        );
 
         // Calculate the price
         $amount = $event->price($data["data"], $person);
@@ -67,10 +85,16 @@ class ParticipationsController extends PaymentController
         $participation = EventPerson::create($data);
 
         // Pay
-        $out = $this->doPayment($request, $amount, Config::format(
-            "events.transaction",
-            ["event" => $event->attributesToArray()]
-        ), $event->category_id, false);
+        $out = $this->doPayment(
+            $request,
+            $amount,
+            Config::format(
+                "events.transaction",
+                ["event" => $event->attributesToArray()]
+            ),
+            $event->category_id,
+            false
+        );
         $participation->transaction_id = $out["transaction"];
         $participation->save();
 
@@ -80,7 +104,7 @@ class ParticipationsController extends PaymentController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -91,8 +115,8 @@ class ParticipationsController extends PaymentController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -115,10 +139,16 @@ class ParticipationsController extends PaymentController
         // Check the payment infos
         $this->checkPaymentData($request, $amount, false);
         // Pay, bitch!
-        $out = $this->doPayment($request, $amount, Config::format(
-            "events.transaction",
-            ["event" => $event->attributesToArray()]
-        ), $event->category_id, false);
+        $out = $this->doPayment(
+            $request,
+            $amount,
+            Config::format(
+                "events.transaction",
+                ["event" => $event->attributesToArray()]
+            ),
+            $event->category_id,
+            false
+        );
         $participation->transaction_id = $out["transaction"];
 
         $participation->save();
@@ -128,7 +158,7 @@ class ParticipationsController extends PaymentController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -153,7 +183,7 @@ class ParticipationsController extends PaymentController
             $out = [];
             foreach ($request->ids as $id) {
                 $participation = EventPerson::findOrFail($id);
-        
+
                 if (!$participation->transaction()->exists()) {
                     $participation->delete();
                     $out[] = $id;

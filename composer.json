@@ -26,6 +26,7 @@
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3.3",
+        "smgladkovskiy/phpcs-git-pre-commit": "dev-master",
         "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
@@ -48,6 +49,15 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "install-hooks": [
+            "sh ./vendor/smgladkovskiy/phpcs-git-pre-commit/src/setup.sh"
+        ],
+        "post-install-cmd": [
+            "@install-hooks"
+        ],
+        "post-update-cmd": [
+            "@install-hooks"
         ]
     },
     "extra": {

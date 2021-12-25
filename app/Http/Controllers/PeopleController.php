@@ -16,7 +16,10 @@ class PeopleController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->commonIndex($request, Person::class, [
+        return $this->commonIndex(
+            $request,
+            Person::class,
+            [
             "fullname" => function ($r, $k, $v) {
                 return $r->where(DB::raw("CONCAT(`firstname`, ' ', `lastname`)"), 'like', '%' . $v . '%');
             },
@@ -26,12 +29,14 @@ class PeopleController extends Controller
             "firstname" => "like:firstname",
             "lastname" => "like:lastname",
             "discord_id" => "equals:discord_id"
-        ]);
+            ]
+        );
     }
 
     /**
      * Store a newly created resource in storage.
-     *I
+     * I
+     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -152,6 +157,9 @@ class PeopleController extends Controller
             'sales.movement',
             'sales.movement.products',
             'sales.movement.products.product:name,id,price',
+            'events',
+            'events.event',
+            'events.transaction:id,name,amount,rectification,created_at,updated_at',
         )->findOrFail($id)->makeVisible('edu_token')->makeHidden('fullname')];
     }
 }

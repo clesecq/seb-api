@@ -99,7 +99,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::res("personal_accounts", PersonalAccount::class, PersonalAccountsController::class, ['final']);
     Route::res("personal_transactions", PersonalTransaction::class, PersonalTransactionsController::class, ['readonly']);
     Route::res("personal_refills", PersonalTransaction::class, PersonalRefillsController::class, ['writeonly']);
-    Route::res("events", Event::class, EventsController::class, ['final']);
+    Route::res("events", Event::class, EventsController::class, ['final', 'export']);
     Route::res("participations", Event::class, ParticipationsController::class);
 });
 // @codingStandardsIgnoreEnd

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b905295d153bbf5d2801f3c65ee66444",
+    "content-hash": "6393255caeaca59981dd13d40977d642",
     "packages": [
         {
             "name": "amicale-core/seb-models",
@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.unistra.fr/amicale-core/seb/seb-models.git",
-                "reference": "0c225a89b4df961fad38043401330095452eb3a6"
+                "reference": "4c3c11436a4c9163dd4879be357ea33a5e694fb5"
             },
             "require": {
                 "doctrine/dbal": "^3.1",
@@ -37,7 +37,7 @@
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "time": "2021-12-24T19:07:29+00:00"
+            "time": "2021-12-25T15:55:25+00:00"
         },
         {
             "name": "asm89/stack-cors",
@@ -8819,6 +8819,42 @@
             "time": "2020-09-28T06:39:44+00:00"
         },
         {
+            "name": "smgladkovskiy/phpcs-git-pre-commit",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smgladkovskiy/phpcs-git-pre-commit.git",
+                "reference": "0b1e516f4b55d7064f19956998d78ec951b6cf73"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smgladkovskiy/phpcs-git-pre-commit/zipball/0b1e516f4b55d7064f19956998d78ec951b6cf73",
+                "reference": "0b1e516f4b55d7064f19956998d78ec951b6cf73",
+                "shasum": ""
+            },
+            "require": {
+                "squizlabs/php_codesniffer": "^2.7 || ^3.0"
+            },
+            "default-branch": true,
+            "type": "scripts",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Gladkovskiy",
+                    "email": "smgladkovskiy@gmail.com"
+                }
+            ],
+            "description": "PHPCS check before commit",
+            "support": {
+                "issues": "https://github.com/smgladkovskiy/phpcs-git-pre-commit/issues",
+                "source": "https://github.com/smgladkovskiy/phpcs-git-pre-commit/tree/master"
+            },
+            "time": "2021-07-28T13:43:51+00:00"
+        },
+        {
             "name": "squizlabs/php_codesniffer",
             "version": "3.6.2",
             "source": {
@@ -8927,7 +8963,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "smgladkovskiy/phpcs-git-pre-commit": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

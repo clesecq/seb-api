@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Database\Models\Event;
+use Database\Models\EventPerson;
 use Database\Models\TransactionCategory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule as ValidationRule;
@@ -16,22 +17,27 @@ class EventsController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->commonIndex($request, Event::class, [
+        return $this->commonIndex(
+            $request,
+            Event::class,
+            [
             "name" => "like:name",
             "location" => "like:location",
             "category_id" => "equals:category_id"
-        ]);
+            ]
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $data = $request->validate(
+            [
             'name' => ['required', 'string'],
             'location' => ['required', 'string'],
             'inscriptions_closed_at' => ['required', 'date'],
@@ -48,7 +54,8 @@ class EventsController extends Controller
             "data.*.values.*.name" => ["required_if:data.*.type,select", "string", "distinct"],
             "data.*.values.*.price" => ["required_if:data.*.type,select", "numeric"],
             "data.*.values.*.price_member" => ["required_if:data.*.type,select", "numeric"],
-        ]);
+            ]
+        );
 
         $data["category_id"] = TransactionCategory::create($data)->id;
 
@@ -58,11 +65,63 @@ class EventsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         return ['data' => Event::findOrFail($id)];
+    }
+
+    public function export($id)
+    {
+        $event = Event::findOrFail($id);
+        $out = [];
+
+        return response()->streamDownload(
+            function () use ($event) {
+                $file = fopen('php://output', 'w+');
+                $header = ['EP#ID', 'P#ID', 'E#ID', 'Firstname', 'Lastname', 'Member'];
+
+                $datas = [];
+                foreach ($event->data as $dat) {
+                    $datas[] = $dat['name'];
+                }
+
+                $header = array_merge($header, $datas, ['Payed', 'Price', 'Created at', 'Updated at']);
+
+                fputcsv($file, $header);
+
+                foreach ($event->participations as $participation) {
+                    // return (array) $participation->data;
+                    $row = [
+                    $participation->id,
+                    $participation->person_id,
+                    $participation->event_id,
+                    $participation->person->firstname,
+                    $participation->person->lastname,
+                    $participation->person->is_member
+                    ];
+
+                    foreach ($datas as $dat) {
+                        $row[] = ((array) $participation->data)[$dat];
+                    }
+
+                    $row[] = $participation->transaction()->exists();
+                    if ($participation->transaction()->exists()) {
+                        $row[] = $participation->transaction->amount;
+                    } else {
+                        $row[] = "";
+                    }
+                    $row[] = $participation->created_at;
+                    $row[] = $participation->updated_at;
+
+                    fputcsv($file, $row);
+                }
+
+                fclose($file);
+            },
+            'export.csv'
+        );
     }
 }
