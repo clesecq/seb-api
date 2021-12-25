@@ -42,12 +42,12 @@ class ParticipationsController extends PaymentController
             [
             'person_id' => [
                 'required',
-                Rule::unique('event_person', 'person_id')->where('event_id', $request->get('event_id', null)),
+                Rule::unique('event_people', 'person_id')->where('event_id', $request->get('event_id', null)),
                 'exists:people,id'
             ],
             'event_id' => [
                 'required',
-                Rule::unique('event_person', 'evenT_id')->where('person_id', $request->get('person_id', null)),
+                Rule::unique('event_people', 'evenT_id')->where('person_id', $request->get('person_id', null)),
                 'exists:events,id'
             ],
             ]
@@ -62,12 +62,12 @@ class ParticipationsController extends PaymentController
                 [
                 'person_id' => [
                 'required',
-                Rule::unique('event_person', 'person_id')->where('event_id', $request->get('event_id', null)),
+                Rule::unique('event_people', 'person_id')->where('event_id', $request->get('event_id', null)),
                 'exists:people,id'
                 ],
                 'event_id' => [
                 'required',
-                Rule::unique('event_person', 'evenT_id')->where('person_id', $request->get('person_id', null)),
+                Rule::unique('event_people', 'evenT_id')->where('person_id', $request->get('person_id', null)),
                 'exists:events,id'
                 ],
                 ],
