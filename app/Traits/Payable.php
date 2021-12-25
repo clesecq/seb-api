@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Traits;
 
 use Database\Models\Config;
 use Database\Models\Person;
 use Database\Models\PersonalTransaction;
 use Database\Models\Transaction;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class PaymentController extends Controller
+trait Payable
 {
     private function getPersonalAccount($request)
     {

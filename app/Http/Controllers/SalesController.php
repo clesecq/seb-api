@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\Payable;
 use Database\Models\Config;
 use Database\Models\Sale;
 use Database\Models\Movement;
-use Database\Models\Person;
-use Database\Models\PersonalTransaction;
 use Database\Models\ProductMovement;
 use Database\Models\Product;
-use Database\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class SalesController extends PaymentController
+class SalesController extends Controller
 {
+    use Payable;
+
     /**
      * Display a listing of the resource.
      *

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\Payable;
 use Database\Models\Config;
 use Database\Models\Event;
 use Database\Models\EventPerson;
@@ -9,8 +10,10 @@ use Database\Models\Person;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class ParticipationsController extends PaymentController
+class ParticipationsController extends Controller
 {
+    use Payable;
+    
     /**
      * Display a listing of the resource.
      *
