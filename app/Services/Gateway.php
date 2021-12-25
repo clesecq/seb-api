@@ -34,7 +34,7 @@ class Gateway
 
         if (array_key_exists($model, $this->models)) {
             try {
-                $resp = Http::withHeaders([
+                Http::withHeaders([
                     "Authorization" => "Bearer " . $this->key
                 ])->post($this->url . "event/" . $this->models[$model] . "." . $type, $data);
             } catch (Exception $e) {

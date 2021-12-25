@@ -10,17 +10,25 @@ class RunAutomatedTransactions
 {
     private function shouldRun(AutomatedTransaction $trans): bool
     {
+        $should = false;
         switch ($trans->frequency) {
             case "dayly":
-                return true;
+                $should = true;
+                break;
             case "weekly":
-                return $trans->day == (Carbon::now()->dayOfWeekIso);
+                $should = $trans->day == (Carbon::now()->dayOfWeekIso);
+                break;
             case "monthly":
-                return $trans->day == (Carbon::now()->day);
+                $should = $trans->day == (Carbon::now()->day);
+                break;
             case "yearly":
-                return $trans->day == (Carbon::now()->dayOfYear);
+                $should = $trans->day == (Carbon::now()->dayOfYear);
+                break;
+            default:
+                $should = false;
+                break;
         }
-        return false;
+        return $should;
     }
 
     public function __invoke()

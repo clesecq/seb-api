@@ -21,9 +21,9 @@ class EventsController extends Controller
             $request,
             Event::class,
             [
-            "name" => "like:name",
-            "location" => "like:location",
-            "category_id" => "equals:category_id"
+                "name" => "like:name",
+                "location" => "like:location",
+                "category_id" => "equals:category_id"
             ]
         );
     }
@@ -38,22 +38,22 @@ class EventsController extends Controller
     {
         $data = $request->validate(
             [
-            'name' => ['required', 'string'],
-            'location' => ['required', 'string'],
-            'inscriptions_closed_at' => ['required', 'date'],
-            'start' => ['required', 'date'],
-            'end' => ['required', 'date'],
-            'price' => ['required', 'numeric'],
-            'price_member' => ['required', 'numeric'],
-            "data" => ['required', 'array'],
-            "data.*.name" => ["required", "string", "distinct"],
-            "data.*.type" => ["required", "string", "in:string,boolean,select"],
-            "data.*.price" => ["required_if:data.*.type,boolean", "numeric"],
-            "data.*.price_member" => ["required_if:data.*.type,boolean", "numeric"],
-            "data.*.values" => ["required_if:data.*.type,select", "array"],
-            "data.*.values.*.name" => ["required_if:data.*.type,select", "string", "distinct"],
-            "data.*.values.*.price" => ["required_if:data.*.type,select", "numeric"],
-            "data.*.values.*.price_member" => ["required_if:data.*.type,select", "numeric"],
+                'name' => ['required', 'string'],
+                'location' => ['required', 'string'],
+                'inscriptions_closed_at' => ['required', 'date'],
+                'start' => ['required', 'date'],
+                'end' => ['required', 'date'],
+                'price' => ['required', 'numeric'],
+                'price_member' => ['required', 'numeric'],
+                "data" => ['required', 'array'],
+                "data.*.name" => ["required", "string", "distinct"],
+                "data.*.type" => ["required", "string", "in:string,boolean,select"],
+                "data.*.price" => ["required_if:data.*.type,boolean", "numeric"],
+                "data.*.price_member" => ["required_if:data.*.type,boolean", "numeric"],
+                "data.*.values" => ["required_if:data.*.type,select", "array"],
+                "data.*.values.*.name" => ["required_if:data.*.type,select", "string", "distinct"],
+                "data.*.values.*.price" => ["required_if:data.*.type,select", "numeric"],
+                "data.*.values.*.price_member" => ["required_if:data.*.type,select", "numeric"],
             ]
         );
 
@@ -76,8 +76,6 @@ class EventsController extends Controller
     public function export($id)
     {
         $event = Event::findOrFail($id);
-        $out = [];
-
         return response()->streamDownload(
             function () use ($event) {
                 $file = fopen('php://output', 'w+');
@@ -93,14 +91,13 @@ class EventsController extends Controller
                 fputcsv($file, $header);
 
                 foreach ($event->participations as $participation) {
-                    // return (array) $participation->data;
                     $row = [
-                    $participation->id,
-                    $participation->person_id,
-                    $participation->event_id,
-                    $participation->person->firstname,
-                    $participation->person->lastname,
-                    $participation->person->is_member
+                        $participation->id,
+                        $participation->person_id,
+                        $participation->event_id,
+                        $participation->person->firstname,
+                        $participation->person->lastname,
+                        $participation->person->is_member
                     ];
 
                     foreach ($datas as $dat) {

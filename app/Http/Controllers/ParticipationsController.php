@@ -13,7 +13,7 @@ use Illuminate\Validation\Rule;
 class ParticipationsController extends Controller
 {
     use Payable;
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -25,9 +25,9 @@ class ParticipationsController extends Controller
             $request,
             EventPerson::class,
             [
-            "event_id" => "equals:event_id",
-            "person_id" => "equals:person_id",
-            "transaction_id" => "equals:transaction_id"
+                "event_id" => "equals:event_id",
+                "person_id" => "equals:person_id",
+                "transaction_id" => "equals:transaction_id"
             ]
         );
     }
@@ -43,16 +43,16 @@ class ParticipationsController extends Controller
         // Check the event and person
         $data = $request->validate(
             [
-            'person_id' => [
-                'required',
-                Rule::unique('event_people', 'person_id')->where('event_id', $request->get('event_id', null)),
-                'exists:people,id'
-            ],
-            'event_id' => [
-                'required',
-                Rule::unique('event_people', 'evenT_id')->where('person_id', $request->get('person_id', null)),
-                'exists:events,id'
-            ],
+                'person_id' => [
+                    'required',
+                    Rule::unique('event_people', 'person_id')->where('event_id', $request->get('event_id', null)),
+                    'exists:people,id'
+                ],
+                'event_id' => [
+                    'required',
+                    Rule::unique('event_people', 'evenT_id')->where('person_id', $request->get('person_id', null)),
+                    'exists:events,id'
+                ],
             ]
         );
 
@@ -63,16 +63,16 @@ class ParticipationsController extends Controller
         $data = $request->validate(
             array_merge(
                 [
-                'person_id' => [
-                'required',
-                Rule::unique('event_people', 'person_id')->where('event_id', $request->get('event_id', null)),
-                'exists:people,id'
-                ],
-                'event_id' => [
-                'required',
-                Rule::unique('event_people', 'evenT_id')->where('person_id', $request->get('person_id', null)),
-                'exists:events,id'
-                ],
+                    'person_id' => [
+                        'required',
+                        Rule::unique('event_people', 'person_id')->where('event_id', $request->get('event_id', null)),
+                        'exists:people,id'
+                    ],
+                    'event_id' => [
+                        'required',
+                        Rule::unique('event_people', 'evenT_id')->where('person_id', $request->get('person_id', null)),
+                        'exists:events,id'
+                    ],
                 ],
                 $event->validator()
             )
@@ -128,7 +128,6 @@ class ParticipationsController extends Controller
 
         if ($participation->transaction()->exists()) {
             abort(405, "La participation à l'évènement a déjà été payée!", ['Allow' => 'GET, HEAD']);
-        } else {
         }
 
         $event = $participation->event;

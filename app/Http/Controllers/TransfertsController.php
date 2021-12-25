@@ -45,7 +45,7 @@ class TransfertsController extends Controller
             'name' => Config::format("transferts.transaction", ["transfert" => $transfert->attributesToArray()]),
             'amount' => -$data['amount'],
             'rectification' => false,
-            'account_id' => $data['from_account_id'],
+            'account_id' => $from_account->id,
             'category_id' => Config::integer('transferts.category'),
             'user_id' => $request->user()->id
         ]);
@@ -55,7 +55,7 @@ class TransfertsController extends Controller
             'name' => Config::format("transferts.transaction", ["transfert" => $transfert->attributesToArray()]),
             'amount' => $data['amount'],
             'rectification' => false,
-            'account_id' => $data['to_account_id'],
+            'account_id' => $to_account->id,
             'category_id' => Config::integer('transferts.category'),
             'user_id' => $request->user()->id
         ]);
