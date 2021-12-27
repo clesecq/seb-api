@@ -58,5 +58,10 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
         });
+
+        // We set a higher rate for fast auth
+        RateLimiter::for('fast_auth', function (Request $request) {
+            return Limit::perMinute(120)->by($request->ip());
+        });
     }
 }

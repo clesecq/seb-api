@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use Database\Models\FastAuthToken;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,6 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(RunAutomatedTransactions::class)->dailyAt('6:00');
+        $schedule->command('model:prune', ['--model' => [FastAuthToken::class]])->daily();
     }
 
     /**

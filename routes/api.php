@@ -13,6 +13,7 @@ use App\Http\Controllers\ArchivedMembersController;
 use App\Http\Controllers\AutomatedTransactionsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventsController;
+use App\Http\Controllers\FastAuthTokenController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\TransactionCategoriesController;
 use App\Http\Controllers\MovementsController;
@@ -59,7 +60,14 @@ use Database\Models\Event;
 */
 
 // @codingStandardsIgnoreStart
-Route::group(['middleware' => ['auth:sanctum']], function () {
+
+// Fast auth tokens
+Route::group(['middleware' => ['throttle:fast_auth']], function () {
+    Route::post("fa", [FastAuthTokenController::class, 'create']);
+    Route::get("fa/{token}", [FastAuthTokenController::class, 'show']);
+});
+
+Route::group(['middleware' => ['auth:sanctum', 'throttle:api']], function () {
     Route::get("permissions", [PermissionsController::class, 'index']);
     Route::get("stats", [StatsController::class, 'stats']);
 
@@ -71,6 +79,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post("tokens", [TokensController::class, 'create']);
         Route::delete("tokens/{token}", [TokensController::class, 'delete']);
         Route::delete("tokens", [TokensController::class, 'clear']);
+
+        // Only users logged via session can accept connection on fast auth
+        Route::put("fa/{token}", [FastAuthTokenController::class, 'update']);
     });
 
     Route::get("profile/me", [ProfileController::class, 'show']);
