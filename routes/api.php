@@ -79,10 +79,12 @@ Route::group(['middleware' => ['auth:sanctum', 'throttle:api']], function () {
         Route::post("tokens", [TokensController::class, 'create']);
         Route::delete("tokens/{token}", [TokensController::class, 'delete']);
         Route::delete("tokens", [TokensController::class, 'clear']);
-
-        // Only users logged via session can accept connection on fast auth
-        Route::put("fa/{token}", [FastAuthTokenController::class, 'update']);
     });
+
+    // Allow Token-Authenticated users to use FastAuth.
+    // TODO: Add a protection mechanism on FastAuth, like
+    // a pin-code or something.
+    Route::put("fa/{token}", [FastAuthTokenController::class, 'update']);
 
     Route::get("profile/me", [ProfileController::class, 'show']);
 
