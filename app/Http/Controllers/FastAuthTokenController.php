@@ -51,6 +51,7 @@ class FastAuthTokenController extends Controller
 
         if ($token->user()->exists() && $token->accepted) {
             Auth::loginUsingId($token->user_id);
+            $token->delete();
         }
 
         return $token;
