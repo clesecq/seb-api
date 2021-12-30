@@ -6,6 +6,7 @@
     "version": "2.2.0",
     "require": {
         "php": "^7.3|^8.0",
+        "amicale-core/seb-models": "dev-master",
         "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -16,8 +17,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
-        "nicmart/string-template": "^0.1.2",
-        "amicale-core/seb-models": "master"
+        "nicmart/string-template": "^0.1.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

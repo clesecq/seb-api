@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17e10b64afe7b8de11658f15957493da",
+    "content-hash": "c2f482e2a8720b04f856c31c30f4a3e7",
     "packages": [
         {
             "name": "amicale-core/seb-models",
@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.unistra.fr/amicale-core/seb/seb-models.git",
-                "reference": "df315e1d9f5daac191cca3410477b4c8c99110c1"
+                "reference": "8c0438da2553278e5d9cfc71d46fc82eaa5b3daf"
             },
             "require": {
                 "doctrine/dbal": "^3.1",
@@ -37,7 +37,7 @@
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "time": "2021-12-26T21:30:29+00:00"
+            "time": "2021-12-30T10:43:59+00:00"
         },
         {
             "name": "asm89/stack-cors",
@@ -8964,6 +8964,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "amicale-core/seb-models": 20,
         "smgladkovskiy/phpcs-git-pre-commit": 20
     },
     "prefer-stable": true,

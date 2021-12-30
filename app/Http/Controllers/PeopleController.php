@@ -150,6 +150,8 @@ class PeopleController extends Controller
             'users',
             'member',
             'member.transaction:id,name,amount,rectification,created_at,updated_at',
+            'archived_members',
+            'archived_members.transaction:id,name,amount,rectification,created_at,updated_at',
             'personal_account',
             'personal_account.personal_transactions:id,amount,personal_account_id,transaction_id,created_at,updated_at',
             'personal_account.personal_transactions.transaction:id,name,amount,rectification,created_at,updated_at',
