@@ -47,7 +47,7 @@ class EventsController extends Controller
                 'price_member' => ['required', 'numeric'],
                 "data" => ['required', 'array'],
                 "data.*.name" => ["required", "string", "distinct"],
-                "data.*.type" => ["required", "string", "in:string,boolean,select"],
+                "data.*.type" => ["required", "string", "in:string,boolean,select,numeric"],
                 "data.*.price" => ["required_if:data.*.type,boolean", "numeric"],
                 "data.*.price_member" => ["required_if:data.*.type,boolean", "numeric"],
                 "data.*.values" => ["required_if:data.*.type,select", "array"],
