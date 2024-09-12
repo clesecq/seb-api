@@ -53,7 +53,7 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
-    protected $routeMiddleware = [
+    protected $middlewareAliases = [
         'guard' => \App\Http\Middleware\CheckGuard::class,
         'permission' => \App\Http\Middleware\HasPermission::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
