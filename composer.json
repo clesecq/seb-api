@@ -3,10 +3,10 @@
     "type": "project",
     "description": "Management of stocks, member, accounting, sales, ...",
     "license": "AGPL-3.0-or-later",
-    "version": "2.3.0",
+    "version": "2.4.0",
     "require": {
         "php": "^8.2",
-        "amicale-core/seb-models": "dev-laravel11",
+        "amicale-core/seb-models": "dev-master",
         "guzzlehttp/guzzle": "^7.5",
         "laravel/fortify": "^1.16",
         "laravel/framework": "^11.0",
@@ -74,7 +74,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@git.unistra.fr:clesecq/seb-models.git"
+            "url": "https://git.unistra.fr/amicale-core/seb/seb-models.git"
         }
     ]
 }
